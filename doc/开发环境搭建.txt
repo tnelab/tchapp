@@ -33,4 +33,10 @@ Simple下代码可不编译
 
 设置test\tchclient项目为启动项目，可进行c#代码调试
 
-windows调试配置tch_path环境变量，参见doc\分离cef和clr文件.txt
+运行需要cef3 二进制文件
+
+可从cef_sdk 相应版本目录中复制：Resources和Release或Debug下的文件都复制到，项目输出目录publish相应版本目录中
+
+或者：windows调试配置tch_path环境变量，参见doc\分离cef和clr文件.txt
+
+编译时候如报：mkdir xcopy错误，可忽略
