@@ -1,0 +1,86 @@
+2016-11-8
+1）大神农夫，的宝贵意见
+文档看了一遍，大概知道整个结构了，提些意见
+tchclient和tchsubprocess可能可以合并到一个exe
+可以弄一个配置文件指定cef和userapp的路径，窗口标题等等
+.net和js的api可以再封装一遍，调用起来更简单
+弄多一点启动时的错误检测，跑不起来可以知道怎么回事，windows上可以用MessageBox
+
+2）反馈：
+非常感谢，大神的宝贵意见！
+
+1.tchclient和tchsubprocess
+原来项目是合并的，
+但是cef3强制多线程，即使合并也是多线程，tchsubprocess是渲染进程
+参考别人基于cef3的各种开源框架，它们都是分开的
+分开有些好处，就是便于阅读，调试，管理，维护，所以我也做成分开的了
+如果大神有进一步意见，我们再讨论
+
+2.弄一个配置文件指定cef和userapp的路径，窗口标题等等
+原来有考虑这个设计，还集成了一个json解析器，但是后来放弃了
+原因：
+1）从API使用者角度，配置越少越好，参数越少越好，接口越少越好，学习曲线越短越好，上手就能用同时扩展功能最大化最好
+2）从UserApp最终用户角度，UserApp的启动，越“正常”越好，越绿色越好，不用安装，不用配置，复制黏贴，点下鼠标就能用最好
+基于1）2）的需求，最后放弃了配置文件的设计方案
+现在大神提出这个意见，正重新考虑兼容这种设计！
+期待详细讨论！
+
+3..net和js的api可以再封装一遍，调用起来更简单
+昨天已重新封装，现在长这样：
+namespace tchclient
+{
+    public class Program
+    {
+        public static int Main(string[] args)
+        {
+            int exit_code = 0;
+            //最简单的形式
+            exit_code = Client.This.Start("http://tchapp.localhost/ui/index.html");
+	    //复杂形式
+            /*
+	    exit_code = Client.This
+		.AddResourceAssembly("tchclient")//添加包含web资源的程序集,这些程序集可以用于web请求时获取资源
+                .AddResourceAssembly("UserApp.UIcomponent")//可添加多个资源程序集
+                .AddUrlFilter("/ui/test",cshtml_filter)//添加url过滤器，这些过滤的url可以简单进行自定义处理,cshtml有个默认实现的过滤器
+                .AddUrlFilter("/ui/test.ico",ico_filter)//可添加多个过滤器
+                .UseTchRequestProcessor(processor)//完全接管web请求
+                .UseTchErrorProcessor(error_processor)//接管c++错误处理
+                .UseTchJsInvokeProcessor(js_processor)//接管js调用处理
+		.Start("http://tchapp.localhost/ui/index.html");
+                Start签名：public int Start(string url,bool sizeable = true, int x = -1, int y = -1, int width = 800, int height = 600)
+            */	
+            return exit_code;
+        }
+    }
+}
+全自动处理web请求，同时留下两个自定义处理接口，长这样：
+        /// <summary>
+        /// 自定义处理web请求，完全接管请求，请求通过TchResponseInfo送回web，
+        /// 为确保处理每个请求，请在Start方法执行前调用本方法，
+        /// tch_request_processor第一个参数是web请求数据，第二个参数是默认处理函数封装接口（用于自定义处理内部能有选择的使用默认处理），返回处理结果
+        /// 默认处理顺序:
+        /// 1.如果url过滤列表中，调用过滤处理url_filter):Func<TchRequestInfo,byte[]/*response body数据*/>
+        /// 2.本地查找同名文件
+        /// 3.查找同名嵌入资源
+        /// </summary>        
+        /// <param name="tch_request_processor">请求处理器</param>
+        /// <returns>Client对象</returns>
+        public Client UseTchRequestProcessor(Func<TchRequestInfo, ITchResquestProcessor, TchResponseInfo> tch_request_processor)
+        {
+        }
+	//过滤url请求，简单处理拦截的url
+	public Client AddUrlFilter(Func<TchRequestInfo, byte[]> url_filter){}
+
+web请求处理功能暂时不考虑复杂的扩展
+毕竟不是web server
+项目还带了一个http模拟器，
+如果需要web server运用层全扩展，可以使用模拟器（无网络层的Kestrel，可以无修改移植asp.net core项目），
+甚至直接使用Kestrel(项目目前可以集成完整版Kestrel，如需要完整web server环境)
+
+4.弄多一点启动时的错误检测
+错误处理结构已经实现，
+出错默认会直接弹出cmd窗口,.net 可以接管错误处理
+需要增加错误检测代码
+结构刚实现没多久，一直没时间加！
+
+
