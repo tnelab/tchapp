@@ -10,3 +10,5 @@ linux可编译，coreclr可正确加载
 实现基本windows api，集成Razor
 2016-11-7
 重新设计实现TchApp.TchClient,实现自动化处理web请求，重新适配TchApp.HttpSimulator已可编译
+2016-11-8
+完善API，整理项目文档，托管至github
