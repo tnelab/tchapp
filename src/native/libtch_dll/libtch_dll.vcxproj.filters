@@ -1,0 +1,675 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="libcef_dll\base\cef_bind_helpers.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_callback_helpers.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_callback_internal.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_lock.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_lock_impl.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_logging.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_ref_counted.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_string16.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_thread_checker_impl.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_thread_collision_warner.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_weak_ptr.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\app_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\base_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\browser_process_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\client_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\completion_callback_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\context_menu_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\cookie_visitor_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\delete_cookies_callback_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\dialog_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\display_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\domvisitor_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\download_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\drag_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\end_tracing_callback_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\find_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\focus_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\geolocation_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\get_geolocation_callback_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\jsdialog_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\keyboard_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\life_span_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\load_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\navigation_entry_visitor_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\pdf_print_callback_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\print_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\read_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\render_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\render_process_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\request_context_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\request_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\resolve_callback_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\resource_bundle_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\resource_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\response_filter_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\run_file_dialog_callback_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\scheme_handler_factory_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\set_cookie_callback_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\string_visitor_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\task_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\urlrequest_client_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\v8accessor_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\v8handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\web_plugin_info_visitor_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\web_plugin_unstable_callback_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\cpptoc\write_handler_cpptoc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\auth_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\before_download_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\binary_value_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\browser_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\browser_host_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\command_line_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\context_menu_params_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\cookie_manager_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\dictionary_value_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\domdocument_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\domnode_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\download_item_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\download_item_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\drag_data_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\file_dialog_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\frame_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\geolocation_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\jsdialog_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\list_value_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\menu_model_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\navigation_entry_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\post_data_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\post_data_element_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\print_dialog_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\print_job_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\print_settings_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\process_message_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\request_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\request_context_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\request_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\resource_bundle_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\response_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\run_context_menu_callback_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\scheme_registrar_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\sslcert_principal_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\sslinfo_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\stream_reader_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\stream_writer_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\task_runner_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\urlrequest_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\v8context_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\v8exception_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\v8stack_frame_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\v8stack_trace_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\v8value_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\value_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\web_plugin_info_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\xml_reader_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\ctocpp\zip_reader_ctocpp.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\wrapper\cef_closure_task.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\wrapper\cef_message_router.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\wrapper\cef_resource_manager.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\wrapper\cef_stream_resource_handler.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\wrapper\cef_xml_object.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\wrapper\cef_zip_archive.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\wrapper\libcef_dll_wrapper.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\wrapper\libcef_dll_wrapper2.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\base\cef_atomicops_x86_gcc.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\transfer_util.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="libcef_dll\wrapper\cef_byte_read_handler.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libcef_dll\cpptoc\app_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\base_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\browser_process_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\client_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\completion_callback_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\context_menu_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\cookie_visitor_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\delete_cookies_callback_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\dialog_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\display_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\domvisitor_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\download_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\drag_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\end_tracing_callback_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\find_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\focus_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\geolocation_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\get_geolocation_callback_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\jsdialog_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\keyboard_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\life_span_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\load_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\navigation_entry_visitor_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\pdf_print_callback_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\print_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\read_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\render_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\render_process_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\request_context_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\request_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\resolve_callback_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\resource_bundle_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\resource_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\response_filter_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\run_file_dialog_callback_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\scheme_handler_factory_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\set_cookie_callback_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\string_visitor_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\task_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\urlrequest_client_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\v8accessor_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\v8handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\web_plugin_info_visitor_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\web_plugin_unstable_callback_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\cpptoc\write_handler_cpptoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\auth_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\before_download_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\binary_value_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\browser_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\browser_host_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\command_line_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\context_menu_params_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\cookie_manager_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\dictionary_value_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\domdocument_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\domnode_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\download_item_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\download_item_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\drag_data_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\file_dialog_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\frame_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\geolocation_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\jsdialog_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\list_value_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\menu_model_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\navigation_entry_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\post_data_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\post_data_element_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\print_dialog_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\print_job_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\print_settings_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\process_message_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\request_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\request_context_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\request_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\resource_bundle_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\response_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\run_context_menu_callback_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\scheme_registrar_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\sslcert_principal_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\sslinfo_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\stream_reader_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\stream_writer_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\task_runner_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\urlrequest_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\v8context_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\v8exception_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\v8stack_frame_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\v8stack_trace_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\v8value_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\value_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\web_plugin_info_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\xml_reader_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\ctocpp\zip_reader_ctocpp.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\wrapper\cef_browser_info_map.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\transfer_util.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="libcef_dll\wrapper_types.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="libcef_dll\CMakeLists.txt" />
+  </ItemGroup>
+</Project>

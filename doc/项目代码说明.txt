@@ -1,0 +1,37 @@
+Native->tchclient:
+cefclient->除tch_add目录外，为原cef3示例代码（有做少量更改，更改处用zmg标注）
+对于原cef3示例代码，目前原则上以最小修改达到项目目标为基准
+曾做过大幅修改，甚至重建，能力有限，发现重建代码只是原代码的子集。。。。。
+因此，目前以扩展原代码为主，后期项目稳定后，可考虑删减原代码或者重组
+所有新代码文件都在tch_add目录下
+新代码中所有以包含Export的源文件，都包含c导出函数，用于和外部交互
+linux和win代码分流标志，linux代码有Gtk结尾,windows代码有win结尾，其他共享
+共享代码中有少量代码用OS_WIN宏区分
+由于接口设计还不稳定，所以很多代码注释已经过期，或者没有，后面会逐渐补足
+查看各个Export导出c函数，可以比较容易理清设计
+cef3代码只能硬看和查官方资料，我就不写说明了，指不定项目以后会变啥样
+
+Native->tchmain
+Export原则同上，大部分导出函数都是为tchclient.exe导出做中转
+原因是：统一linux和windows下c#的dllimport 模块名，可不带扩展名dll或者so或者路径
+(windows主程序带.exe，linux下主程序没有扩展名,不中转，dllimport不带扩展名的话会冲突)
+
+Native->libtch_dll
+代码来自cef3官方libcef_dll，一行未动
+
+Native->tchsubprocess
+代码抽取自cef3官方cefclient项目，除入口外一行未动
+
+CLI->TchApp.TchClient
+存粹的c导出函数封装，为最终用户提供优雅的API，目前已大改
+CLI->TchApp.HttpSimulator
+抽取自微软Kestrel服务器源代码，做过大改，只保留asp.net core需要的运行接口
+由于微软Kestrel代码经常改，目前最新代码还没研究，只了兼容调整
+目前已可编译使用（未测试）
+
+
+Test->tchclient
+目的是提供API使用测试
+
+Simple
+计划其下的项目作为简单示例项目，API设计稳定后，再写

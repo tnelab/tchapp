@@ -282,3 +282,7 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+*.user
+/src/native/tchsubprocess/TchApp.Subprocess.vcxproj.user
+/src/CLS/TchApp.TchClient/TchApp.TchClient.xproj.user
+/src/CLS/TchApp.HttpSimulator/TchApp.HttpSimulator.xproj.user

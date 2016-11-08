@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cefclient\browser\binding_test.cc" />
+    <ClCompile Include="cefclient\browser\browser_window.cc" />
+    <ClCompile Include="cefclient\browser\browser_window_osr_win.cc" />
+    <ClCompile Include="cefclient\browser\browser_window_std_win.cc" />
+    <ClCompile Include="cefclient\browser\bytes_write_handler.cc" />
+    <ClCompile Include="cefclient\browser\client_app_browser.cc" />
+    <ClCompile Include="cefclient\browser\client_app_delegates_browser.cc" />
+    <ClCompile Include="cefclient\browser\client_handler.cc" />
+    <ClCompile Include="cefclient\browser\client_handler_osr.cc" />
+    <ClCompile Include="cefclient\browser\client_handler_std.cc" />
+    <ClCompile Include="cefclient\browser\dialog_test.cc" />
+    <ClCompile Include="cefclient\browser\geometry_util.cc" />
+    <ClCompile Include="cefclient\browser\main_context.cc" />
+    <ClCompile Include="cefclient\browser\main_context_impl.cc" />
+    <ClCompile Include="cefclient\browser\main_context_impl_win.cc" />
+    <ClCompile Include="cefclient\browser\main_message_loop.cc" />
+    <ClCompile Include="cefclient\browser\main_message_loop_multithreaded_win.cc" />
+    <ClCompile Include="cefclient\browser\main_message_loop_std.cc" />
+    <ClCompile Include="cefclient\browser\osr_dragdrop_win.cc" />
+    <ClCompile Include="cefclient\browser\osr_renderer.cc" />
+    <ClCompile Include="cefclient\browser\osr_window_win.cc" />
+    <ClCompile Include="cefclient\browser\preferences_test.cc" />
+    <ClCompile Include="cefclient\browser\resource_util_win.cc" />
+    <ClCompile Include="cefclient\browser\response_filter_test.cc" />
+    <ClCompile Include="cefclient\browser\root_window.cc" />
+    <ClCompile Include="cefclient\browser\root_window_manager.cc" />
+    <ClCompile Include="cefclient\browser\root_window_win.cc" />
+    <ClCompile Include="cefclient\browser\scheme_test.cc" />
+    <ClCompile Include="cefclient\browser\temp_window_win.cc" />
+    <ClCompile Include="cefclient\browser\test_runner.cc" />
+    <ClCompile Include="cefclient\browser\urlrequest_test.cc" />
+    <ClCompile Include="cefclient\browser\util_win.cc" />
+    <ClCompile Include="cefclient\browser\window_test.cc" />
+    <ClCompile Include="cefclient\browser\window_test_win.cc" />
+    <ClCompile Include="cefclient\common\client_app.cc" />
+    <ClCompile Include="cefclient\common\client_app_delegates_common.cc" />
+    <ClCompile Include="cefclient\common\client_app_other.cc" />
+    <ClCompile Include="cefclient\common\client_switches.cc" />
+    <ClCompile Include="cefclient\common\scheme_test_common.cc" />
+    <ClCompile Include="cefclient\tch_add\TchClientExport.cc" />
+    <ClCompile Include="cefclient\tch_add\TchErrorHandler.cc" />
+    <ClCompile Include="cefclient\tch_add\TchClientExportWin.cc" />
+    <ClCompile Include="cefclient\tch_add\TchQueryHandler.cc" />
+    <ClCompile Include="cefclient\tch_add\TchRequestResourceProvider.cc" />
+    <ClCompile Include="cefclient\tch_add\TchResourceHandler.cc" />
+    <ClCompile Include="cefclient\cefclient_win.cc" />
+    <ClCompile Include="cefclient\tch_add\TchWindowApi.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cefclient\browser\binding_test.h" />
+    <ClInclude Include="cefclient\browser\browser_window.h" />
+    <ClInclude Include="cefclient\browser\browser_window_osr_win.h" />
+    <ClInclude Include="cefclient\browser\browser_window_std_win.h" />
+    <ClInclude Include="cefclient\browser\bytes_write_handler.h" />
+    <ClInclude Include="cefclient\browser\client_app_browser.h" />
+    <ClInclude Include="cefclient\browser\client_handler.h" />
+    <ClInclude Include="cefclient\browser\client_handler_osr.h" />
+    <ClInclude Include="cefclient\browser\client_handler_std.h" />
+    <ClInclude Include="cefclient\browser\client_types.h" />
+    <ClInclude Include="cefclient\browser\dialog_test.h" />
+    <ClInclude Include="cefclient\browser\geometry_util.h" />
+    <ClInclude Include="cefclient\browser\main_context.h" />
+    <ClInclude Include="cefclient\browser\main_context_impl.h" />
+    <ClInclude Include="cefclient\browser\main_message_loop.h" />
+    <ClInclude Include="cefclient\browser\main_message_loop_multithreaded_win.h" />
+    <ClInclude Include="cefclient\browser\main_message_loop_std.h" />
+    <ClInclude Include="cefclient\browser\osr_dragdrop_events.h" />
+    <ClInclude Include="cefclient\browser\osr_dragdrop_win.h" />
+    <ClInclude Include="cefclient\browser\osr_renderer.h" />
+    <ClInclude Include="cefclient\browser\osr_window_win.h" />
+    <ClInclude Include="cefclient\browser\preferences_test.h" />
+    <ClInclude Include="cefclient\browser\resource.h" />
+    <ClInclude Include="cefclient\browser\resource_util.h" />
+    <ClInclude Include="cefclient\browser\response_filter_test.h" />
+    <ClInclude Include="cefclient\browser\root_window.h" />
+    <ClInclude Include="cefclient\browser\root_window_manager.h" />
+    <ClInclude Include="cefclient\browser\root_window_win.h" />
+    <ClInclude Include="cefclient\browser\scheme_test.h" />
+    <ClInclude Include="cefclient\browser\temp_window.h" />
+    <ClInclude Include="cefclient\browser\temp_window_win.h" />
+    <ClInclude Include="cefclient\browser\test_runner.h" />
+    <ClInclude Include="cefclient\browser\urlrequest_test.h" />
+    <ClInclude Include="cefclient\browser\util_win.h" />
+    <ClInclude Include="cefclient\browser\window_test.h" />
+    <ClInclude Include="cefclient\cefclient.h" />
+    <ClInclude Include="cefclient\common\client_app.h" />
+    <ClInclude Include="cefclient\common\client_app_other.h" />
+    <ClInclude Include="cefclient\common\client_switches.h" />
+    <ClInclude Include="cefclient\common\scheme_test_common.h" />
+    <ClInclude Include="cefclient\tch_add\TchErrorHandler.h" />
+    <ClInclude Include="cefclient\tch_add\TchClientExport.h" />
+    <ClInclude Include="cefclient\tch_add\TchQueryHandler.h" />
+    <ClInclude Include="cefclient\tch_add\TchRequestResourceProvider.h" />
+    <ClInclude Include="cefclient\tch_add\TchResourceHandler.h" />
+    <ClInclude Include="cefclient\tch_add\TchWindowApi.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="cefclient\CMakeLists.txt" />
+    <Text Include="cefclient\resources\win\README-TRANSFER.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="cefclient\resources\win\cefclient.exe.manifest" />
+    <Manifest Include="cefclient\resources\win\compatibility.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="cefclient\resources\win\cefclient.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cefclient\resources\binding.html" />
+    <None Include="cefclient\resources\dialogs.html" />
+    <None Include="cefclient\resources\localstorage.html" />
+    <None Include="cefclient\resources\osr_test.html" />
+    <None Include="cefclient\resources\other_tests.html" />
+    <None Include="cefclient\resources\pdf.html" />
+    <None Include="cefclient\resources\pdf.pdf" />
+    <None Include="cefclient\resources\performance.html" />
+    <None Include="cefclient\resources\performance2.html" />
+    <None Include="cefclient\resources\preferences.html" />
+    <None Include="cefclient\resources\response_filter.html" />
+    <None Include="cefclient\resources\transparency.html" />
+    <None Include="cefclient\resources\urlrequest.html" />
+    <None Include="cefclient\resources\window.html" />
+    <None Include="cefclient\resources\win\cefclient.aps" />
+    <None Include="cefclient\resources\xmlhttprequest.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="cefclient\resources\logo.png" />
+    <Image Include="cefclient\resources\win\cefclient.ico" />
+    <Image Include="cefclient\resources\win\small.ico" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{93B1C0BC-9F8C-406C-90B0-92AD0E6698E3}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>TchAppCefClient</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <ProjectName>tchclient</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\TchApp.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\TchApp.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\TchApp.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\TchApp.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)..\publish\windows\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\bin\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetName>tchclient</TargetName>
+    <IncludePath>$(CefSdk);$(ProjectDir);$(IncludePath)</IncludePath>
+    <LibraryPath>$(CefSdk)\$(Configuration);$(VC_LibraryPath_x86);$(WindowsSdk_71A_LibraryPath_x86);</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)..\publish\windows\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\bin\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetName>tchclient</TargetName>
+    <IncludePath>$(CefSdk);$(ProjectDir);$(IncludePath)</IncludePath>
+    <LibraryPath>$(CefSdk)\$(Configuration);$(VC_LibraryPath_x64);$(WindowsSdk_71A_LibraryPath_x64);</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\publish\windows\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\bin\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetName>tchclient</TargetName>
+    <IncludePath>$(CefSdk);$(ProjectDir);$(IncludePath)</IncludePath>
+    <LibraryPath>$(CefSdk)\$(Configuration);$(VC_LibraryPath_x86);$(WindowsSdk_71A_LibraryPath_x86);</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\publish\windows\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)..\bin\$(ProjectName)\$(Configuration)\</IntDir>
+    <TargetName>tchclient</TargetName>
+    <IncludePath>$(CefSdk);$(ProjectDir);$(IncludePath)</IncludePath>
+    <LibraryPath>$(CefSdk)\$(Configuration);$(VC_LibraryPath_x64);$(WindowsSdk_71A_LibraryPath_x64);</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions);OS_WIN;USING_CEF_SHARED;</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libcef.lib;libcef_dll_wrapper.lib;Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>libcef.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);OS_WIN;USING_CEF_SHARED;</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libcef.lib;libcef_dll_wrapper.lib;Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>libcef.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)OS_WIN;OS_WIN;USING_CEF_SHARED;</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libcef.lib;libcef_dll_wrapper.lib;Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>libcef.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);OS_WIN;USING_CEF_SHARED;</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libcef.lib;libcef_dll_wrapper.lib;Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>libcef.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+
+  <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>3a487132-a1d9-4bd8-93b7-64d46b7fd9e4</ProjectGuid>
+    <RootNamespace>TchApp.Simple.Hello</RootNamespace>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)'=='' ">$(SolutionDir)..\bin\</OutputPath>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PostBuildEvent>
+      mkdir $(SolutionDir)..\publish\windows\x64\Debug
+      mkdir $(SolutionDir)..\publish\windows\win32\Debug
+      mkdir $(SolutionDir)..\publish\windows\x64\Release
+      mkdir $(SolutionDir)..\publish\windows\win32\Release
+      mkdir $(SolutionDir)..\publish\linux\x86_64\Release
+      xcopy $(SolutionDir)..\bin\simple\TchApp.Simple.Hello\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\x64\Debug /E /Y
+      xcopy $(SolutionDir)..\bin\simple\TchApp.Simple.Hello\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\win32\Debug /E /Y
+      xcopy $(SolutionDir)..\bin\simple\TchApp.Simple.Hello\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\x64\Release /E /Y
+      xcopy $(SolutionDir)..\bin\simple\TchApp.Simple.Hello\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\win32\Release /E /Y
+      xcopy $(SolutionDir)..\bin\simple\TchApp.Simple.Hello\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\linux\x86_64\Release /E /Y
+    </PostBuildEvent>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

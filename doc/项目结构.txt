@@ -1,0 +1,18 @@
+项目结构：
+Native->libtch_dll:cef3用到的静态库
+Native->tchclient:主程序，负责加载cef3（改名成需要运行的.net core UserApp dll名称，会自动加载执行.net core UserApp dll）
+Native->tchmain:程序主执行模块,负责为cef3提供资源和处理来自cef3的调用请求,也用于隔离coreclr加载
+Native->tchsubprocess->tchsubprocess:cef3呈现子进程
+
+CLI->TchApp.TchClient:tchclient导出函数封装
+
+CLI->TchApp.HttpSimulator:加载asp.net的http模拟器
+
+UserApp:用户业务模块,，必须是符合netcoreapp1.0标准，并带默认入口函数Main
+
+程序执行流程：
+tchclien.exe(确认cef3执行环境，寻找tchmain.dll)
+控制权移交到tchmain->TchMain(加载clr,寻找tchclient.exe同名dll)
+控制权已移交到UserApp.dll->Main(通过TchApp.TchClient.dll初始化tchclient回调,调用tchclient导出函数TchStart)
+控制权移交到tchclient.exe->TchStart(加载cef3,初始化web渲染，展示url页面，发出web请求)
+控制权移交到UserApp.dll或者TchApp.TchClient响应web请求

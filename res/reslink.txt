@@ -1,0 +1,4 @@
+cef_bin:
+https://www.cefbuilds.com/
+dotnetcore sdk:
+https://www.microsoft.com/net/download

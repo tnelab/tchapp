@@ -1,0 +1,12 @@
+2016-6-4
+项目调整完成
+2016-10-23
+linux可编译，coreclr可正确加载
+2016-10-24
+分离cef和clr文件（windows版）
+2016-10-26
+重整tchclient api ，添加tchclient错误处理机制
+2016-11-6
+实现基本windows api，集成Razor
+2016-11-7
+重新设计实现TchApp.TchClient,实现自动化处理web请求，重新适配TchApp.HttpSimulator已可编译

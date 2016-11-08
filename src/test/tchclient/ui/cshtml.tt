@@ -1,0 +1,59 @@
+﻿<#@ template language="C#" hostSpecific="true" #>
+<#@ assembly name="System" #>
+<#@ assembly name="Microsoft.AspNetCore.Razor.dll" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="Microsoft.AspNetCore.Razor" #>
+<#@ import namespace="Microsoft.AspNetCore.Razor.CodeGenerators" #>
+<#
+string projectPath=Host.ResolveAssemblyReference("$(ProjectDir)");
+
+var rootNamespace = "tchclient.ui";
+var cshtmlFilePath = projectPath+"ui\\test.cshtml";
+
+var basePath = Path.GetDirectoryName(cshtmlFilePath);
+var fileName = Path.GetFileName(cshtmlFilePath);
+var fileNameNoExtension = Path.GetFileNameWithoutExtension(fileName);
+var codeLang = new CSharpRazorCodeLanguage();
+var host = new RazorEngineHost(codeLang);
+
+host.DefaultBaseClass = "BasePage";
+host.GeneratedClassContext = new GeneratedClassContext(
+    executeMethodName: GeneratedClassContext.DefaultExecuteMethodName,
+    writeMethodName: GeneratedClassContext.DefaultWriteMethodName,
+    writeLiteralMethodName: GeneratedClassContext.DefaultWriteLiteralMethodName,
+    writeToMethodName: "WriteTo",
+    writeLiteralToMethodName: "WriteLiteralTo",
+    templateTypeName: "HelperResult",
+    defineSectionMethodName: "DefineSection",
+    generatedTagHelperContext: new GeneratedTagHelperContext());
+var engine = new RazorTemplateEngine(host);
+
+var cshtmlContent = File.ReadAllText(cshtmlFilePath);
+
+var generatorResults = engine.GenerateCode(
+        input: new StringReader(cshtmlContent),
+        className: fileNameNoExtension,
+        rootNamespace: Path.GetFileName(rootNamespace),
+        sourceFileName: fileName);
+
+var generatedCode = generatorResults.GeneratedCode;
+this.WriteLine(generatedCode);
+#>
+namespace tchclient.ui{
+	using System.Text;
+	using System.Threading.Tasks;
+	public abstract class BasePage{
+		StringBuilder htmlBuilder=new StringBuilder();
+		public override string ToString(){
+			return htmlBuilder.ToString();
+		}
+		public abstract Task ExecuteAsync();
+		public void WriteLiteral(string value){
+			htmlBuilder.Append(value);
+		}
+		public void Write(string value){
+			htmlBuilder.Append(value);
+		}
+	}
+}

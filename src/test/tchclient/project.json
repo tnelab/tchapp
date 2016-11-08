@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true,
+    "languageVersion": "csharp6",
+    "copyToOutput": { "includeFiles": [ "tchclient.ico" ] },
+    "embed": {
+      "include": [ "./ui/*.html", "./ui/*.png", "./ui/*.js","./ui/test/*.png" ]
+    }
+  },
+
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.1"
+    },
+    "NETStandard.Library": "1.6.0",
+    "TchApp.TchClient": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "dnxcore50"
+    }
+  },
+  "runtimes": {
+    "ubuntu.14.04-x64": {}
+  },
+  "scripts": {
+  }
+}
