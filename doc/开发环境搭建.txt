@@ -6,14 +6,18 @@ Visual Studio 2015 Update 3
 cef3
 
 资源：
-cef_binary_3.2623.1399:需翻墙
-https://www.cefbuilds.com/
+cef_binary_3.2623.1399
+需翻墙：https://www.cefbuilds.com/
+百度网盘：http://pan.baidu.com/s/1eSv97ua
 
 cef_sdk配置：
 版本：3.2623.1399，:cef_binary_3.2623.1399
 
-下载后解压到，项目根目录cef_sdk中，进入解压目录删除或改名cefclient,cefsimple,libcef_dll目录
-结构如下:cef_sdk\cef_binary_3.2623.1399.g64e2fe1_windows64
+下载cef_binary_3.2623.1399后,
+解压到项目根目录的cef_sdk目录(没有请创建)中，
+eg:cef_sdk\cef_binary_3.2623.1399.g64e2fe1_windows64
+进入解压目录
+删除或改名cefclient,cefsimple,libcef_dll目录
 
 建议下载版本:windows和linux 64位
 
