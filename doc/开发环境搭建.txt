@@ -1,22 +1,32 @@
 linux参见bash_on_win10.txt
 windows:
 需要：
-vs2015 update3 +dotnet core 1.1 pre
+Visual Studio 2015 Update 3
+.NET Core 1.0.1 - VS 2015 Tooling Preview 2
+cef3
+
 资源：
-cef_bin:
+cef_binary_3.2623.1399:需翻墙
 https://www.cefbuilds.com/
-dotnetcore sdk:
-https://www.microsoft.com/net/download
 
 cef_sdk配置：
-版本：3.2623.1399
+版本：3.2623.1399，:cef_binary_3.2623.1399
 
 下载后解压到，项目根目录cef_sdk中，进入解压目录删除或改名cefclient,cefsimple,libcef_dll目录
+结构如下:cef_sdk\cef_binary_3.2623.1399.g64e2fe1_windows64
 
-建议下载版本windows和linux 64位bin
+建议下载版本:windows和linux 64位
 
-编译先编译本机代码，所有版本先编译一遍（debug x64,x32 ,release x64 x32）
+编译先编译Native下的本机代码
 
-然后可编译.net core代码
+然后可编译CLI下代码
+
+然后编译test下代码
+
+Simple下代码可不编译
+
+设置Native\tchclient项目为启动项目，可进行c++代码调试
+
+设置test\tchclient项目为启动项目，可进行c#代码调试
 
 windows调试配置tch_path环境变量，参见doc\分离cef和clr文件.txt
