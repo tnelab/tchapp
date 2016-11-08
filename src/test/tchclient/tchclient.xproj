@@ -8,7 +8,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>5b082a11-838f-4637-8ed0-ed983aa34a8e</ProjectGuid>
     <RootNamespace>tchclient</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">$(SolutionDir)..\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">$(SolutionDir)..\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>

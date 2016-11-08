@@ -9,7 +9,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>3a487132-a1d9-4bd8-93b7-64d46b7fd9e4</ProjectGuid>
     <RootNamespace>TchApp.Simple.Hello</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">$(SolutionDir)..\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">$(SolutionDir)..\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
