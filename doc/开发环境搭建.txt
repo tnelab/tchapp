@@ -1,42 +1,38 @@
-linux参见bash_on_win10.txt
-windows:
-需要：
+windows下开发环境搭建(linux参见:linux下编译native代码.txt)
+
+1.工具需求
 Visual Studio 2015 Update 3
 .NET Core 1.0.1 - VS 2015 Tooling Preview 2
-cef3
+cef3 cef_binary_3.2623.1399
 
-资源：
-cef_binary_3.2623.1399
+2.资源下载
 需翻墙：https://www.cefbuilds.com/
 百度网盘：http://pan.baidu.com/s/1eSv97ua
 
-cef_sdk配置：
-版本：3.2623.1399，:cef_binary_3.2623.1399
-
-下载cef_binary_3.2623.1399后,
-解压到项目根目录的cef_sdk目录(没有请创建)中，
-eg:cef_sdk\cef_binary_3.2623.1399.g64e2fe1_windows64
-进入解压目录
-删除或改名cefclient,cefsimple,libcef_dll目录
-
+3.cef_sdk配置：
+1)下载cef_binary_3.2623.1399
 建议下载版本:windows和linux 64位
 
-编译先编译Native下的本机代码
+2)进入项目根目录，创建cef_sdk目录(注意大小写)
 
-然后可编译CLI下代码
+3)解压cef_binary_3.2623.1399到cef_sdk
+eg:cef_sdk\cef_binary_3.2623.1399.g64e2fe1_windows64
 
-然后编译test下代码
+4)进入相应版本的cef_binary_3.2623.1399目录,删除或改名cefclient,cefsimple,libcef_dll目录
 
-Simple下代码可不编译
+4.编译代码
+1)进入项目根目录src，用vs打开TchApp.sln
+2)编译整个解决方案
+注意：选择的版本要和你拥有的cef_sdk版本匹配，x64对x64,debug对debug
+3)代码编译后会输出到:项目根目录\publish相应版本目录下
 
-设置Native\tchclient项目为启动项目，可进行c++代码调试
+5.调试运行
+1)设置Native\tchclient项目为启动项目，可进行c++代码调试
 
-设置test\tchclient项目为启动项目，可进行c#代码调试
+2)设置test\tchclient项目为启动项目，可进行c#代码调试
 
-运行需要cef3 二进制文件
+3)运行需要cef3 二进制文件
+可从cef_sdk相应版本目录中复制：复制Resources和Release或Debug下的文件到相应版本的输出目录中
 
-可从cef_sdk 相应版本目录中复制：Resources和Release或Debug下的文件都复制到，项目输出目录publish相应版本目录中
+4)如果想分离部署cef3 二进制文件，请参考：\doc\分离cef和clr.txt
 
-或者：windows调试配置tch_path环境变量，参见doc\分离cef和clr文件.txt
-
-编译时候如报：mkdir xcopy错误，可忽略
