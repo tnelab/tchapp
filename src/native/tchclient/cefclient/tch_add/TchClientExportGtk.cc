@@ -131,7 +131,7 @@ int TchStart(const char* url) {
 	auto sub_exe_path = exe_full_path_str.substr(0, scan_index).append("/tchsubprocess");
 
 	CefString(&settings.browser_subprocess_path).FromString(sub_exe_path);
-
+	CefString(&settings.log_file).FromWString(L"cef_log.txt");
 	// Populate the settings based on command line arguments.
 	context->PopulateSettings(&settings);
 	//set single process
