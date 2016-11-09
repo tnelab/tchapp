@@ -13,13 +13,10 @@ namespace Tnelab{
 		}
 #ifdef OS_WIN
 		if (!error_msg.empty()) {
+			// 弹出错误信息，原来使用AllocConsole但是弹出的控制台窗口不能单独关闭
 			char msg[1024] = { 0 };
 			sprintf(msg, "TCH_ERROR:%d,%s\r\n", error_code, error_msg.c_str());
-			AllocConsole();
-			HANDLE hd = GetStdHandle(STD_OUTPUT_HANDLE);
-			WriteConsoleA(hd, msg, strlen(msg), NULL, NULL);
-			system("pause");
-			CloseHandle(hd);
+			MessageBoxA(NULL, error_msg.c_str(), "Error, press Ctrl+C to copy the details", MB_ICONERROR | MB_OK);
 		}
 #else
 		if (!error_msg.empty())	printf("TCH_ERROR:%d,%s\r\n", error_code, error_msg.c_str());
