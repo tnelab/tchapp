@@ -286,3 +286,7 @@ paket-files/
 /src/native/tchsubprocess/TchApp.Subprocess.vcxproj.user
 /src/CLS/TchApp.TchClient/TchApp.TchClient.xproj.user
 /src/CLS/TchApp.HttpSimulator/TchApp.HttpSimulator.xproj.user
+
+# CEF sdk
+cef_sdk/
+
