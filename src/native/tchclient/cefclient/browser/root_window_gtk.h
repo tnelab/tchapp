@@ -31,7 +31,8 @@ class RootWindowGtk : public RootWindow,
             bool with_osr,
             const CefRect& rect,
             const CefBrowserSettings& settings,
-            const std::string& url) OVERRIDE;
+            const std::string& url,
+            bool sizeable) OVERRIDE;
   void InitAsPopup(RootWindow::Delegate* delegate,
                    bool with_controls,
                    bool with_osr,
@@ -148,6 +149,10 @@ class RootWindowGtk : public RootWindow,
   bool force_close_;
   bool window_destroyed_;
   bool browser_destroyed_;
+
+  //zmg 2016-11-11
+  bool sizeable_;
+  //zmg end
 
   DISALLOW_COPY_AND_ASSIGN(RootWindowGtk);
 };
