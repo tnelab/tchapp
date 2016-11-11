@@ -12,7 +12,6 @@ void* htchclient = dlopen(NULL, RTLD_NOW);
 #endif // OS_WIN
 
 int TchStart(const char* url, bool sizeable, int x, int y, int width, int height) {
-	printf("%p\n", htchclient);
 	auto func = (TchStart_ptr)GetFuncPtr(htchclient, "TchStart");
 	return func(url,sizeable,x,y,width,height);
 }

@@ -165,11 +165,18 @@ int TchStart(const char* url, bool sizeable, int x, int y, int width, int height
 	test_runner::RegisterSchemeHandlers();
 
 	// Create the first window.
+	settings.windowless_rendering_enabled = true;
+	CefRect rect;
+	rect.x = x;
+	rect.y = y;
+	rect.width = width;
+	rect.height = height;
 	context->GetRootWindowManager()->CreateRootWindow(
 		true,             // Show controls.
 		settings.windowless_rendering_enabled ? true : false,
-		CefRect(),        // Use default system size.
-		std::string(url));   // Use default URL.
+		rect,        // Use default system size.
+		std::string(url),
+		sizeable);   // Use default URL.
 
 						  // Run the message loop. This will block until Quit() is called by the
 						  // RootWindowManager after all windows have been destroyed.
