@@ -11,39 +11,76 @@
 
 namespace gnu_fs = std::experimental::filesystem;
 
-
-void AddFilesFromDirectoryToTpaList(std::string directory, std::string& tpa_list_out) {
-	DIR  *dir_ptr = opendir(directory.c_str());
-	struct dirent *entry= readdir(dir_ptr);
-	std::string path;
-	while (entry) {
-		path = entry->d_name;
-		if (path.size()>4&&path.compare(path.size() - 4, 4, ".dll")==0) {
-			tpa_list_out.append(directory).append("/").append(path + ":");
+namespace {
+	void AddFilesFromDirectoryToTpaList(std::string directory, std::string& tpa_list_out) {
+		DIR *dir_ptr = opendir(directory.c_str());
+		if (dir_ptr == nullptr) {
+			return;
 		}
-		entry = readdir(dir_ptr);
+		struct dirent *entry= readdir(dir_ptr);
+		std::string path;
+		while (entry) {
+			path = entry->d_name;
+			if (path.size()>4&&path.compare(path.size() - 4, 4, ".dll")==0) {
+				tpa_list_out.append(directory).append("/").append(path + ":");
+			}
+			entry = readdir(dir_ptr);
+		}
+		closedir(dir_ptr);
+		tpa_list_out.erase(tpa_list_out.size() - 1, 1);
 	}
-	closedir(dir_ptr);
-	tpa_list_out.erase(tpa_list_out.size() - 1, 1);
+
+	bool IsValidCoreClrDirectory(const std::string& clr_dir) {
+		std::string clr_path = clr_dir+"/libcoreclr.so";
+		return access(clr_path.c_str(), F_OK) >= 0;
+	}
+
+	std::string DetectCoreClrDirectory(const std::string& app_dir) {
+		// use ./clr if exists
+		std::string clr_dir = app_dir+"/clr";
+		if (IsValidCoreClrDirectory(clr_dir)) {
+			return clr_dir;
+		}
+		// use environment variable if exists
+		char* clr_dir_env = getenv("CORE_LIBRARIES");
+		if (clr_dir_env != nullptr) {
+			clr_dir = clr_dir_env;
+			if (IsValidCoreClrDirectory(clr_dir)) {
+				return clr_dir;
+			}
+		}
+		// detect from default install directory
+		std::string clr_install_dir(
+			"/usr/share/dotnet/shared/Microsoft.NETCore.App/");
+		auto dir_ptr = std::shared_ptr<DIR>(
+			opendir(clr_install_dir.c_str()), closedir);
+		if (dir_ptr != nullptr) {
+			struct dirent *entry = readdir(dir_ptr.get());
+			while (entry) {
+				clr_dir = clr_install_dir+entry->d_name;
+				if (IsValidCoreClrDirectory(clr_dir)) {
+					return clr_dir;
+				}
+				entry = readdir(dir_ptr.get());
+			}
+		}
+		std::cerr << "Detect coreclr directory failed" << std::endl;
+		std::abort();
+	}
 }
 
-std::string exe_name;
 int TchMain(int argc, char* argv[]) {	
 	const char* exe_path = realpath(argv[0], 0);
 	std::string cmd_line_str(exe_path);
 	int scan_i = cmd_line_str.rfind('/');
 	std::string app_name = cmd_line_str.substr(scan_i + 1, cmd_line_str.size() - scan_i);
-	exe_name = app_name;
 	std::string app_path(exe_path);
 	std::string app_dir = app_path.substr(0, app_path.length() - app_name.length() - 1);
 	
 	std::string cli_entry_path = app_path+".dll";
 
-	std::string clr_dir;
-	std::string clr_path;
-	clr_dir = app_dir;
-	clr_dir.append("/clr");
-	clr_path=clr_dir+"/libcoreclr.so";
+	std::string clr_dir = DetectCoreClrDirectory(app_dir);
+	std::string clr_path = clr_dir+"/libcoreclr.so";
 	
 	std::string tpa_list;
 	AddFilesFromDirectoryToTpaList(clr_dir, tpa_list);

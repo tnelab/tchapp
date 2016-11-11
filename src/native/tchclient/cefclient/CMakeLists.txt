@@ -27,10 +27,12 @@ set(CEFCLIENT_TCHADD_SRCS
   )
 set(CEFCLIENT_WINDOWS_TCHADD_SRCS
   tch_add/TchClientExportWin.cc
+  tch_add/TchWindowApi.cc
 )
 source_group(cefclient\\\\tch_add FILES ${CEFCLIENT_WINDOWS_TCHADD_SRCS})
 set(CEFCLIENT_LINUX_TCHADD_SRCS
   tch_add/TchClientExportGtk.cc
+  tch_add/TchWindowApiGtk.cc
 )
 source_group(cefclient\\\\tch_add FILES ${CEFCLIENT_LINUX_TCHADD_SRCS})
 # zmg end
