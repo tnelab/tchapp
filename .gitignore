@@ -290,3 +290,5 @@ paket-files/
 # CEF sdk
 cef_sdk/
 
+# build directory
+build/
