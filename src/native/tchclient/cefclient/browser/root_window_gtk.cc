@@ -80,10 +80,11 @@ void RootWindowGtk::Init(RootWindow::Delegate* delegate,
                          bool with_osr,
                          const CefRect& bounds,
                          const CefBrowserSettings& settings,
-                         const std::string& url) {
+                         const std::string& url,
+                         bool sizeable) {
   DCHECK(delegate);
   DCHECK(!initialized_);
-
+  sizeable_ = sizeable;
   delegate_ = delegate;
   with_controls_ = with_controls;
   with_osr_ = with_osr;
@@ -272,6 +273,12 @@ void RootWindowGtk::CreateRootWindow(const CefBrowserSettings& settings) {
   g_signal_connect(vbox, "size-allocate",
                    G_CALLBACK(&RootWindowGtk::VboxSizeAllocated), this);
   gtk_container_add(GTK_CONTAINER(window_), vbox);
+
+  //zmg 2016-11-11
+  if (sizeable_) {
+    gtk_window_set_resizable(GTK_WINDOW(window_), sizeable_);
+  }
+  //zmg end
 
   if (with_controls_) {
     GtkWidget* menu_bar = CreateMenuBar();
