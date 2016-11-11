@@ -50,7 +50,7 @@ void TerminationSignalHandler(int signatl) {
 
 int cef_argc=0;
 char* cef_argv[16];
-int TchStart(const char* url) {
+int TchStart(const char* url, bool sizeable, int x, int y, int width, int height) {
 	// Create a copy of |argv| on Linux because Chromium mangles the value
 	// internally (see issue #620).	
 
