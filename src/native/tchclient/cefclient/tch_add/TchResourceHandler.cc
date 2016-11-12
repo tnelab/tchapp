@@ -37,10 +37,18 @@ namespace Tnelab {
 				scan_index = header_str.find(':', current_index);
 				key = header_str.substr(current_index, scan_index - current_index);
 				current_index = scan_index + 2;
-				scan_index = header_str.find('\r', current_index);
+				scan_index = header_str.find_first_of("\r\n", current_index);
 				value = header_str.substr(current_index, scan_index - current_index);
 				handler->header_map_.insert(std::pair<const char*, const char*>(key.c_str(), value.c_str()));
-				current_index = scan_index + 2;
+				// printf("%s %s %lu\n", key.c_str(), value.c_str(), current_index);q
+				if (scan_index == std::string::npos) {
+					break;
+				}
+				current_index = scan_index + 1;
+				if (current_index < header_str.length() &&
+					header_str.at(current_index) == '\n') {
+					++current_index;
+				}
 			}
 			//std::ofstream fout("e:\\cef_out.txt",std::ios::app);
 			//fout << header_map_str << ":"<< header_map.size()<<"\r\n";

@@ -8,8 +8,7 @@ HMODULE htchclient = GetModuleHandle(0);
 #else
 #include <dlfcn.h>
 #define GetFuncPtr(h,l) dlsym(h,l)
-extern std::string exe_name;
-void* htchclient = dlopen(exe_name.c_str(), RTLD_NOLOAD);
+void* htchclient = dlopen(NULL, RTLD_NOW);
 #endif // OS_WIN
 
 int TchStart(const char* url, int x, int y, int width, int height) {
