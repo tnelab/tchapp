@@ -26,12 +26,12 @@ sudo apt-get install libgtk2.0-dev libgtkglext1-dev libnss3-dev libnspr4-dev lib
 mkdir build
 cd build
 cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release ../src/native
-make -j4 cefclient
+make -j4 tchclient
 make -j4 tchmain
 make -j4 tchsubprocess
 
 5.编译结果
 编译生成的二进制文件会在主目录的publish下
 
-6.加载clr需要一下支持库：
+6.加载clr需要以下支持库：
 libunwind8-dev

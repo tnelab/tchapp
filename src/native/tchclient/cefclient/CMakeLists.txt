@@ -19,6 +19,7 @@ set(CEFCLIENT_TCHADD_TCHADD_SRCS
   tch_add/TchRequestResourceProvider.h
   tch_add/TchResourceHandler.cc
   tch_add/TchResourceHandler.h
+  tch_add/TchWindowApi.h
 )
 source_group(cefclient\\\\tch_add FILES ${CEFCLIENT_TCHADD_TCHADD_SRCS})
 
@@ -27,7 +28,7 @@ set(CEFCLIENT_TCHADD_SRCS
   )
 set(CEFCLIENT_WINDOWS_TCHADD_SRCS
   tch_add/TchClientExportWin.cc
-  tch_add/TchWindowApi.cc
+  tch_add/TchWindowApiWin.cc
 )
 source_group(cefclient\\\\tch_add FILES ${CEFCLIENT_WINDOWS_TCHADD_SRCS})
 set(CEFCLIENT_LINUX_TCHADD_SRCS

@@ -50,7 +50,7 @@ void TerminationSignalHandler(int signatl) {
 
 int cef_argc=0;
 char* cef_argv[16];
-int TchStart(const char* url, bool sizeable, int x, int y, int width, int height) {
+int TchStart(const char* url, int x, int y, int width, int height) {
 	// Create a copy of |argv| on Linux because Chromium mangles the value
 	// internally (see issue #620).	
 
@@ -175,8 +175,7 @@ int TchStart(const char* url, bool sizeable, int x, int y, int width, int height
 		true,             // Show controls.
 		settings.windowless_rendering_enabled ? true : false,
 		rect,        // Use default system size.
-		std::string(url),
-		sizeable);   // Use default URL.
+		std::string(url));   // Use default URL.
 
 						  // Run the message loop. This will block until Quit() is called by the
 						  // RootWindowManager after all windows have been destroyed.

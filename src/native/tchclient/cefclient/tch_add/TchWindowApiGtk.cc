@@ -1,4 +1,4 @@
-#include "TchWindowApi.h"
+﻿#include "TchWindowApi.h"
 #include "include/wrapper/cef_helpers.h"
 #include "include/cef_parser.h"
 #include "include/wrapper/cef_message_router.h"

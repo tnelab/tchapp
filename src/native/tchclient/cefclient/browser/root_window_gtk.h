@@ -31,8 +31,7 @@ class RootWindowGtk : public RootWindow,
             bool with_osr,
             const CefRect& rect,
             const CefBrowserSettings& settings,
-            const std::string& url,
-            bool sizeable) OVERRIDE;
+            const std::string& url) OVERRIDE;
   void InitAsPopup(RootWindow::Delegate* delegate,
                    bool with_controls,
                    bool with_osr,
