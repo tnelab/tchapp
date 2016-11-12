@@ -53,7 +53,9 @@ class ScopedGLContext {
 OsrWindowWin::OsrWindowWin(Delegate* delegate,
                            const OsrRenderer::Settings& settings)
     : delegate_(delegate),
-      renderer_(settings),
+	  //zmg 2016-11-10 异形窗体
+      //renderer_(settings),
+	  //zmg end
       hwnd_(NULL),
       hdc_(NULL),
       hrc_(NULL),
@@ -141,8 +143,16 @@ void OsrWindowWin::Show() {
     return;
 
   // Show the native window if not currently visible.
+  //zmg 2016-11-11
+  /*
   if (hwnd_ && !::IsWindowVisible(hwnd_))
     ShowWindow(hwnd_, SW_SHOW);
+  */
+  //zmg
+  if (hwnd_ && !::IsWindowVisible(hwnd_)) {
+	  ShowWindow(hwnd_, SW_SHOW);
+  }
+  //zmg end
 
   if (hidden_) {
     // Set the browser as visible.
@@ -175,6 +185,15 @@ void OsrWindowWin::Hide() {
 }
 
 void OsrWindowWin::SetBounds(int x, int y, size_t width, size_t height) {
+  //zmg 2016-11-11 异形窗体
+  //POINT point;
+  //point.x = x;
+  //point.y = y;
+  //ClientToScreen(GetParent(hwnd_),&point);;
+  //x = point.x;
+  //y = point.y;
+  //zmg end
+
   if (!CefCurrentlyOn(TID_UI)) {
     // Execute this method on the UI thread.
     CefPostTask(TID_UI, base::Bind(&OsrWindowWin::SetBounds, this, x, y, width,
@@ -239,13 +258,37 @@ void OsrWindowWin::Create(HWND parent_hwnd, const RECT& rect) {
 
   // Create the native window with a border so it's easier to visually identify
   // OSR windows.
+  //zmg 2016-11-9 去除边框
+  /*
   hwnd_ = ::CreateWindow(kWndClass, 0,
       WS_BORDER | WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,
       rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
       parent_hwnd, 0, hInst, 0);
   CHECK(hwnd_);
-
   client_rect_ = rect;
+  */
+  //zmg
+  const DWORD dwStyle = WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE;
+  POINT point;
+  point.x = rect.left;
+  point.y = rect.top;
+  ClientToScreen(parent_hwnd,&point);
+
+  RECT new_rect;
+  new_rect.left = point.x;
+  new_rect.top = point.y;
+
+
+  hwnd_ = ::CreateWindow(kWndClass, 0, dwStyle,
+	  new_rect.left, new_rect.top, rect.right - rect.left, rect.bottom - rect.top,
+	  parent_hwnd, 0, hInst, 0);
+  CHECK(hwnd_);
+
+  renderer_.SetTargetHWND(hwnd_);
+  ::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_APPWINDOW | WS_EX_LAYERED/* | WS_EX_TRANSPARENT*/);
+  //::SendMessage(hwnd_, WM_PAINT, 0, 0);
+  GetClientRect(hwnd_,&client_rect_);
+  //zmg end
 
   // Associate |this| with the window.
   SetUserDataPtr(hwnd_, this);
@@ -270,8 +313,9 @@ void OsrWindowWin::Destroy() {
   RevokeDragDrop(hwnd_);
   drop_target_ = NULL;
 #endif
-
-  DisableGL();
+  //zmg 2016-11-10 异形窗体
+  //DisableGL();
+  //end zmg
 
   // Destroy the native window.
   ::DestroyWindow(hwnd_);
@@ -346,12 +390,17 @@ void OsrWindowWin::Render() {
 
   if (render_task_pending_)
     render_task_pending_ = false;
-
+  //zmg 2016-11-10 异形窗体
+  /*
   if (!hdc_)
     EnableGL();
 
   ScopedGLContext scoped_gl_context(hdc_, hrc_, true);
   renderer_.Render();
+  */
+  //zmg
+  renderer_.Render();
+  //zmg end
 }
 
 void OsrWindowWin::NotifyNativeWindowCreated(HWND hwnd) {
@@ -377,7 +426,11 @@ void OsrWindowWin::RegisterOsrClass(HINSTANCE hInstance,
   WNDCLASSEX wcex;
 
   wcex.cbSize = sizeof(WNDCLASSEX);
-  wcex.style         = CS_OWNDC;
+  //zmg 2016-11-12 异形窗体
+  //wcex.style         = CS_OWNDC;
+  //zmg 
+  wcex.style		   = CS_OWNDC;
+  //zmg end
   wcex.lpfnWndProc   = OsrWndProc;
   wcex.cbClsExtra    = 0;
   wcex.cbWndExtra    = 0;
@@ -407,7 +460,7 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
 
   switch (message) {
     case WM_LBUTTONDOWN:
-		//zmg 2016-11-6
+		//zmg 2016-11-6 处理标题栏
 		x = LOWORD(lParam);
 		y = HIWORD(lParam);
 
@@ -416,7 +469,8 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
 			y <= Tnelab::TchWindowApi::CaptionRect.height&&
 			y >= Tnelab::TchWindowApi::CaptionRect.y)
 		{
-			SendMessage(::GetParent(hWnd), WM_NCLBUTTONDOWN, HTCAPTION, 0);
+			//PostMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+			PostMessage(::GetParent(hWnd), WM_NCLBUTTONDOWN, HTCAPTION, 0);
 			break;
 		}	
 		//zmg end
@@ -670,6 +724,9 @@ void OsrWindowWin::OnSize() {
 
   if (browser_)
     browser_->GetHost()->WasResized();
+  //zmg 2016-11-11 异形窗体
+  //::SendMessage(hwnd_, WM_PAINT, 0, 0);  
+  //zmg end
 }
 
 void OsrWindowWin::OnFocus(bool setFocus) {
@@ -716,6 +773,9 @@ void OsrWindowWin::OnPaint() {
 
   if (browser_)
     browser_->GetHost()->Invalidate(PET_VIEW);
+  //zmg 2016-11-11 异形窗体
+  renderer_.Render();  
+  //zmg end
 }
 
 bool OsrWindowWin::OnEraseBkgnd() {
@@ -779,8 +839,12 @@ bool OsrWindowWin::GetRootScreenRect(CefRefPtr<CefBrowser> browser,
 bool OsrWindowWin::GetViewRect(CefRefPtr<CefBrowser> browser,
                                CefRect& rect) {
   CEF_REQUIRE_UI_THREAD();
-
-  rect.x = rect.y = 0;
+  //zmg 2016-11-11 异形窗体
+  rect.x =  rect.y = 0;
+  //zmg
+  //rect.x = client_rect_.left;
+  //rect.y = client_rect_.top;
+  //zmg end
   rect.width = DeviceToLogical(client_rect_.right - client_rect_.left,
                                device_scale_factor_);
   rect.height = DeviceToLogical(client_rect_.bottom - client_rect_.top,
@@ -858,10 +922,14 @@ void OsrWindowWin::OnPaint(CefRefPtr<CefBrowser> browser,
     renderer_.OnPaint(browser, type, dirtyRects, buffer, width, height);
     return;
   }
+  //zmg 2016-11-10 异形窗体
+  /*
   if (!hdc_)
     EnableGL();
 
   ScopedGLContext scoped_gl_context(hdc_, hrc_, true);
+  */
+  //zmg end
   renderer_.OnPaint(browser, type, dirtyRects, buffer, width, height);
   if (type == PET_VIEW && !renderer_.popup_rect().IsEmpty()) {
     painting_popup_ = true;

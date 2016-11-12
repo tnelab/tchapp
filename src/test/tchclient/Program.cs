@@ -23,7 +23,7 @@ namespace tchclient
             int exit_code = 0;
             exit_code = Client.This
                 .AddResourceAssembly("tchclient")
-                .Start("http://tchapp.localhost/ui/index.html", sizeable: false);
+                .Start("http://tchapp.localhost/ui/index.html");
 
             return exit_code;
         }

@@ -110,8 +110,7 @@ RootWindowWin::~RootWindowWin() {
   DCHECK(window_destroyed_);
   DCHECK(browser_destroyed_);
 }
-//zmg 2016-11-6
-/*
+
 void RootWindowWin::Init(RootWindow::Delegate* delegate,
                          bool with_controls,
                          bool with_osr,
@@ -142,41 +141,7 @@ void RootWindowWin::Init(RootWindow::Delegate* delegate,
         base::Bind(&RootWindowWin::CreateRootWindow, this, settings));
   }
 }
-*/
-//zmg
-void RootWindowWin::Init(RootWindow::Delegate* delegate,
-	bool with_controls,
-	bool with_osr,
-	const CefRect& bounds,
-	const CefBrowserSettings& settings,
-	const std::string& url,
-	bool sizeable) {
-	DCHECK(delegate);
-	DCHECK(!initialized_);
-	sizeable_ = sizeable;
-	delegate_ = delegate;
-	with_controls_ = with_controls;
-	with_osr_ = with_osr;
 
-	start_rect_.left = bounds.x;
-	start_rect_.top = bounds.y;
-	start_rect_.right = bounds.x + bounds.width;
-	start_rect_.bottom = bounds.y + bounds.height;
-
-	CreateBrowserWindow(url);
-
-	initialized_ = true;
-
-	// Create the native root window on the main thread.
-	if (CURRENTLY_ON_MAIN_THREAD()) {
-		CreateRootWindow(settings);
-	}
-	else {
-		MAIN_POST_CLOSURE(
-			base::Bind(&RootWindowWin::CreateRootWindow, this, settings));
-	}
-}
-//zmg end
 void RootWindowWin::InitAsPopup(RootWindow::Delegate* delegate,
                                 bool with_controls,
                                 bool with_osr,
@@ -228,10 +193,8 @@ void RootWindowWin::Show(ShowMode mode) {
       break;
     default:
       break;
-  }
-
+  }  
   ShowWindow(hwnd_, nCmdShow);
-  UpdateWindow(hwnd_);
 }
 
 void RootWindowWin::Hide() {
@@ -294,6 +257,10 @@ void RootWindowWin::CreateBrowserWindow(const std::string& startup_url) {
   if (with_osr_) {
     OsrRenderer::Settings settings;
     MainContext::Get()->PopulateOsrSettings(&settings);
+	////zmg 2016-11-8
+	//settings.transparent = true;
+	//settings.background_color = CefColorSetARGB(0, 0, 0, 0);
+	////zmg end
     browser_window_.reset(new BrowserWindowOsrWin(this, startup_url, settings));
   } else {
     browser_window_.reset(new BrowserWindowStdWin(this, startup_url));
@@ -323,11 +290,10 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
   find_message_id_ = RegisterWindowMessage(FINDMSGSTRING);
   CHECK(find_message_id_);
 
-  //zmg 2016-11-6
+  //zmg 2016-11-11 去除窗口非客户区
   //const DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
   //zmg
-  DWORD dwStyle = WS_POPUP | WS_OVERLAPPED;;
-  if (sizeable_)dwStyle = dwStyle | WS_THICKFRAME;
+  const DWORD dwStyle = WS_POPUP | WS_CLIPCHILDREN;
   //zmg end
 
   int x, y, width, height;
@@ -346,7 +312,7 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
     width = window_rect.right - window_rect.left;
     height = window_rect.bottom - window_rect.top;
   }
-  //zmg 2016-11-6
+  //zmg 2016-11-6 窗口居中
   if (x ==-1&& y == -1) {
 	  int screen_width = GetSystemMetrics(SM_CXSCREEN);
 	  int screen_height = GetSystemMetrics(SM_CYSCREEN);
@@ -360,6 +326,10 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
                        x, y, width, height,
                        NULL, NULL, hInstance, NULL);
   CHECK(hwnd_);
+
+  //zmg 2016-11-11 异形窗体
+  ::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_LAYERED/*|WS_EX_TRANSPARENT*/);
+  //zmg end
 
   // Associate |this| with the main window.
   SetUserDataPtr(hwnd_, this);
@@ -468,31 +438,29 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
                                rect.right - rect.left,
                                rect.bottom - rect.top);
   }
-
   // Show this window.
   Show(ShowNormal);
 }
 
 // static
 void RootWindowWin::RegisterRootClass(HINSTANCE hInstance,
-                                      const std::wstring& window_class,
-                                      HBRUSH background_brush) {
-  // Only register the class one time.
-  static bool class_registered = false;
-  if (class_registered)
-    return;
-  class_registered = true;
+	const std::wstring& window_class,
+	HBRUSH background_brush) {
+	// Only register the class one time.
+	static bool class_registered = false;
+	if (class_registered)
+		return;
+	class_registered = true;
 
-  WNDCLASSEX wcex;
+	WNDCLASSEX wcex;
 
-  wcex.cbSize = sizeof(WNDCLASSEX);
-
-  wcex.style         = CS_HREDRAW | CS_VREDRAW;
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.style         = CS_HREDRAW | CS_VREDRAW;
   wcex.lpfnWndProc   = RootWndProc;
   wcex.cbClsExtra    = 0;
   wcex.cbWndExtra    = 0;
   wcex.hInstance     = hInstance;
-  //zmg 2016-11-6
+  //zmg 2016-11-6 设置图标
   //wcex.hIcon         = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CEFCLIENT));
   //zmg
   wchar_t  icon_path[MAX_PATH];
@@ -503,7 +471,7 @@ void RootWindowWin::RegisterRootClass(HINSTANCE hInstance,
   //zmg end
   wcex.hCursor       = LoadCursor(NULL, IDC_ARROW);
   wcex.hbrBackground = background_brush;
-  //zmg 2016-5-12
+  //zmg 2016-5-12 修正原菜单
   //wcex.lpszMenuName  = MAKEINTRESOURCE(IDC_CEFCLIENT);
   //zmg
   wcex.lpszMenuName = NULL;
@@ -615,7 +583,6 @@ LRESULT CALLBACK RootWindowWin::RootWndProc(HWND hWnd, UINT message,
     case WM_MOVING:
     case WM_MOVE:
       self->OnMove();
-      return 0;
 
     case WM_ERASEBKGND:
       if (self->OnEraseBkgnd())

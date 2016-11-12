@@ -12,9 +12,9 @@ extern std::string exe_name;
 void* htchclient = dlopen(exe_name.c_str(), RTLD_NOLOAD);
 #endif // OS_WIN
 
-int TchStart(const char* url, bool sizeable, int x, int y, int width, int height) {
+int TchStart(const char* url, int x, int y, int width, int height) {
 	auto func = (TchStart_ptr)GetFuncPtr(htchclient, "TchStart");
-	return func(url,sizeable,x,y,width,height);
+	return func(url,x,y,width,height);
 }
 int SetTchErrorDelegate(void* delegate) {
 	auto func = (SetTchErrorDelegate_ptr)GetFuncPtr(htchclient, "SetTchErrorDelegate");

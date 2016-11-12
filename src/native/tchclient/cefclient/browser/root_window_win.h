@@ -28,24 +28,14 @@ class RootWindowWin : public RootWindow,
   ~RootWindowWin();
 
   // RootWindow methods.
-  //zmg 2016-11-6
-  /*
+
   void Init(RootWindow::Delegate* delegate,
             bool with_controls,
             bool with_osr,
             const CefRect& rect,
             const CefBrowserSettings& settings,
             const std::string& url) OVERRIDE;
-  */
-  //zmg
-  void Init(RootWindow::Delegate* delegate,
-	  bool with_controls,
-	  bool with_osr,
-	  const CefRect& rect,
-	  const CefBrowserSettings& settings,
-	  const std::string& url,
-	  bool sizeable) OVERRIDE;
-  //zmg end
+
   void InitAsPopup(RootWindow::Delegate* delegate,
                    bool with_controls,
                    bool with_osr,
@@ -153,10 +143,6 @@ class RootWindowWin : public RootWindow,
 
   bool window_destroyed_;
   bool browser_destroyed_;
-
-  //zmg 2016-11-6
-  bool sizeable_;
-  //zmg end
 
   DISALLOW_COPY_AND_ASSIGN(RootWindowWin);
 };

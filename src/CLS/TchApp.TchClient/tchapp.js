@@ -178,5 +178,4 @@ $(function () {
         caption_rect.Height = $("*[data-tch-caption=true]").first().height();
         Tch.AddCaptionRect(caption_rect, function (result) { console.log(result); });
     }
-    alert("hi");
 });

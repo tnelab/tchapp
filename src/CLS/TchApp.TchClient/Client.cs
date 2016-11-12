@@ -28,7 +28,7 @@ namespace TchApp.TchClient
         delegate void TchErrorDelegate(int error_code, string error_msg);
 
         [DllImport("tchmain")]
-        extern static int TchStart(string url,bool sizeable=true, int x = -1, int y = -1, int width = 800, int height = 600);
+        extern static int TchStart(string url, int x = -1, int y = -1, int width = 800, int height = 600);
         [DllImport("tchmain")]
         extern static int SetTchErrorDelegate(TchErrorDelegate func);
         [DllImport("tchmain")]
@@ -132,9 +132,9 @@ namespace TchApp.TchClient
         /// <param name="width">窗口初始宽度</param>
         /// <param name="height">窗口初始高度</param>
         /// <returns>无措返回0</returns>
-        public int Start(string url,bool sizeable = true, int x = -1, int y = -1, int width = 800, int height = 600)
+        public int Start(string url,int x = -1, int y = -1, int width = 800, int height = 600)
         {
-            int exit_code= TchStart(url, sizeable, x, y, width, height);
+            int exit_code= TchStart(url, x, y, width, height);
 
             return exit_code;
         }

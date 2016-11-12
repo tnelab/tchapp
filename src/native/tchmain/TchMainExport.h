@@ -39,7 +39,7 @@ CORECLR_HOSTING_API(coreclr_execute_assembly,
 #define TCH_CLIENT_API(function,return_type, ...) \
     typedef return_type (*function##_ptr)(__VA_ARGS__);
 
-TCH_CLIENT_API(TchStart, int, const char* url, bool sizeable, int x,int y,int width,int height);
+TCH_CLIENT_API(TchStart, int, const char* url, int x,int y,int width,int height);
 TCH_CLIENT_API(SetTchErrorDelegate, int, void* delegate);
 TCH_CLIENT_API(SetJsInvokeDelegate, void, void* delegate);
 TCH_CLIENT_API(SetResourceRequestDelegate, void, void* delegate);
@@ -55,7 +55,7 @@ TCH_CLIENT_API(OnTchError, void, int code, const char* msg);
 #endif
 extern "C" {
 	TCHAPI int TchMain(int argc, char* argv[]);
-	TCHAPI int TchStart(const char* url, bool sizeable = true, int x = -1, int y = -1, int width = 800, int height = 600);
+	TCHAPI int TchStart(const char* url, int x = -1, int y = -1, int width = 800, int height = 600);
 	TCHAPI int SetTchErrorDelegate(void* delegate);
 	TCHAPI void SetJsInvokeDelegate(void* delegate);
 	TCHAPI void SetResourceRequestDelegate(void* delegate);

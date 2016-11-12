@@ -21,7 +21,7 @@
 
 using namespace client;
 
-int TchStart(const char* url, bool sizeable, int x,int y,int width,int height) {
+int TchStart(const char* url, int x,int y,int width,int height) {
 	// Enable High-DPI support on Windows 7 or newer.
 	CefEnableHighDPISupport();
 	CefMainArgs main_args(::GetModuleHandle(0));
@@ -89,7 +89,7 @@ int TchStart(const char* url, bool sizeable, int x,int y,int width,int height) {
 
 	// Create the main message loop object.
 	scoped_ptr<MainMessageLoop> message_loop;
-
+	settings.multi_threaded_message_loop = false;
 	if (settings.multi_threaded_message_loop)
 		message_loop.reset(new MainMessageLoopMultithreadedWin);
 	else
@@ -100,7 +100,7 @@ int TchStart(const char* url, bool sizeable, int x,int y,int width,int height) {
 	// Register scheme handlers.
 	test_runner::RegisterSchemeHandlers();
 	
-	//zmg 2016-11-6
+	//zmg 2016-11-10 
 	/*
 	// Create the first window.
 	context->GetRootWindowManager()->CreateRootWindow(
@@ -120,8 +120,7 @@ int TchStart(const char* url, bool sizeable, int x,int y,int width,int height) {
 		false,             // Show controls.
 		settings.windowless_rendering_enabled ? true : false,
 		rect,        // Use default system size.
-		std::string(url),
-		sizeable);   // Use default URL.
+		std::string(url));   // Use default URL.
 	//zmg end
 
 						  // Run the message loop. This will block until Quit() is called by the

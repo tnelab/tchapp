@@ -23,8 +23,6 @@ class RootWindowManager : public RootWindow::Delegate {
   // after all windows have closed.
   explicit RootWindowManager(bool terminate_when_all_windows_closed);
 
-  //zmg 2016-11-6
-  /*
   // Create a new top-level native window that loads |url|.
   // If |with_controls| is true the window will show controls.
   // If |with_osr| is true the window will use off-screen rendering.
@@ -35,15 +33,6 @@ class RootWindowManager : public RootWindow::Delegate {
       bool with_osr,
       const CefRect& bounds,
       const std::string& url);
-  */
-  //zmg
-  scoped_refptr<RootWindow> CreateRootWindow(
-	  bool with_controls,
-	  bool with_osr,
-	  const CefRect& bounds,
-	  const std::string& url,
-	  bool sizeable=true);
-  //zmg end
 
   // Create a new native popup window.
   // If |with_controls| is true the window will show controls.

@@ -63,24 +63,12 @@ class RootWindow :
   // |delegate| must be non-NULL and outlive this object.
   // Use RootWindowManager::CreateRootWindow() instead of calling this method
   // directly.
-  //zmg 2016-11-6
-  /*
   virtual void Init(RootWindow::Delegate* delegate,
                     bool with_controls,
                     bool with_osr,
                     const CefRect& bounds,
                     const CefBrowserSettings& settings,
                     const std::string& url) = 0;
-  */
-  //zmg
-  virtual void Init(RootWindow::Delegate* delegate,
-	  bool with_controls,
-	  bool with_osr,
-	  const CefRect& bounds,
-	  const CefBrowserSettings& settings,
-	  const std::string& url,
-	  bool sizeable) = 0;
-  //zmg end
 
   // Initialize as a popup window. This is used to attach a new native window to
   // a single browser instance that will be created later. The native window

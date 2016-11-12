@@ -21,7 +21,7 @@ using namespace Tnelab;
 //
 
 extern "C"{
-	TCHAPI int TchStart(const char* url, bool sizeable = true, int x = -1, int y = -1, int width = 800, int height = 600);
+	TCHAPI int TchStart(const char* url, int x = -1, int y = -1, int width = 800, int height = 600);
 	TCHAPI int SetTchErrorDelegate(TchErrorHandler::TchErrorDelegate* delegate);
 	TCHAPI void SetJsInvokeDelegate(TchQueryHandler::JsInvokeDelegate delegate);
 	TCHAPI void SetResourceRequestDelegate(TchResourceHandler::ResourceRequestDelegate delegate);

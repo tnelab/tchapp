@@ -57,8 +57,6 @@ RootWindowManager::~RootWindowManager() {
   // All root windows should already have been destroyed.
   DCHECK(root_windows_.empty());
 }
-//zmg 2016-11-6
-/*
 scoped_refptr<RootWindow> RootWindowManager::CreateRootWindow(
     bool with_controls,
     bool with_osr,
@@ -76,27 +74,7 @@ scoped_refptr<RootWindow> RootWindowManager::CreateRootWindow(
 
   return root_window;
 }
-*/
-//zmg
-scoped_refptr<RootWindow> RootWindowManager::CreateRootWindow(
-	bool with_controls,
-	bool with_osr,
-	const CefRect& bounds,
-	const std::string& url,
-	bool sizeable) {
-	CefBrowserSettings settings;
-	MainContext::Get()->PopulateBrowserSettings(&settings);
 
-	scoped_refptr<RootWindow> root_window = RootWindow::Create();
-	root_window->Init(this, with_controls, with_osr, bounds, settings,
-		url.empty() ? MainContext::Get()->GetMainURL() : url,sizeable);
-
-	// Store a reference to the root window on the main thread.
-	OnRootWindowCreated(root_window);
-
-	return root_window;
-}
-//zmg end
 scoped_refptr<RootWindow> RootWindowManager::CreateRootWindowAsPopup(
     bool with_controls,
     bool with_osr,

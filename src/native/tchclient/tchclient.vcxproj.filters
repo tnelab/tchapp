@@ -153,7 +153,10 @@
     <ClCompile Include="cefclient\tch_add\TchQueryHandler.cc">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="cefclient\tch_add\TchWindowApi.cpp">
+    <ClCompile Include="cefclient\tch_add\TchWindowApiWin.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cefclient\tch_add\TchGDIRenderer.cc">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -294,6 +297,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="cefclient\tch_add\TchWindowApi.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cefclient\tch_add\TchGDIRenderer.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

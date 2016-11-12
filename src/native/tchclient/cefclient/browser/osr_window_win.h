@@ -13,6 +13,10 @@
 #include "cefclient/browser/client_handler_osr.h"
 #include "cefclient/browser/osr_dragdrop_win.h"
 #include "cefclient/browser/osr_renderer.h"
+//zmg 2016-11-11 异形窗体
+#include "cefclient/tch_add/TchGDIRenderer.h"
+//zmg end
+
 
 namespace client {
 
@@ -76,7 +80,7 @@ class OsrWindowWin :
 
   // Redraw what is currently in the texture.
   void Invalidate();
-  void Render();
+  void Render();    
 
   void NotifyNativeWindowCreated(HWND hwnd);
 
@@ -151,7 +155,12 @@ class OsrWindowWin :
   Delegate* delegate_;
 
   // The below members are only accessed on the UI thread.
-  OsrRenderer renderer_;
+  //zmg 2016-11-10  异形窗体
+  //OsrRenderer renderer_;
+  //zmg
+  Tnelab::TchGDIRenderer renderer_;
+  //zmg end
+  
   HWND hwnd_;
   HDC hdc_;
   HGLRC hrc_;
