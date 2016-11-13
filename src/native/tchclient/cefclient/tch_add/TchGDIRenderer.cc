@@ -1,5 +1,4 @@
 #include "TchGDIRenderer.h"
-#include "include/wrapper/cef_helpers.h"
 
 Tnelab::TchGDIRenderer::~TchGDIRenderer()
 {
@@ -114,7 +113,7 @@ void Tnelab::TchGDIRenderer::IncrementSpin(float spinDX, float spinDY)
 }
 
 void Tnelab::TchGDIRenderer::Render()
-{
+{	
 	if (view_width_ == 0 || view_height_ == 0)
 		return;
 	if (hwnd_ == 0)
@@ -128,6 +127,7 @@ void Tnelab::TchGDIRenderer::Render()
 	point.y = 0;
 	size.cx = view_width_;
 	size.cy = view_height_;
+	if (!initialized_) this->Initialize();//消除启动黑屏
 	//呈现到父窗口
 	bool result=UpdateLayeredWindow(GetParent(hwnd_), GetDC(GetParent(hwnd_)), NULL, &size, source_hdc_, &point, 0, &bfunc, ULW_ALPHA);
 	DCHECK(result);

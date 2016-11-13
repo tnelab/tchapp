@@ -4,13 +4,21 @@
 #pragma once
 #include "include/cef_browser.h"
 #include "include/cef_render_handler.h"
+#include "include/wrapper/cef_helpers.h"
 
 namespace Tnelab {
 	class TchGDIRenderer{
 	public:
 		~TchGDIRenderer();
 		// Initialize the OpenGL environment.
-		void Initialize() {};
+		void Initialize() {
+			//MessageBox(0, L"init1", 0, 0);
+			if (initialized_) return;
+			DCHECK(hwnd_);			
+			//执行后会默认绘制黑色背景，影响体验，需马上刷新界面
+			::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_LAYERED/* | WS_EX_TRANSPARENT*/);
+			initialized_ = true;
+		};
 
 		void SetTargetHWND(HWND hwnd) { hwnd_ = hwnd; };
 
@@ -36,7 +44,7 @@ namespace Tnelab {
 		void IncrementSpin(float spinDX, float spinDY);
 
 		bool IsTransparent() const { return true; }
-		cef_color_t GetBackgroundColor() const { return CefColorSetARGB(0,0,0,0); }
+		cef_color_t GetBackgroundColor() const { return CefColorSetARGB(255,255,255,255); }
 
 		int GetViewWidth() const { return view_width_; }
 		int GetViewHeight() const { return view_height_; }
@@ -67,6 +75,8 @@ namespace Tnelab {
 		float spin_x_=0.0;
 		float spin_y_=0.0;
 		CefRect update_rect_;
+
+		bool initialized_=false;
 	};
 }
 #endif

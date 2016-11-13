@@ -278,10 +278,14 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
   const std::wstring& window_class = GetResourceString(IDC_CEFCLIENT);
 
   const cef_color_t background_color = MainContext::Get()->GetBackgroundColor();
-  const HBRUSH background_brush = CreateSolidBrush(
+  //zmg 2016-11-12 消除启动黑屏,使用透明画刷
+  /*const HBRUSH background_brush = CreateSolidBrush(
       RGB(CefColorGetR(background_color),
           CefColorGetG(background_color),
-          CefColorGetB(background_color)));
+          CefColorGetB(background_color)));*/
+  //zmg
+  const HBRUSH background_brush = (HBRUSH)GetStockObject(NULL_BRUSH);
+  //zmg end
 
   // Register the window class.
   RegisterRootClass(hInstance, window_class, background_brush);
@@ -293,7 +297,7 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
   //zmg 2016-11-11 去除窗口非客户区
   //const DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
   //zmg
-  const DWORD dwStyle = WS_POPUP | WS_CLIPCHILDREN;
+  const DWORD dwStyle = WS_POPUP | WS_CLIPCHILDREN|WS_BORDER;
   //zmg end
 
   int x, y, width, height;
@@ -447,15 +451,19 @@ void RootWindowWin::RegisterRootClass(HINSTANCE hInstance,
 	const std::wstring& window_class,
 	HBRUSH background_brush) {
 	// Only register the class one time.
-	static bool class_registered = false;
-	if (class_registered)
-		return;
-	class_registered = true;
-
-	WNDCLASSEX wcex;
-
-	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.style         = CS_HREDRAW | CS_VREDRAW;
+  static bool class_registered = false;
+  if (class_registered)
+  	return;
+  class_registered = true;
+  
+  WNDCLASSEX wcex;
+  
+  wcex.cbSize = sizeof(WNDCLASSEX);
+  //zmg  2016-11-12
+  //wcex.style         = CS_HREDRAW | CS_VREDRAW;
+  //zmg
+  wcex.style = CS_OWNDC;
+  //zmg end
   wcex.lpfnWndProc   = RootWndProc;
   wcex.cbClsExtra    = 0;
   wcex.cbWndExtra    = 0;

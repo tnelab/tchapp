@@ -14,6 +14,7 @@
 //zmg 2016-11-6
 #include "cefclient/tch_add/TchWindowApi.h"
 //zmg end
+
 namespace client {
 
 namespace {
@@ -247,18 +248,23 @@ void OsrWindowWin::Create(HWND parent_hwnd, const RECT& rect) {
   DCHECK(!::IsRectEmpty(&rect));
 
   HINSTANCE hInst = ::GetModuleHandle(NULL);
-
+  //zmg 2016-11-12 Ïû³ýÆô¶¯ºÚÆÁ,Ê¹ÓÃÍ¸Ã÷»­Ë¢
+  /*
   const cef_color_t background_color = renderer_.GetBackgroundColor();
   const HBRUSH background_brush = CreateSolidBrush(
       RGB(CefColorGetR(background_color),
           CefColorGetG(background_color),
           CefColorGetB(background_color)));
+ */
+  //zmg
+  const HBRUSH background_brush = (HBRUSH)GetStockObject(NULL_BRUSH);
+  //zmg end
 
   RegisterOsrClass(hInst, background_brush);
 
   // Create the native window with a border so it's easier to visually identify
   // OSR windows.
-  //zmg 2016-11-9 È¥³ý±ß¿ò
+  //zmg 2016-11-9 È¥³ý±ß¿ò,ÒìÐÎ´°Ìå
   /*
   hwnd_ = ::CreateWindow(kWndClass, 0,
       WS_BORDER | WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,
@@ -268,25 +274,15 @@ void OsrWindowWin::Create(HWND parent_hwnd, const RECT& rect) {
   client_rect_ = rect;
   */
   //zmg
-  const DWORD dwStyle = WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE;
-  POINT point;
-  point.x = rect.left;
-  point.y = rect.top;
-  ClientToScreen(parent_hwnd,&point);
-
-  RECT new_rect;
-  new_rect.left = point.x;
-  new_rect.top = point.y;
+  const DWORD dwStyle = WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE| WS_BORDER;
 
 
   hwnd_ = ::CreateWindow(kWndClass, 0, dwStyle,
-	  new_rect.left, new_rect.top, rect.right - rect.left, rect.bottom - rect.top,
+	  rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
 	  parent_hwnd, 0, hInst, 0);
   CHECK(hwnd_);
-
   renderer_.SetTargetHWND(hwnd_);
-  ::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_APPWINDOW | WS_EX_LAYERED/* | WS_EX_TRANSPARENT*/);
-  //::SendMessage(hwnd_, WM_PAINT, 0, 0);
+  //renderer_.Initialize();  
   GetClientRect(hwnd_,&client_rect_);
   //zmg end
 
