@@ -66,6 +66,7 @@
     <ClCompile Include="cefclient\tch_add\TchRequestResourceProvider.cc" />
     <ClCompile Include="cefclient\tch_add\TchResourceHandler.cc" />
     <ClCompile Include="cefclient\cefclient_win.cc" />
+    <ClCompile Include="cefclient\tch_add\TchWindowApi.cpp" />
     <ClCompile Include="cefclient\tch_add\TchWindowApiWin.cc" />
   </ItemGroup>
   <ItemGroup>

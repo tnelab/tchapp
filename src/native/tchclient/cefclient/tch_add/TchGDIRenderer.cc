@@ -1,8 +1,45 @@
 #include "TchGDIRenderer.h"
 
+
+void Tnelab::TchGDIRenderer::Initialize() {
+	if (initialized_) return;
+	DCHECK(hwnd_);
+
+	source_hdc_ = CreateCompatibleDC(NULL);
+	DCHECK(source_hdc_);
+	SaveDC(source_hdc_);
+	transparent_source_hdc_ = CreateCompatibleDC(NULL);
+	DCHECK(transparent_source_hdc_);
+	SaveDC(transparent_source_hdc_);
+	initialized_ = true;
+};
 Tnelab::TchGDIRenderer::~TchGDIRenderer()
 {
 	Cleanup();
+}
+
+void Tnelab::TchGDIRenderer::CleanupBmp()
+{
+	if (source_hdc_hbitmap_ != 0) {
+
+		RestoreDC(source_hdc_, -1);
+		DeleteObject(this->source_hdc_hbitmap_);
+	}
+	if (transparent_source_hdc_hbitmap_ != 0) {
+		RestoreDC(transparent_source_hdc_, -1);
+		DeleteObject(this->transparent_source_hdc_hbitmap_);
+	}
+}
+
+void Tnelab::TchGDIRenderer::Cleanup()
+{
+	this->CleanupBmp();
+	if (source_hdc_ != 0) {
+		DeleteDC(source_hdc_);
+	}
+	if (transparent_source_hdc_ != 0) {
+		DeleteDC(transparent_source_hdc_);
+	}
 }
 
 void Tnelab::TchGDIRenderer::OnPopupSize(CefRefPtr<CefBrowser> browser, const CefRect & rect)
@@ -127,11 +164,18 @@ void Tnelab::TchGDIRenderer::Render()
 	point.y = 0;
 	size.cx = view_width_;
 	size.cy = view_height_;
-	if (!initialized_) this->Initialize();//消除启动黑屏
+	
 	//呈现到父窗口
-	bool result=UpdateLayeredWindow(GetParent(hwnd_), GetDC(GetParent(hwnd_)), NULL, &size, source_hdc_, &point, 0, &bfunc, ULW_ALPHA);
+	bool result = true;
+	result=UpdateLayeredWindow(GetParent(hwnd_), GetDC(GetParent(hwnd_)), NULL, &size, source_hdc_, &point, 0, &bfunc, ULW_ALPHA);
 	DCHECK(result);
 	//浏览器窗口设置为1透明遮罩
+
+	//执行后会默认绘制黑色背景，影响体验，需马上刷新界面
+	if (!islayered) {
+		::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_LAYERED/* | WS_EX_TRANSPARENT*/);
+		islayered = true;
+	}
 	result = UpdateLayeredWindow(hwnd_, GetDC(hwnd_), NULL, &size, transparent_source_hdc_, &point, 0, &bfunc, ULW_ALPHA);
 	DCHECK(result);
 }
@@ -141,20 +185,6 @@ void Tnelab::TchGDIRenderer::OnPopupShow(CefRefPtr<CefBrowser> browser, bool sho
 	if (!show) {
 		// Clear the popup rectangle.
 		ClearPopupRects();
-	}
-}
-
-void Tnelab::TchGDIRenderer::Cleanup()
-{
-	if (source_hdc_ != 0) {
-
-		RestoreDC(source_hdc_, -1);
-		DeleteDC(source_hdc_);
-		DeleteObject(this->source_hdc_hbitmap_);
-
-		RestoreDC(transparent_source_hdc_,-1);
-		DeleteDC(transparent_source_hdc_);
-		DeleteObject(this->transparent_source_hdc_hbitmap_);
 	}
 }
 
@@ -187,7 +217,7 @@ void Tnelab::TchGDIRenderer::ClearPopupRects()
 
 void Tnelab::TchGDIRenderer::createSourceHDC(HDC& hdc, HBITMAP& hbitmap, int width, int height)
 {
-	if (hdc != 0) this->Cleanup();
+	if (hbitmap != 0) this->CleanupBmp();
 	DCHECK(width > 0);
 	DCHECK(height > 0);
 
@@ -200,9 +230,6 @@ void Tnelab::TchGDIRenderer::createSourceHDC(HDC& hdc, HBITMAP& hbitmap, int wid
 	bih_.biBitCount = 32;
 	bih_.biCompression = BI_RGB;
 	
-	hdc = CreateCompatibleDC(NULL);	
-	DCHECK(hdc);
-	SaveDC(hdc);
 	hbitmap = CreateDIBSection(
 		hdc,
 		(BITMAPINFO*)&bih_,

@@ -144,16 +144,8 @@ void OsrWindowWin::Show() {
     return;
 
   // Show the native window if not currently visible.
-  //zmg 2016-11-11
-  /*
   if (hwnd_ && !::IsWindowVisible(hwnd_))
-    ShowWindow(hwnd_, SW_SHOW);
-  */
-  //zmg
-  if (hwnd_ && !::IsWindowVisible(hwnd_)) {
 	  ShowWindow(hwnd_, SW_SHOW);
-  }
-  //zmg end
 
   if (hidden_) {
     // Set the browser as visible.
@@ -274,15 +266,24 @@ void OsrWindowWin::Create(HWND parent_hwnd, const RECT& rect) {
   client_rect_ = rect;
   */
   //zmg
-  const DWORD dwStyle = WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE| WS_BORDER;
+  const DWORD dwStyle = WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE;
 
 
   hwnd_ = ::CreateWindow(kWndClass, 0, dwStyle,
 	  rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
 	  parent_hwnd, 0, hInst, 0);
   CHECK(hwnd_);
+  //初始化window api settings
+  auto ptr_settings = new Tnelab::TchWindowApi::TchWindowSettings();
+  RECT temp_rect;
+  GetWindowRect(parent_hwnd, &temp_rect);
+  CefRect cef_rect(temp_rect.left, temp_rect.top, temp_rect.right - temp_rect.left, temp_rect.bottom - temp_rect.top);
+  ptr_settings->OldRootWindowRect = cef_rect;
+  Tnelab::TchWindowApi::SetSettings(reinterpret_cast<unsigned long>(hwnd_), ptr_settings);
+  //初始化gdi 呈现器
   renderer_.SetTargetHWND(hwnd_);
-  //renderer_.Initialize();  
+  renderer_.Initialize();
+  //初始化 client_rect_
   GetClientRect(hwnd_,&client_rect_);
   //zmg end
 
@@ -311,6 +312,9 @@ void OsrWindowWin::Destroy() {
 #endif
   //zmg 2016-11-10 异形窗体
   //DisableGL();
+  //zmg
+  //释放静态资源
+  Tnelab::TchWindowApi::ClearSettings(reinterpret_cast<unsigned long>(hwnd_));
   //end zmg
 
   // Destroy the native window.
@@ -425,7 +429,7 @@ void OsrWindowWin::RegisterOsrClass(HINSTANCE hInstance,
   //zmg 2016-11-12 异形窗体
   //wcex.style         = CS_OWNDC;
   //zmg 
-  wcex.style		   = CS_OWNDC;
+  wcex.style		   = CS_PARENTDC;
   //zmg end
   wcex.lpfnWndProc   = OsrWndProc;
   wcex.cbClsExtra    = 0;
@@ -441,14 +445,18 @@ void OsrWindowWin::RegisterOsrClass(HINSTANCE hInstance,
   RegisterClassEx(&wcex);
 }
 
+//zmg 2016-11-13
+//返回窗口句柄
+ClientWindowHandle OsrWindowWin::GetWindowHandle() {
+	REQUIRE_MAIN_THREAD();
+	return hwnd_;
+}
+//zmg end
+
 // static
 LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
                                           WPARAM wParam, LPARAM lParam) {
   CEF_REQUIRE_UI_THREAD();
-
-  //zmg 2016-11-6
-  int x = 0, y = 0;
-  //zmg end
 
   OsrWindowWin* self = GetUserDataPtr<OsrWindowWin*>(hWnd);
   if (!self)
@@ -457,18 +465,22 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
   switch (message) {
     case WM_LBUTTONDOWN:
 		//zmg 2016-11-6 处理标题栏
-		x = LOWORD(lParam);
-		y = HIWORD(lParam);
-
-		if (x <= Tnelab::TchWindowApi::CaptionRect.width &&
-			x >= Tnelab::TchWindowApi::CaptionRect.x&&
-			y <= Tnelab::TchWindowApi::CaptionRect.height&&
-			y >= Tnelab::TchWindowApi::CaptionRect.y)
 		{
-			//PostMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0);
-			PostMessage(::GetParent(hWnd), WM_NCLBUTTONDOWN, HTCAPTION, 0);
-			break;
-		}	
+			int x = 0, y = 0;
+			auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<int>(self->GetWindowHandle()));
+			x = LOWORD(lParam);
+			y = HIWORD(lParam);
+
+			if (x <= ptr_tch_window_settings->CaptionRect.width &&
+				x >= ptr_tch_window_settings->CaptionRect.x&&
+				y <= ptr_tch_window_settings->CaptionRect.height&&
+				y >= ptr_tch_window_settings->CaptionRect.y)
+			{
+				//PostMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+				PostMessage(::GetParent(hWnd), WM_NCLBUTTONDOWN, HTCAPTION, 0);
+				break;
+			}
+		}
 		//zmg end
     case WM_RBUTTONDOWN:
     case WM_MBUTTONDOWN:

@@ -4,8 +4,6 @@
 #include "include/wrapper/cef_message_router.h"
 using namespace Tnelab;
 
-CefRect TchWindowApi::CaptionRect;
-
 void TchWindowApi::CloseWindow(CefRefPtr<CefFrame> frame) {
 	// TODO
 }

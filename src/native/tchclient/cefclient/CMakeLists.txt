@@ -20,6 +20,7 @@ set(CEFCLIENT_TCHADD_TCHADD_SRCS
   tch_add/TchResourceHandler.cc
   tch_add/TchResourceHandler.h
   tch_add/TchWindowApi.h
+  tch_add/TchWindowApi.cpp
 )
 source_group(cefclient\\\\tch_add FILES ${CEFCLIENT_TCHADD_TCHADD_SRCS})
 

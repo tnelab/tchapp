@@ -297,7 +297,7 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
   //zmg 2016-11-11 去除窗口非客户区
   //const DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
   //zmg
-  const DWORD dwStyle = WS_POPUP | WS_CLIPCHILDREN|WS_BORDER;
+  const DWORD dwStyle = WS_POPUP | WS_CLIPCHILDREN;
   //zmg end
 
   int x, y, width, height;

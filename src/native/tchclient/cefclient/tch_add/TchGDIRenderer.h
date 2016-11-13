@@ -11,19 +11,14 @@ namespace Tnelab {
 	public:
 		~TchGDIRenderer();
 		// Initialize the OpenGL environment.
-		void Initialize() {
-			//MessageBox(0, L"init1", 0, 0);
-			if (initialized_) return;
-			DCHECK(hwnd_);			
-			//执行后会默认绘制黑色背景，影响体验，需马上刷新界面
-			::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_LAYERED/* | WS_EX_TRANSPARENT*/);
-			initialized_ = true;
-		};
+		void Initialize();
 
 		void SetTargetHWND(HWND hwnd) { hwnd_ = hwnd; };
 
 		// Clean up the GDI environment.
 		void Cleanup();
+
+		void CleanupBmp();
 
 		// Render to the screen.
 		void Render();
@@ -77,6 +72,7 @@ namespace Tnelab {
 		CefRect update_rect_;
 
 		bool initialized_=false;
+		bool islayered = false;
 	};
 }
 #endif

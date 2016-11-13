@@ -75,7 +75,8 @@ namespace Tnelab {
 		rect.y = json_dic->GetInt("Y");
 		rect.width = json_dic->GetInt("Width");
 		rect.height = json_dic->GetInt("Height");
-		TchWindowApi::CaptionRect = rect;
+		auto ptr_tch_window_settings = TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(frame->GetBrowser()->GetHost()->GetWindowHandle()));
+		ptr_tch_window_settings->CaptionRect = rect;
 		callback->Success("true");
 		return true;
 	}

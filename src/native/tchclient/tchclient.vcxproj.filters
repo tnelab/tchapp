@@ -159,6 +159,9 @@
     <ClCompile Include="cefclient\tch_add\TchGDIRenderer.cc">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="cefclient\tch_add\TchWindowApi.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cefclient\cefclient.h">

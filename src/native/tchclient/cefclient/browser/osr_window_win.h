@@ -63,6 +63,10 @@ class OsrWindowWin :
   void SetFocus();
   void SetDeviceScaleFactor(float device_scale_factor);
 
+  //zmg 2016-11-13
+  ClientWindowHandle GetWindowHandle();
+  //zmg
+
  private:
   // Only allow deletion via scoped_refptr.
   friend struct CefDeleteOnThread<TID_UI>;
