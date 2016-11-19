@@ -21,6 +21,9 @@
 #include "cefclient/browser/temp_window.h"
 #include "cefclient/browser/window_test.h"
 #include "cefclient/common/client_switches.h"
+//zmg 2016-11-18
+#include "cefclient/tch_add/TchWindowApi.h"
+//zmg end
 
 namespace client {
 
@@ -354,6 +357,11 @@ void RootWindowGtk::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
   // created.
   if (is_popup_)
     CreateRootWindow(CefBrowserSettings());
+  //zmg 2016-11-18
+  //≥ı ºªØwindow api settings
+  auto ptr_settings = new Tnelab::TchWindowApi::TchWindowSettings();
+  Tnelab::TchWindowApi::SetSettings(reinterpret_cast<unsigned long>(browser->GetHost()->GetWindowHandle()), ptr_settings);
+  //zmg end
 }
 
 void RootWindowGtk::OnBrowserWindowDestroyed() {
