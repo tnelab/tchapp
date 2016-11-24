@@ -321,6 +321,11 @@ void RootWindowGtk::CreateRootWindow(const CefBrowserSettings& settings) {
     gtk_toolbar_insert(GTK_TOOLBAR(toolbar), tool_item, -1);  // append
 
     gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
+  } else {
+    //zmg 2016-11-23
+    // no window decoration
+    gtk_window_set_decorated(GTK_WINDOW(window_), false);
+    //zmg end
   }
 
   // Realize (show) the GTK widget. This must be done before the browser is
