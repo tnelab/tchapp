@@ -171,11 +171,18 @@ Tch.ShowWindow = function () {
 }
 $(function () {
     if ($("*[data-tch-caption=true]").length > 0) {
-        let caption_rect = {};
-        caption_rect.X = $("*[data-tch-caption=true]").first().offset().left;
-        caption_rect.Y = $("*[data-tch-caption=true]").first().offset().top;
-        caption_rect.Width = $("*[data-tch-caption=true]").first().width();
-        caption_rect.Height = $("*[data-tch-caption=true]").first().height();
-        Tch.AddCaptionRect(caption_rect, function (result) { console.log(result); });
+        var addCaptionRect = function() {
+            let caption_rect = {};
+            caption_rect.X = $("*[data-tch-caption=true]").first().offset().left;
+            caption_rect.Y = $("*[data-tch-caption=true]").first().offset().top;
+            caption_rect.Width = $("*[data-tch-caption=true]").first().width();
+            caption_rect.Height = $("*[data-tch-caption=true]").first().height();
+            if (!caption_rect.Width || !caption_rect.Height) {
+                setTimeout(addCaptionRect, 1);
+                return;
+            }
+            Tch.AddCaptionRect(caption_rect, function (result) { console.log(result); });
+        }
+        addCaptionRect();
     }
 });
