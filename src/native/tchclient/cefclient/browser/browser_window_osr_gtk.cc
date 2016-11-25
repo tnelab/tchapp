@@ -21,6 +21,9 @@
 #include "include/wrapper/cef_closure_task.h"
 #include "cefclient/browser/geometry_util.h"
 #include "cefclient/browser/main_message_loop.h"
+//zmg 2016-11-23
+#include "cefclient/tch_add/TchWindowApi.h"
+//zmg end
 
 namespace client {
 
@@ -921,7 +924,12 @@ BrowserWindowOsrGtk::BrowserWindowOsrGtk(BrowserWindow::Delegate* delegate,
       hidden_(false),
       gl_enabled_(false),
       painting_popup_(false),
-      device_scale_factor_(1.0f) {
+      device_scale_factor_(1.0f),
+      // zmg 2016-11-23
+      caption_moving_(false),
+      caption_moving_begin_x_(0),
+      caption_moving_begin_y_(0) {
+      // zmg end
   client_handler_ = new ClientHandlerOsr(this, this, startup_url);
 }
 
@@ -1324,6 +1332,29 @@ gint BrowserWindowOsrGtk::ClickEvent(GtkWidget* widget,
       break;
   }
 
+  // zmg 2016-11-23
+  // start moving when clicked caption regions
+  if (button_type == MBT_LEFT) {
+    if (mouse_up) {
+      self->caption_moving_ = false;
+    } else {
+      auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(static_cast<int>(host->GetWindowHandle()));
+      auto& caption_rect = ptr_tch_window_settings->CaptionRect;
+      // printf("x %d y %d\n", (int)caption_rect.x, (int)caption_rect.y);
+      // printf("w %d h %d\n", (int)caption_rect.width, (int)caption_rect.height);
+      // printf("ex %d ey %d\n", (int)event->x, (int)event->y);
+      if (event->x <= caption_rect.x + caption_rect.width &&
+          event->x >= caption_rect.x &&
+          event->y <= caption_rect.y + caption_rect.height &&
+          event->y >= caption_rect.y) {
+        self->caption_moving_ = true;
+        self->caption_moving_begin_x_ = event->x;
+        self->caption_moving_begin_y_ = event->y;
+      }
+    }
+  }
+  // zmg end
+
   host->SendMouseClickEvent(mouse_event, button_type, mouse_up, click_count);
   return TRUE;
 }
@@ -1416,6 +1447,18 @@ gint BrowserWindowOsrGtk::MoveEvent(GtkWidget* widget,
   mouse_event.modifiers = GetCefStateModifiers(state);
 
   bool mouse_leave = (event->type == GDK_LEAVE_NOTIFY);
+
+  // zmg 2016-11-23
+  if (self->caption_moving_) {
+    GtkWidget* window = gtk_widget_get_ancestor(GTK_WIDGET(widget), GTK_TYPE_WINDOW);
+    if (window != nullptr) {
+      gint window_x = event->x_root - self->caption_moving_begin_x_;
+      gint window_y = event->y_root - self->caption_moving_begin_y_;
+      gtk_window_move(GTK_WINDOW(window), window_x, window_y);
+      // printf("move window to %d %d\n", window_x, window_y);
+    }
+  }
+  // zmg end
 
   host->SendMouseMoveEvent(mouse_event, mouse_leave);
   return TRUE;

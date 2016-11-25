@@ -172,7 +172,7 @@ int TchStart(const char* url, int x, int y, int width, int height) {
 	rect.width = width;
 	rect.height = height;
 	context->GetRootWindowManager()->CreateRootWindow(
-		true,             // Show controls.
+		false,             // Show controls.
 		settings.windowless_rendering_enabled ? true : false,
 		rect,        // Use default system size.
 		std::string(url));   // Use default URL.

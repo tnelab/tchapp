@@ -119,6 +119,12 @@ class BrowserWindowOsrGtk : public BrowserWindow,
 
   float device_scale_factor_;
 
+  // zmg 2016-11-23
+  bool caption_moving_;
+  int caption_moving_begin_x_;
+  int caption_moving_begin_y_;
+  // zmg end
+
   DISALLOW_COPY_AND_ASSIGN(BrowserWindowOsrGtk);
 };
 
