@@ -471,9 +471,9 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
 			x = LOWORD(lParam);
 			y = HIWORD(lParam);
 
-			if (x <= ptr_tch_window_settings->CaptionRect.width &&
+			if (x <= ptr_tch_window_settings->CaptionRect.width+ ptr_tch_window_settings->CaptionRect.x &&
 				x >= ptr_tch_window_settings->CaptionRect.x&&
-				y <= ptr_tch_window_settings->CaptionRect.height&&
+				y <= ptr_tch_window_settings->CaptionRect.height+ ptr_tch_window_settings->CaptionRect.y&&
 				y >= ptr_tch_window_settings->CaptionRect.y)
 			{
 				//PostMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0);
