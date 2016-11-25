@@ -1339,7 +1339,7 @@ gint BrowserWindowOsrGtk::ClickEvent(GtkWidget* widget,
       self->caption_moving_ = false;
     } else {
       auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(static_cast<int>(host->GetWindowHandle()));
-      auto caption_rect = ptr_tch_window_settings->CaptionRect;
+      auto& caption_rect = ptr_tch_window_settings->CaptionRect;
       // printf("x %d y %d\n", (int)caption_rect.x, (int)caption_rect.y);
       // printf("w %d h %d\n", (int)caption_rect.width, (int)caption_rect.height);
       // printf("ex %d ey %d\n", (int)event->x, (int)event->y);
