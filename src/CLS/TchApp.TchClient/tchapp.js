@@ -16,7 +16,7 @@ Tch.JsInvoke = function (invoke_obj, callback) {
     });
 }
 //添加标题区域，用于移动窗口
-Tch.AddCaptionRect = function (rect) {
+Tch.SetCaptionRect = function (rect) {
     let callback;
     let len = arguments.length;
     if (len === 1) {
@@ -26,7 +26,29 @@ Tch.AddCaptionRect = function (rect) {
         callback = arguments[1];
     }
     let invoke_body = JSON.stringify(rect);
-    let request_body = { TchQuery: "AddCaptionRect", Arguments: invoke_body };
+    let request_body = { TchQuery: "SetCaptionRect", Arguments: invoke_body };
+    window.cefQuery({
+        request: JSON.stringify(request_body),
+        onSuccess: function (response) {
+            callback(response);
+        },
+        onFailure: function (error_code, error_message) {
+            console.log(error_code + ":" + error_message);
+        }
+    });
+}
+//添加标题区域的排除区域，用于在标题栏中放置按钮
+Tch.AddCaptionClipRect = function (rect) {
+    let callback;
+    let len = arguments.length;
+    if (len === 1) {
+        callback = function (result) { }
+    }
+    else {
+        callback = arguments[1];
+    }
+    let invoke_body = JSON.stringify(rect);
+    let request_body = { TchQuery: "AddCaptionClipRect", Arguments: invoke_body };
     window.cefQuery({
         request: JSON.stringify(request_body),
         onSuccess: function (response) {
@@ -171,18 +193,25 @@ Tch.ShowWindow = function () {
 }
 $(function () {
     if ($("*[data-tch-caption=true]").length > 0) {
-        var addCaptionRect = function() {
+        let caption_elm = $("*[data-tch-caption=true]").first();
+        setTimeout(function () {
             let caption_rect = {};
-            caption_rect.X = $("*[data-tch-caption=true]").first().offset().left;
-            caption_rect.Y = $("*[data-tch-caption=true]").first().offset().top;
-            caption_rect.Width = $("*[data-tch-caption=true]").first().width();
-            caption_rect.Height = $("*[data-tch-caption=true]").first().height();
-            if (!caption_rect.Width || !caption_rect.Height) {
-                setTimeout(addCaptionRect, 1);
-                return;
-            }
-            Tch.AddCaptionRect(caption_rect, function (result) { console.log(result); });
-        }
-        addCaptionRect();
+            caption_rect.X = caption_elm.offset().left;
+            caption_rect.Y = caption_elm.offset().top;
+            caption_rect.Width = caption_elm.width();
+            caption_rect.Height = caption_elm.height();
+            Tch.SetCaptionRect(caption_rect, function (result) { console.log(result); });
+        }, 100);
+        $(caption_elm).find("*[data-tch-caption=false]").each(function () {
+            let clip_elm = $(this);
+            setTimeout(function () {
+                let caption_rect = {};
+                caption_rect.X = clip_elm.offset().left;
+                caption_rect.Y = clip_elm.offset().top;
+                caption_rect.Width = clip_elm.width();
+                caption_rect.Height = clip_elm.height();
+                Tch.AddCaptionClipRect(caption_rect, function (result) { console.log(result); });
+            }, 100);
+        });
     }
 });

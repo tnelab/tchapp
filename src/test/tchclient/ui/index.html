@@ -7,15 +7,23 @@
     <script src="/tchapp.js"></script>
     <style>
         .caption{
-            height:24px;
             background-color:red;
             color:white;
+        }
+        .caption_button{
+            float:right;
+            cursor:pointer;
         }
     </style>
 </head>
 <body>
     <div style="background-color:rgba(0,255,0,0.5)">
-        <div class="caption" data-tch-caption="true">TchApp测试</div>
+        <div class="caption" data-tch-caption="true">
+            TchApp测试
+            <span class="caption_button" data-tch-caption="false" onclick="Tch.CloseWindow()">Ｘ</span>
+            <span class="caption_button" data-tch-caption="false" onclick="Tch.MaximizingWindow()">口</span>
+            <span class="caption_button" data-tch-caption="false" onclick="Tch.MinimizeWindow()">＿</span>
+        </div>
         <a href="javascript:Tch.CloseWindow()">关闭窗口</a>
         <a href="javascript:Tch.MaximizingWindow()">最大化窗口</a>
         <a href="javascript:Tch.MinimizeWindow()">最小化窗口</a>

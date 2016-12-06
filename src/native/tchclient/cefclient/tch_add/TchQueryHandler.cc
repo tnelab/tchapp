@@ -30,8 +30,11 @@ namespace Tnelab {
 		query_processor_map_["JsInvoke"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 			return this->JsInvokeProcessor_(request_dic, frame, query_id, request, persistent, callback);
 		};
-		query_processor_map_["AddCaptionRect"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
-			return this->AddCaptionRecteProcessor_(request_dic, frame, query_id, request, persistent, callback);
+		query_processor_map_["SetCaptionRect"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+			return this->SetCaptionRectProcessor_(request_dic, frame, query_id, request, persistent, callback);
+		};
+		query_processor_map_["AddCaptionClipRect"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+			return this->AddCaptionClipRectProcessor_(request_dic, frame, query_id, request, persistent, callback);
 		};
 		query_processor_map_["CloseWindow"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 			return this->CloseWindowProcessor_(request_dic, frame, query_id, request, persistent, callback);
@@ -65,18 +68,33 @@ namespace Tnelab {
 		callback->Success(result);
 		return true;
 	}
-	//处理JsInvoke
-	bool TchQueryHandler::AddCaptionRecteProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+	//处理SetCaptionRect
+	bool TchQueryHandler::SetCaptionRectProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		auto invoke_json = request_dict->GetString("Arguments");
 		auto json_val=CefParseJSON(invoke_json, JSON_PARSER_RFC);
 		auto json_dic = json_val->GetDictionary();
 		CefRect rect;
-		rect.x=json_dic->GetInt("X");
-		rect.y = json_dic->GetInt("Y");
-		rect.width = json_dic->GetInt("Width");
-		rect.height = json_dic->GetInt("Height");
+		rect.x=json_dic->GetDouble("X");
+		rect.y = json_dic->GetDouble("Y");
+		rect.width = json_dic->GetDouble("Width");
+		rect.height = json_dic->GetDouble("Height");
 		auto ptr_tch_window_settings = TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(frame->GetBrowser()->GetHost()->GetWindowHandle()));
 		ptr_tch_window_settings->CaptionRect = rect;
+		callback->Success("true");
+		return true;
+	}
+	//处理AddCaptionClipRect
+	bool TchQueryHandler::AddCaptionClipRectProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+		auto invoke_json = request_dict->GetString("Arguments");
+		auto json_val = CefParseJSON(invoke_json, JSON_PARSER_RFC);
+		auto json_dic = json_val->GetDictionary();
+		CefRect rect;
+		rect.x = json_dic->GetDouble("X");
+		rect.y = json_dic->GetDouble("Y");
+		rect.width = json_dic->GetDouble("Width");
+		rect.height = json_dic->GetDouble("Height");
+		auto ptr_tch_window_settings = TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(frame->GetBrowser()->GetHost()->GetWindowHandle()));
+		ptr_tch_window_settings->CaptionClipRectList.push_back(rect);
 		callback->Success("true");
 		return true;
 	}

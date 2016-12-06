@@ -3,6 +3,7 @@
 #pragma once
 #include "include/wrapper/cef_helpers.h"
 #include "include/cef_frame.h"
+#include <vector>
 
 namespace Tnelab {	
 	class TchWindowApi {
@@ -10,6 +11,7 @@ namespace Tnelab {
 		class TchWindowSettings {
 		public:
 			CefRect CaptionRect;
+			std::vector<CefRect> CaptionClipRectList;
 			CefRect OldRootWindowRect;
 		};
 		static void CloseWindow(CefRefPtr<CefFrame> frame);

@@ -470,13 +470,30 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
 			auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<int>(self->GetWindowHandle()));
 			x = LOWORD(lParam);
 			y = HIWORD(lParam);
-
-			if (x <= ptr_tch_window_settings->CaptionRect.width+ ptr_tch_window_settings->CaptionRect.x &&
+			//是否处于标题区域
+			bool is_caption = x <= ptr_tch_window_settings->CaptionRect.width + ptr_tch_window_settings->CaptionRect.x &&
 				x >= ptr_tch_window_settings->CaptionRect.x&&
-				y <= ptr_tch_window_settings->CaptionRect.height+ ptr_tch_window_settings->CaptionRect.y&&
-				y >= ptr_tch_window_settings->CaptionRect.y)
+				y <= ptr_tch_window_settings->CaptionRect.height + ptr_tch_window_settings->CaptionRect.y&&
+				y >= ptr_tch_window_settings->CaptionRect.y;
+			
+			//是否处于裁剪区域
+			if (is_caption) {
+				bool is_clip = false;
+				for (auto it = ptr_tch_window_settings->CaptionClipRectList.begin(); it != ptr_tch_window_settings->CaptionClipRectList.end(); it++)
+				{
+					is_clip= x <= it->width + it->x &&
+						x >= it->x&&
+						y <= it->height + it->y&&
+						y >= it->y;
+					if (is_clip) {
+						is_caption = false;
+						break;
+					}
+				}
+			}
+			
+			if (is_caption)
 			{
-				//PostMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, 0);
 				PostMessage(::GetParent(hWnd), WM_NCLBUTTONDOWN, HTCAPTION, 0);
 				break;
 			}
