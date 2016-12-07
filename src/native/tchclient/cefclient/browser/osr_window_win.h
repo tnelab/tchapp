@@ -13,7 +13,7 @@
 #include "cefclient/browser/client_handler_osr.h"
 #include "cefclient/browser/osr_dragdrop_win.h"
 #include "cefclient/browser/osr_renderer.h"
-//zmg 2016-11-11 异形窗体
+//zmg 2016-11-11 for transparent
 #include "cefclient/tch_add/TchGDIRenderer.h"
 //zmg end
 
@@ -159,7 +159,7 @@ class OsrWindowWin :
   Delegate* delegate_;
 
   // The below members are only accessed on the UI thread.
-  //zmg 2016-11-10  异形窗体
+  //zmg 2016-11-10  for transparent
   //OsrRenderer renderer_;
   //zmg
   Tnelab::TchGDIRenderer renderer_;
@@ -194,6 +194,12 @@ class OsrWindowWin :
   int last_click_count_;
   double last_click_time_;
   bool last_mouse_down_on_view_;
+  //zmg 2016-12-07
+  //for border
+  int ht_flag_ = 0;
+  //for caption
+  bool is_caption_moving_ = false;
+  //zmg end
 
   DISALLOW_COPY_AND_ASSIGN(OsrWindowWin);
 };

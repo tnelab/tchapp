@@ -54,7 +54,7 @@ class ScopedGLContext {
 OsrWindowWin::OsrWindowWin(Delegate* delegate,
                            const OsrRenderer::Settings& settings)
     : delegate_(delegate),
-	  //zmg 2016-11-10 异形窗体
+	  //zmg 2016-11-10 for transparent
       //renderer_(settings),
 	  //zmg end
       hwnd_(NULL),
@@ -178,7 +178,7 @@ void OsrWindowWin::Hide() {
 }
 
 void OsrWindowWin::SetBounds(int x, int y, size_t width, size_t height) {
-  //zmg 2016-11-11 异形窗体
+  //zmg 2016-11-11 for transparent
   //POINT point;
   //point.x = x;
   //point.y = y;
@@ -256,7 +256,7 @@ void OsrWindowWin::Create(HWND parent_hwnd, const RECT& rect) {
 
   // Create the native window with a border so it's easier to visually identify
   // OSR windows.
-  //zmg 2016-11-9 去除边框,异形窗体
+  //zmg 2016-11-9 Remove border for transparent
   /*
   hwnd_ = ::CreateWindow(kWndClass, 0,
       WS_BORDER | WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS | WS_VISIBLE,
@@ -310,10 +310,10 @@ void OsrWindowWin::Destroy() {
   RevokeDragDrop(hwnd_);
   drop_target_ = NULL;
 #endif
-  //zmg 2016-11-10 异形窗体
+  //zmg 2016-11-10 for transparent
   //DisableGL();
   //zmg
-  //释放静态资源
+  //Release static resources
   Tnelab::TchWindowApi::ClearSettings(reinterpret_cast<unsigned long>(hwnd_));
   //end zmg
 
@@ -390,7 +390,7 @@ void OsrWindowWin::Render() {
 
   if (render_task_pending_)
     render_task_pending_ = false;
-  //zmg 2016-11-10 异形窗体
+  //zmg 2016-11-10 for transparent
   /*
   if (!hdc_)
     EnableGL();
@@ -426,7 +426,7 @@ void OsrWindowWin::RegisterOsrClass(HINSTANCE hInstance,
   WNDCLASSEX wcex;
 
   wcex.cbSize = sizeof(WNDCLASSEX);
-  //zmg 2016-11-12 异形窗体
+  //zmg 2016-11-12 for transparent
   //wcex.style         = CS_OWNDC;
   //zmg 
   wcex.style		   = CS_PARENTDC;
@@ -463,41 +463,146 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
     return DefWindowProc(hWnd, message, wParam, lParam);
 
   switch (message) {
-    case WM_LBUTTONDOWN:
-		//zmg 2016-11-6 处理标题栏
+	//zmg 2016-12-6 处理边框
+	case WM_NCHITTEST:
+	{
+		int x = 0, y = 0;
+		auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<int>(self->GetWindowHandle()));
+		int border_width = ptr_tch_window_settings->WindowBorderWidth;
+		if (border_width == 0)
+			break;
+		RECT rect;
+		::GetWindowRect(::GetParent(hWnd), &rect);
+
+		int width = rect.right - rect.left;
+		int height = rect.bottom - rect.top;
+
+		x = LOWORD(lParam)-rect.left;
+		y = HIWORD(lParam)-rect.top;
+
+		int ht_flag = -1;
+		if (abs(x) <= border_width && abs(y) <= border_width)
 		{
+			ht_flag = HTTOPLEFT;
+			SetClassLongPtr(hWnd, GCLP_HCURSOR,
+				static_cast<LONG>(reinterpret_cast<LONG_PTR>(LoadCursor(NULL, IDC_SIZENWSE))));
+			::SetCursor(LoadCursor(NULL, IDC_SIZENWSE));
+		}
+		else
+			if (abs(x - width) <= border_width && y <= border_width)
+			{
+				ht_flag = HTTOPRIGHT;
+				SetClassLongPtr(hWnd, GCLP_HCURSOR,
+					static_cast<LONG>(reinterpret_cast<LONG_PTR>(LoadCursor(NULL, IDC_SIZENESW))));
+				::SetCursor(LoadCursor(NULL, IDC_SIZENESW));
+			}
+			else
+				if (abs(x) <= border_width && abs(y - height) <= border_width)
+				{
+					ht_flag = HTBOTTOMLEFT;
+					SetClassLongPtr(hWnd, GCLP_HCURSOR,
+						static_cast<LONG>(reinterpret_cast<LONG_PTR>(LoadCursor(NULL, IDC_SIZENESW))));
+					::SetCursor(LoadCursor(NULL, IDC_SIZENESW));
+				}
+				else
+					if (abs(x - width) <= border_width && abs(y - height) <= border_width)
+					{
+						ht_flag = HTBOTTOMRIGHT;
+						SetClassLongPtr(hWnd, GCLP_HCURSOR,
+							static_cast<LONG>(reinterpret_cast<LONG_PTR>(LoadCursor(NULL, IDC_SIZENWSE))));
+						::SetCursor(LoadCursor(NULL, IDC_SIZENWSE));
+					}
+					else
+						if (abs(x) <= border_width)
+						{
+							ht_flag = HTLEFT;								
+							SetClassLongPtr(hWnd, GCLP_HCURSOR,
+								static_cast<LONG>(reinterpret_cast<LONG_PTR>(LoadCursor(NULL, IDC_SIZEWE))));
+							::SetCursor(LoadCursor(NULL, IDC_SIZEWE));
+						}
+						else
+							if (abs(x - width) <= border_width)
+							{
+								ht_flag = HTRIGHT;
+								SetClassLongPtr(hWnd, GCLP_HCURSOR,
+									static_cast<LONG>(reinterpret_cast<LONG_PTR>(LoadCursor(NULL, IDC_SIZEWE))));
+								::SetCursor(LoadCursor(NULL, IDC_SIZEWE));
+							}
+							else
+								if (abs(y) <= border_width)
+								{
+									ht_flag = HTTOP;
+									SetClassLongPtr(hWnd, GCLP_HCURSOR,
+										static_cast<LONG>(reinterpret_cast<LONG_PTR>(LoadCursor(NULL, IDC_SIZENS))));
+									::SetCursor(LoadCursor(NULL, IDC_SIZENS));
+								}
+								else
+									if (abs(y - height) <= border_width)
+									{
+										ht_flag = HTBOTTOM;
+										SetClassLongPtr(hWnd, GCLP_HCURSOR,
+											static_cast<LONG>(reinterpret_cast<LONG_PTR>(LoadCursor(NULL, IDC_SIZENS))));
+										::SetCursor(LoadCursor(NULL, IDC_SIZENS));
+									}
+									else
+									{
+										SetClassLongPtr(hWnd, GCLP_HCURSOR,
+											static_cast<LONG>(reinterpret_cast<LONG_PTR>(LoadCursor(NULL, IDC_ARROW))));
+										::SetCursor(LoadCursor(NULL, IDC_ARROW));
+									}
+		self->ht_flag_ = ht_flag;
+		break;
+	}
+	//zmg end
+    case WM_LBUTTONDOWN:
+		//zmg 2016-11-6
+		{
+			//for border
+			if (self->ht_flag_ != 0) {
+				if (self->ht_flag_ == HTTOP) {
+					SendMessage(GetParent(hWnd), WM_SYSCOMMAND, SC_SIZE | WMSZ_TOP, lParam);
+					break;
+				}
+				else if (self->ht_flag_ == HTBOTTOM) {
+					SendMessage(GetParent(hWnd), WM_SYSCOMMAND, SC_SIZE | WMSZ_BOTTOM, lParam);
+					break;
+				}
+				else if (self->ht_flag_ == HTLEFT) {
+					SendMessage(GetParent(hWnd), WM_SYSCOMMAND, SC_SIZE | WMSZ_LEFT, lParam);
+					break;
+				}
+				else if (self->ht_flag_ == HTRIGHT) {
+					SendMessage(GetParent(hWnd), WM_SYSCOMMAND, SC_SIZE | WMSZ_RIGHT, lParam);
+					break;
+				}
+				else if (self->ht_flag_ == HTTOPLEFT) {
+					SendMessage(GetParent(hWnd), WM_SYSCOMMAND, SC_SIZE | WMSZ_TOPLEFT, lParam);
+					break;
+				}
+				else if (self->ht_flag_ == HTTOPRIGHT) {
+					SendMessage(GetParent(hWnd), WM_SYSCOMMAND, SC_SIZE | WMSZ_TOPRIGHT, lParam);
+					break;
+				}
+				else if (self->ht_flag_ == HTBOTTOMLEFT) {
+					SendMessage(GetParent(hWnd), WM_SYSCOMMAND, SC_SIZE | WMSZ_BOTTOMLEFT, lParam);
+					break;
+				}
+				else if (self->ht_flag_ == HTBOTTOMRIGHT) {
+					SendMessage(GetParent(hWnd), WM_SYSCOMMAND, SC_SIZE | WMSZ_BOTTOMRIGHT, lParam);
+					break;
+				}
+			}			
+			//for caption
 			int x = 0, y = 0;
-			auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<int>(self->GetWindowHandle()));
+			auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<int>(self->hwnd_));
 			x = LOWORD(lParam);
 			y = HIWORD(lParam);
-			//是否处于标题区域
-			bool is_caption = x <= ptr_tch_window_settings->CaptionRect.width + ptr_tch_window_settings->CaptionRect.x &&
+			//is caption
+			self->is_caption_moving_ = x <= ptr_tch_window_settings->CaptionRect.width + ptr_tch_window_settings->CaptionRect.x &&
 				x >= ptr_tch_window_settings->CaptionRect.x&&
 				y <= ptr_tch_window_settings->CaptionRect.height + ptr_tch_window_settings->CaptionRect.y&&
 				y >= ptr_tch_window_settings->CaptionRect.y;
-			
-			//是否处于裁剪区域
-			if (is_caption) {
-				bool is_clip = false;
-				for (auto it = ptr_tch_window_settings->CaptionClipRectList.begin(); it != ptr_tch_window_settings->CaptionClipRectList.end(); it++)
-				{
-					is_clip= x <= it->width + it->x &&
-						x >= it->x&&
-						y <= it->height + it->y&&
-						y >= it->y;
-					if (is_clip) {
-						is_caption = false;
-						break;
-					}
-				}
-			}
-			
-			if (is_caption)
-			{
-				PostMessage(::GetParent(hWnd), WM_NCLBUTTONDOWN, HTCAPTION, 0);
-				break;
-			}
-		}
+		}		
 		//zmg end
     case WM_RBUTTONDOWN:
     case WM_MBUTTONDOWN:
@@ -579,7 +684,7 @@ void OsrWindowWin::OnMouseEvent(UINT message, WPARAM wParam, LPARAM lParam) {
       last_click_time_ = 0;
     }
   }
-
+  
   switch(message) {
     case WM_LBUTTONDOWN:
     case WM_RBUTTONDOWN:
@@ -656,8 +761,20 @@ void OsrWindowWin::OnMouseEvent(UINT message, WPARAM wParam, LPARAM lParam) {
       break;
 
     case WM_MOUSEMOVE: {
+	  //zmg 2016-12-7
+	  //for caption
+	  if (is_caption_moving_)
+	  {
+	  	if (GetCapture() == hwnd_)
+	  		ReleaseCapture();
+	  	PostMessage(::GetParent(hwnd_), WM_NCLBUTTONDOWN, HTCAPTION, 0);
+	  	is_caption_moving_ = false;
+	  	break;
+	  }
+	  //zmg end
       int x = GET_X_LPARAM(lParam);
       int y = GET_Y_LPARAM(lParam);
+
       if (mouse_rotation_) {
         // Apply rotation effect.
         current_mouse_pos_.x = x;
@@ -749,7 +866,7 @@ void OsrWindowWin::OnSize() {
 
   if (browser_)
     browser_->GetHost()->WasResized();
-  //zmg 2016-11-11 异形窗体
+  //zmg 2016-11-11 for transparent
   //::SendMessage(hwnd_, WM_PAINT, 0, 0);  
   //zmg end
 }
@@ -798,7 +915,7 @@ void OsrWindowWin::OnPaint() {
 
   if (browser_)
     browser_->GetHost()->Invalidate(PET_VIEW);
-  //zmg 2016-11-11 异形窗体
+  //zmg 2016-11-11 for transparent
   renderer_.Render();  
   //zmg end
 }
@@ -864,7 +981,7 @@ bool OsrWindowWin::GetRootScreenRect(CefRefPtr<CefBrowser> browser,
 bool OsrWindowWin::GetViewRect(CefRefPtr<CefBrowser> browser,
                                CefRect& rect) {
   CEF_REQUIRE_UI_THREAD();
-  //zmg 2016-11-11 异形窗体
+  //zmg 2016-11-11 for transparent
   rect.x =  rect.y = 0;
   //zmg
   //rect.x = client_rect_.left;
@@ -947,7 +1064,7 @@ void OsrWindowWin::OnPaint(CefRefPtr<CefBrowser> browser,
     renderer_.OnPaint(browser, type, dirtyRects, buffer, width, height);
     return;
   }
-  //zmg 2016-11-10 异形窗体
+  //zmg 2016-11-10 for transparent
   /*
   if (!hdc_)
     EnableGL();

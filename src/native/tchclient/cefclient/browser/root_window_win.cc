@@ -331,7 +331,7 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
                        NULL, NULL, hInstance, NULL);
   CHECK(hwnd_);
 
-  //zmg 2016-11-11 “Ï–Œ¥∞ÃÂ
+  //zmg 2016-11-11 for transparent
   ::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_LAYERED/*|WS_EX_TRANSPARENT*/);
   //zmg end
 

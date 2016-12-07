@@ -36,8 +36,6 @@ namespace Tnelab {
 		bool JsInvokeProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
 		//处理SetCaptionRect
 		bool SetCaptionRectProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
-		//处理AddCaptionClipRect
-		bool AddCaptionClipRectProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
 		//处理CloseWindow
 		bool CloseWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
 		//处理MinimizeWindow
@@ -50,6 +48,8 @@ namespace Tnelab {
 		bool HideWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
 		//处理ShowWindow
 		bool ShowWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
+		//处理SetWindowBorder
+		bool SetWindowBorderProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
 	};
 }
 #endif  // CEF_TESTS_CEFCLIENT_TCH_ADD_TCH_QUERY_HANDLER_H_

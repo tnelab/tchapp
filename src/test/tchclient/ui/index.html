@@ -1,12 +1,12 @@
 ﻿<!DOCTYPE html>
-<html style="background-color:rgba(255,0,0,0.5)">
+<html style="background-color:rgba(255,0,0,0.5)" data-tch-window="{Border:5,Width:1024}">
 <head>
     <meta charset="UTF-8">
     <title>TchApp测试</title>
     <script src="/jquery-3.1.1.min.js"></script>
     <script src="/tchapp.js"></script>
     <style>
-        .caption{
+        #tch_window_caption{
             background-color:red;
             color:white;
         }
@@ -18,11 +18,11 @@
 </head>
 <body>
     <div style="background-color:rgba(0,255,0,0.5)">
-        <div class="caption" data-tch-caption="true">
+        <div id="tch_window_caption" data-tch-caption="true">
             TchApp测试
-            <span class="caption_button" data-tch-caption="false" onclick="Tch.CloseWindow()">Ｘ</span>
-            <span class="caption_button" data-tch-caption="false" onclick="Tch.MaximizingWindow()">口</span>
-            <span class="caption_button" data-tch-caption="false" onclick="Tch.MinimizeWindow()">＿</span>
+            <span class="caption_button" onclick="Tch.CloseWindow()">Ｘ</span>
+            <span class="caption_button" onclick="Tch.MaximizingWindow()">口</span>
+            <span class="caption_button" onclick="Tch.MinimizeWindow()">＿</span>
         </div>
         <a href="javascript:Tch.CloseWindow()">关闭窗口</a>
         <a href="javascript:Tch.MaximizingWindow()">最大化窗口</a>

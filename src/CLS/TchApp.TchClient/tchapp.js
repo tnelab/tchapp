@@ -37,28 +37,7 @@ Tch.SetCaptionRect = function (rect) {
         }
     });
 }
-//添加标题区域的排除区域，用于在标题栏中放置按钮
-Tch.AddCaptionClipRect = function (rect) {
-    let callback;
-    let len = arguments.length;
-    if (len === 1) {
-        callback = function (result) { }
-    }
-    else {
-        callback = arguments[1];
-    }
-    let invoke_body = JSON.stringify(rect);
-    let request_body = { TchQuery: "AddCaptionClipRect", Arguments: invoke_body };
-    window.cefQuery({
-        request: JSON.stringify(request_body),
-        onSuccess: function (response) {
-            callback(response);
-        },
-        onFailure: function (error_code, error_message) {
-            console.log(error_code + ":" + error_message);
-        }
-    });
-}
+
 //关闭窗口
 Tch.CloseWindow = function () {
     let callback;
@@ -191,27 +170,60 @@ Tch.ShowWindow = function () {
         }
     });
 }
+//设置边框大小
+Tch.SetWindowBorder = function (width) {
+    let callback;
+    let len = arguments.length;
+    if (len == 2) {
+        callback = arguments[1];        
+    }
+    else {
+        callback = function (result) { }
+    }
+    let obj = { Border: width };
+    let invoke_body = JSON.stringify(obj);
+    let request_body = { TchQuery: "SetWindowBorder", Arguments: invoke_body };
+    window.cefQuery({
+        request: JSON.stringify(request_body),
+        onSuccess: function (response) {
+            callback(response);
+        },
+        onFailure: function (error_code, error_message) {
+            console.log(error_code + ":" + error_message);
+        }
+    });
+}
+
+//初始化
 $(function () {
-    if ($("*[data-tch-caption=true]").length > 0) {
-        let caption_elm = $("*[data-tch-caption=true]").first();
-        setTimeout(function () {
-            let caption_rect = {};
-            caption_rect.X = caption_elm.offset().left;
-            caption_rect.Y = caption_elm.offset().top;
-            caption_rect.Width = caption_elm.width();
-            caption_rect.Height = caption_elm.height();
-            Tch.SetCaptionRect(caption_rect, function (result) { console.log(result); });
-        }, 100);
-        $(caption_elm).find("*[data-tch-caption=false]").each(function () {
-            let clip_elm = $(this);
+    let set_caption_rect = function () {
+        //处理标题栏,内部ID：tch_window_caption表示标题栏
+        if ($("#tch_window_caption").length > 0) {
+            let caption_elm = $("#tch_window_caption");
             setTimeout(function () {
                 let caption_rect = {};
-                caption_rect.X = clip_elm.offset().left;
-                caption_rect.Y = clip_elm.offset().top;
-                caption_rect.Width = clip_elm.width();
-                caption_rect.Height = clip_elm.height();
-                Tch.AddCaptionClipRect(caption_rect, function (result) { console.log(result); });
+                caption_rect.X = caption_elm.offset().left;
+                caption_rect.Y = caption_elm.offset().top;
+                caption_rect.Width = caption_elm.width();
+                caption_rect.Height = caption_elm.height();
+                Tch.SetCaptionRect(caption_rect, function (result) { console.log(result); });
             }, 100);
-        });
+        }
+    }
+    set_caption_rect();
+    $(window).resize(set_caption_rect);
+    //处理window设置
+    let window_settings = $("html").attr("data-tch-window");
+    if (window_settings != undefined) {
+        try {
+            window_settings = eval("window_settings="+window_settings);
+        }
+        catch (err) {
+            alert("data-tch-window error:" + err);
+        }
+        //处理边框
+        if (!isNaN(window_settings.Border)&&window_settings.Border>0) {
+            Tch.SetWindowBorder(window_settings.Border);
+        }
     }
 });

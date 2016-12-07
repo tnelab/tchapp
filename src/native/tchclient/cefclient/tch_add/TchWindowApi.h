@@ -11,8 +11,8 @@ namespace Tnelab {
 		class TchWindowSettings {
 		public:
 			CefRect CaptionRect;
-			std::vector<CefRect> CaptionClipRectList;
 			CefRect OldRootWindowRect;
+			int WindowBorderWidth = 0;
 		};
 		static void CloseWindow(CefRefPtr<CefFrame> frame);
 		static void MinimizeWindow(CefRefPtr<CefFrame> frame);
