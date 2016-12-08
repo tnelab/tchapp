@@ -200,14 +200,12 @@ $(function () {
         //处理标题栏,内部ID：tch_window_caption表示标题栏
         if ($("#tch_window_caption").length > 0) {
             let caption_elm = $("#tch_window_caption");
-            setTimeout(function () {
-                let caption_rect = {};
-                caption_rect.X = caption_elm.offset().left;
-                caption_rect.Y = caption_elm.offset().top;
-                caption_rect.Width = caption_elm.width();
-                caption_rect.Height = caption_elm.height();
-                Tch.SetCaptionRect(caption_rect, function (result) { console.log(result); });
-            }, 100);
+            let caption_rect = {};
+            caption_rect.X = caption_elm.offset().left;
+            caption_rect.Y = caption_elm.offset().top;
+            caption_rect.Width = caption_elm.width();
+            caption_rect.Height = caption_elm.height();
+            Tch.SetCaptionRect(caption_rect, function (result) { console.log(result); });
         }
     }
     set_caption_rect();

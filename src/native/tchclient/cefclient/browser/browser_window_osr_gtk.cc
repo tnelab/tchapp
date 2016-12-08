@@ -1218,7 +1218,17 @@ void BrowserWindowOsrGtk::Create(ClientWindowHandle parent_handle) {
 
   glarea_ = gtk_drawing_area_new();
   DCHECK(glarea_);
-
+  
+  //zmg 2016-12-8
+  //for js caption rect
+  gint width, height;
+  gdk_drawable_get_size(GDK_DRAWABLE(parent_handle), &width, &height);
+  glarea_->allocation.x=0;
+  glarea_->allocation.y=0;
+  glarea_->allocation.width=width;
+  glarea_->allocation.height=height;
+  //zmg end
+  
   GdkGLConfig* glconfig = gdk_gl_config_new_by_mode(
       static_cast<GdkGLConfigMode>(GDK_GL_MODE_RGB |
                                    GDK_GL_MODE_DEPTH |

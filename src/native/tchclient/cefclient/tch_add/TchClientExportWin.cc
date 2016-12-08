@@ -39,21 +39,21 @@ int TchStart(const char* url, int x,int y,int width,int height) {
 	//set command line string
 
 	//command_str << L"TchApp";
-	command_str << L" --multi-threaded-message-loop=true";
+	//command_str << L" --multi-threaded-message-loop";
 	//command_str << L" --cache-path=./TchApp.CefClient/cache";
 	command_str << L" --url=";
 	command_str << url;
-	//command_str<<L" off-screen-rendering-enabled=true";
-	//command_str<<L" off-screen-frame-rate=15";
-	//command_str<<L" transparent-painting-enabled=true";
-	command_str << L" --show-update-rect=true";
-	//command_str<<L" --mouse-cursor-change-disabled=true";
-	//command_str << L" --request-context-per-browser=true";
-	command_str << L" --request-context-shared-cache=true";
+	command_str<<L" --off-screen-rendering-enabled";
+	//command_str<<L" --off-screen-frame-rate=15";
+	command_str<<L" --transparent-painting-enabled";
+	command_str << L" --show-update-rect";
+	//command_str<<L" --mouse-cursor-change-disabled";
+	//command_str << L" --request-context-per-browser";
+	command_str << L" --request-context-shared-cache";
 	//command_str<<L" --background-color=#ffffff";
-	command_str << L" --enable-gpu=true";
+	command_str << L" --enable-gpu";
 	//command_str<<L" --filter-url=http://www.baidu.com,http://www.sina.com.cn";
-
+	//command_str<<L" --type=renderer";//进程类型:windows为renderer，linux为zygote
 	command_line->InitFromString(command_str.str());
 	// Create a ClientApp of the correct type.
 	CefRefPtr<CefApp> app;
@@ -89,7 +89,6 @@ int TchStart(const char* url, int x,int y,int width,int height) {
 
 	// Create the main message loop object.
 	scoped_ptr<MainMessageLoop> message_loop;
-	settings.multi_threaded_message_loop = false;
 	if (settings.multi_threaded_message_loop)
 		message_loop.reset(new MainMessageLoopMultithreadedWin);
 	else
@@ -110,7 +109,6 @@ int TchStart(const char* url, int x,int y,int width,int height) {
 		std::string(url));   // Use default URL.
 	*/
 	//zmg
-	settings.windowless_rendering_enabled = true;
 	CefRect rect;
 	rect.x = x;
 	rect.y = y;
