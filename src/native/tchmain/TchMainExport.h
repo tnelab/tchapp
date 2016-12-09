@@ -44,6 +44,7 @@ TCH_CLIENT_API(SetTchErrorDelegate, int, void* delegate);
 TCH_CLIENT_API(SetJsInvokeDelegate, void, void* delegate);
 TCH_CLIENT_API(SetResourceRequestDelegate, void, void* delegate);
 TCH_CLIENT_API(OnTchError, void, int code, const char* msg);
+TCH_CLIENT_API(SetTchAppDomainName, void, const char* domain_name);
 
 #undef TCH_CLIENT_API
 
@@ -60,6 +61,7 @@ extern "C" {
 	TCHAPI void SetJsInvokeDelegate(void* delegate);
 	TCHAPI void SetResourceRequestDelegate(void* delegate);
 	TCHAPI void OnTchError(int code, const char* msg);
+	TCHAPI void SetTchAppDomainName(const char* domain_name);
 }
 
 

@@ -47,7 +47,7 @@ namespace TchApp.TchClient
             //从程序集中查找
             string resource_name = tch_request_info.Uri.AbsolutePath.Remove(0, 1).Replace("/", ".");
             Stream resource_stream = null;
-            foreach (var assembly in Client.This.ResourceAssemblySet)
+            foreach (var assembly in Application.This.ResourceAssemblySet)
             {
                 resource_stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{resource_name}");
                 if (resource_stream != null) break;
@@ -70,8 +70,8 @@ namespace TchApp.TchClient
         /// <returns></returns>
         public TchResponseInfo GetResponseInfoFormFilter(string url)
         {
-            if (Client.This.FilterUrlDic.ContainsKey(url))
-                return Client.This.FilterUrlDic[url](url);
+            if (Application.This.FilterUrlDic.ContainsKey(url))
+                return Application.This.FilterUrlDic[url](url);
             return null;
         }
         /// <summary>
@@ -91,7 +91,7 @@ namespace TchApp.TchClient
             if (tch_response_info != null) return tch_response_info;
 
             //未找到任何资源
-            Client.This.OnError(-1, $"[{tch_request_info.Uri.AbsolutePath}] File Not Found");
+            Application.This.OnError(-1, $"[{tch_request_info.Uri.AbsolutePath}] File Not Found");
             return TchHelper.ParseToResponse(Encoding.UTF8.GetBytes($"<html><head><meta charset=\"UTF-8\"/><title>处理请求错误</title></head><body><h1>{tch_request_info.Uri.AbsolutePath}没找到</h1></body></html>"), 404, "File Not Found");
         }
         private DefaultTchRequestProcessor() { }

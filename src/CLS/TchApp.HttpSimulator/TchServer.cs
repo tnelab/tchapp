@@ -90,7 +90,7 @@ namespace TchApp.HttpSimulator
             task.Start();
             if (!isSimulator)
             {
-                Client.This.Start(start_url);
+                Application.This.Run(start_url);
             }
             else
             {

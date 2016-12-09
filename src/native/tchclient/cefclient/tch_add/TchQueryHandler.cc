@@ -1,10 +1,10 @@
-// Called due to cefQuery execution in binding.html.
+ï»¿// Called due to cefQuery execution in binding.html.
 #include "TchWindowApi.h"
 #include "TchQueryHandler.h"
 #include "cefclient/browser/main_context.h"
 using namespace client;
 namespace Tnelab {
-	//×ÊÔ´´¦ÀíÎ¯ÍĞ
+	//èµ„æºå¤„ç†å§”æ‰˜
 	TchQueryHandler::JsInvokeDelegate TchQueryHandler::user_js_invoke_handle_ = 0;
 
 	TchQueryHandler::TchQueryHandler() { InitQueryProcessorMap_(); }
@@ -21,7 +21,7 @@ namespace Tnelab {
 		if (it == query_processor_map_.end()) return false;
 		return query_processor_map_[tch_query](request_dict, frame, query_id, request, persistent, callback);
 	}
-	//ÉèÖÃÓÃ»§Jsµ÷ÓÃÎ¯ÍĞ
+	//è®¾ç½®ç”¨æˆ·Jsè°ƒç”¨å§”æ‰˜
 	void TchQueryHandler::SetJsInvokeDelegate(JsInvokeDelegate delegate) {
 		user_js_invoke_handle_ = delegate;
 	}
@@ -57,7 +57,7 @@ namespace Tnelab {
 	}
 
 	//TchQueryProcessor List
-	//´¦ÀíJsInvoke
+	//å¤„ç†JsInvoke
 	bool TchQueryHandler::JsInvokeProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		if (user_js_invoke_handle_ == 0) {
 			callback->Failure(-1, "JsInvokeDelegate is null");
@@ -68,7 +68,7 @@ namespace Tnelab {
 		callback->Success(result);
 		return true;
 	}
-	//´¦ÀíSetCaptionRect
+	//å¤„ç†SetCaptionRect
 	bool TchQueryHandler::SetCaptionRectProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		auto invoke_json = request_dict->GetString("Arguments");
 		auto json_val=CefParseJSON(invoke_json, JSON_PARSER_RFC);
@@ -83,43 +83,43 @@ namespace Tnelab {
 		callback->Success("true");
 		return true;
 	}
-	//´¦ÀíCloseWindow
+	//å¤„ç†CloseWindow
 	bool TchQueryHandler::CloseWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		TchWindowApi::CloseWindow(frame);
 		callback->Success("true");
 		return true;
 	}
-	//´¦ÀíMinimizeWindow
+	//å¤„ç†MinimizeWindow
 	bool TchQueryHandler::MinimizeWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		TchWindowApi::MinimizeWindow(frame);
 		callback->Success("true");
 		return true;
 	}
-	//´¦ÀíMaximizingWindow
+	//å¤„ç†MaximizingWindow
 	bool TchQueryHandler::MaximizingWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		TchWindowApi::MaximizingWindow(frame);
 		callback->Success("true");
 		return true;
 	}
-	//´¦ÀíRestoreWindow
+	//å¤„ç†RestoreWindow
 	bool TchQueryHandler::RestoreWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		TchWindowApi::RestoreWindow(frame);
 		callback->Success("true");
 		return true;
 	}
-	//´¦ÀíHideWindow
+	//å¤„ç†HideWindow
 	bool TchQueryHandler::HideWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		TchWindowApi::HideWindow(frame);
 		callback->Success("true");
 		return true;
 	}
-	//´¦ÀíShowWindow
+	//å¤„ç†ShowWindow
 	bool TchQueryHandler::ShowWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		TchWindowApi::ShowWindow(frame);
 		callback->Success("true");
 		return true;
 	}
-	//´¦ÀíShowWindow
+	//å¤„ç†ShowWindow
 	bool TchQueryHandler::SetWindowBorderProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		auto invoke_json = request_dict->GetString("Arguments");
 		auto json_val = CefParseJSON(invoke_json, JSON_PARSER_RFC);

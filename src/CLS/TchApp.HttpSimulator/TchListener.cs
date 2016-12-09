@@ -46,9 +46,9 @@ namespace TchApp.HttpSimulator
 
             var task = new Task<int>(() => {
                 var argv=System.Environment.GetCommandLineArgs();
-                return Client.This
+                return Application.This
                 .UseTchRequestProcessor(_OnResourceRequest)
-                .Start(options.StartUrl);
+                .Run(options.StartUrl);
             });
             task.Start();
             await task;

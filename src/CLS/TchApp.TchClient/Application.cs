@@ -13,7 +13,7 @@ namespace TchApp.TchClient
     /// <summary>
     /// 负责与web交互
     /// </summary>
-    public sealed class Client
+    public sealed class Application
     {
         #region 原始c导出函数及委托
         [UnmanagedFunctionPointerAttribute(CallingConvention.Cdecl)]
@@ -37,6 +37,8 @@ namespace TchApp.TchClient
         extern static void SetResourceRequestDelegate(ResourceRequestDelegate func);
         [DllImport("tchmain")]
         extern static void OnTchError(int code,string msg);
+        [DllImport("tchmain")]
+        extern static void SetTchAppDomainName(string domain_name);
         #endregion
 
         #region 导出c函数封装
@@ -81,7 +83,7 @@ namespace TchApp.TchClient
             }
             catch(Exception ex)
             {
-                Client.This.OnError(-1, $"request exception:{ex.Message}");
+                Application.This.OnError(-1, $"request exception:{ex.Message}");
                 response_info=TchHelper.ParseToResponse($"<html><head><meta charset=\"UTF-8\"/><title>处理请求错误</title></head><body><h1>处理请求发生异常，{ex.Message}</h1></body></html>");
             }
             try
@@ -98,7 +100,7 @@ namespace TchApp.TchClient
             }
             catch(Exception ex)
             {
-                Client.This.OnError(-1, $"request exception:{ex.Message}");
+                Application.This.OnError(-1, $"request exception:{ex.Message}");
             }
             return 0;
         }
@@ -107,7 +109,7 @@ namespace TchApp.TchClient
         /// <summary>
         /// 单例构造函数
         /// </summary>
-        private Client()
+        private Application()
         {
             SetResourceRequestDelegate(onTchRequest);
             if (this.processTchJsInvoke != null) SetJsInvokeDelegate(this.jsInvokeProcessor);
@@ -120,24 +122,29 @@ namespace TchApp.TchClient
         /// <summary>
         /// 单例client对象
         /// </summary>
-        public static Client This = new Client();
+        public static Application This = new Application();
 
         /// <summary>
         /// 启动web解析和渲染
         /// </summary>
-        /// <param name="url">初始url,tch内部域名为：tchapp.localhost,eg:http://tchapp.localhost/ui/index.html</param>
+        /// <param name="url">初始url,tch默认内部域名为：tchapp.localhost,eg:http://tchapp.localhost/ui/index.html or ui/index.html or /ui/index.html</param>
         /// <param name="sizeable">窗口是否可调整大小</param>
         /// <param name="x">窗口初始x坐标</param>
         /// <param name="y">窗口初始y坐标</param>
         /// <param name="width">窗口初始宽度</param>
         /// <param name="height">窗口初始高度</param>
         /// <returns>无措返回0</returns>
-        public int Start(string url,int x = -1, int y = -1, int width = 800, int height = 600)
+        public int Run(string url,int x = -1, int y = -1, int width = 800, int height = 600)
         {
-            int exit_code= TchStart(url, x, y, width, height);
-
+            Uri result;
+            if (!Uri.TryCreate(url, UriKind.Absolute, out result))
+                if (!Uri.TryCreate($"http://{this.TchAppDomainName}/{url}", UriKind.Absolute, out result))
+                    if (!Uri.TryCreate($"http://{this.TchAppDomainName}{url}", UriKind.Absolute, out result))
+                        throw new ArgumentException($"[{url}] is bad url.");
+            int exit_code= TchStart(result.AbsoluteUri, x, y, width, height);
             return exit_code;
         }
+
         /// <summary>
         /// 引发一个给错误给错误处理器统一处理
         /// </summary>
@@ -156,7 +163,7 @@ namespace TchApp.TchClient
         /// </summary>
         /// <param name="assembly_name">包含资源的程序集名称</param>
         /// <returns>Client对象</returns>
-        public Client AddResourceAssembly(string assembly_name)
+        public Application AddResourceAssembly(string assembly_name)
         {            
             ResourceAssemblySet.Add(Assembly.Load(new AssemblyName(assembly_name)));
             return this;
@@ -167,7 +174,7 @@ namespace TchApp.TchClient
         /// </summary>
         /// <param name="tch_js_invoke_processor">js调用处理器</param>
         /// <returns>Client对象</returns>
-        public Client UseTchJsInvokeProcessor(Func<string, string> tch_js_invoke_processor) {
+        public Application UseTchJsInvokeProcessor(Func<string, string> tch_js_invoke_processor) {
             this.processTchJsInvoke = tch_js_invoke_processor;
             return this;
         }
@@ -177,7 +184,7 @@ namespace TchApp.TchClient
         /// </summary>
         /// <param name="tch_error_processor">错误处理器</param>
         /// <returns>Client对象</returns>
-        public Client UseTchErrorProcessor(Action<int, string> tch_error_processor)
+        public Application UseTchErrorProcessor(Action<int, string> tch_error_processor)
         {
             this.processTchError = tch_error_processor;
             return this;
@@ -196,7 +203,7 @@ namespace TchApp.TchClient
         /// </summary>        
         /// <param name="tch_request_processor">请求处理器</param>
         /// <returns>Client对象</returns>
-        public Client UseTchRequestProcessor(Func<TchRequestInfo,TchResponseInfo> tch_request_processor)
+        public Application UseTchRequestProcessor(Func<TchRequestInfo,TchResponseInfo> tch_request_processor)
         {
             this.tchRequestProcessor = tch_request_processor;
             return this;
@@ -209,9 +216,42 @@ namespace TchApp.TchClient
         /// <param name="url">需要过滤的url eg:/ui/index.html</param>
         /// <param name="url_filter">能够返回url指向资源的处理器</param>
         /// <returns>url指向的资源字节数组</returns>
-        public Client AddUrlFilter(string url,Func<string,TchResponseInfo> url_filter)
+        public Application AddUrlFilter(string url,Func<string,TchResponseInfo> url_filter)
         {
             this.FilterUrlDic.Add(url, url_filter);
+            return this;
+        }
+
+        string tchapp_domain_name_ = "tchapp.localhost";
+        /// <summary>
+        /// 获取当前tchapp的转发域名，向此域名发出的请求都会被转发给程序本身，而不是寻找该域名所在的服务器。
+        /// 该域名默认为tchapp.localhost，该域名必须符合互联网域名命名规则。
+        /// </summary>
+        public string TchAppDomainName
+        {
+            set
+            {
+                Uri result;
+                bool is_ok = Uri.TryCreate("http://" + value + "/", UriKind.Absolute, out result);
+                if (!is_ok)
+                    throw new ArgumentException($"[{value}] is bad domain name.");
+                this.tchapp_domain_name_ = result.Host;
+                SetTchAppDomainName(tchapp_domain_name_);
+            }
+            get
+            {
+                return this.tchapp_domain_name_;
+            }
+        }
+        /// <summary>
+        /// 设置tchapp的转发域名，向此域名发出的请求都会被转发给程序本身，而不是寻找该域名所在的服务器。
+        /// 该域名默认为tchapp.localhost，该域名必须符合互联网域名命名规则。
+        /// </summary>
+        /// <param name="domain_name">域名</param>
+        /// <returns></returns>
+        public Application UseTchAppDomainName(string domain_name)
+        {
+            this.TchAppDomainName = domain_name;
             return this;
         }
         #endregion

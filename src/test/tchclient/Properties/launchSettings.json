@@ -1,9 +1,6 @@
 {
   "profiles": {
-    "tchclient": {
-      "commandName": "Project"
-    },
-    "TchApp": {
+    "TchApp X64 Debug": {
       "executablePath": "$(SolutionDir)..\\publish\\windows\\x64\\Debug\\tchclient.exe",
       "workingDirectory": "$(SolutionDir)..\\publish\\windows\\x64\\Debug\\"
     }

@@ -21,9 +21,10 @@ namespace tchclient
 
 
             int exit_code = 0;
-            exit_code = Client.This
+            exit_code = Application.This
                 .AddResourceAssembly("tchclient")
-                .Start("http://tchapp.localhost/ui/index.html");
+                .UseTchAppDomainName("www.8888.com")
+                .Run("ui/index.html");
 
             return exit_code;
         }

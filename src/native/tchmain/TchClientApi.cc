@@ -31,3 +31,7 @@ void OnTchError(int code,const char* msg) {
 	auto func = (OnTchError_ptr)GetFuncPtr(htchclient, "OnTchError");
 	func(code,msg);
 }
+void SetTchAppDomainName(const char* domain_name) {
+	auto func = (SetTchAppDomainName_ptr)GetFuncPtr(htchclient, "SetTchAppDomainName");
+	func(domain_name);
+}
