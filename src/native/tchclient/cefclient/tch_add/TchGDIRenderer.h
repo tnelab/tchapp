@@ -51,7 +51,7 @@ namespace Tnelab {
 		void ClearPopupRects();
 	private:
 		void createSourceHDC(HDC& hdc,HBITMAP& hbitmap,int width,int height);
-		void bgra2rgba(char* out_color_bytes, char* out_transparent_color_bytes,const char* bytes_buffer,int startX,int startY,int width,int height);
+		void bgra2rgba(uint32* out_color_bytes, char* out_transparent_color_bytes,const uint32* bytes_buffer,int startX,int startY,int width,int height,int buffer_width);
 
 		void *bmp_cnt_ = 0;
 		BITMAPINFOHEADER bih_;

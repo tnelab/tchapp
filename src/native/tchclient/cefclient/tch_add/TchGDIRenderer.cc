@@ -65,18 +65,18 @@ void Tnelab::TchGDIRenderer::OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHan
 	if (width == 0 || height == 0) return;
 	
 	//准备web渲染DC
-	char* bytes_buffer = (char*)buffer;
+	uint32* bytes_buffer = (uint32*)buffer;
 	if (type == PET_VIEW) {
-		//update_rect_ = dirtyRects[0];		
+		update_rect_ = dirtyRects[0];		
 
 		if (old_width != view_width_ || old_height != view_height_ ||
 			(dirtyRects.size() == 1 &&
 				dirtyRects[0] == CefRect(0, 0, view_width_, view_height_))) {
 			// Update/resize.			
 			//bgra到rgba转换
-			char* color_bytes = (char*)malloc(view_height_*view_width_*4);
+			uint32* color_bytes = (uint32*)malloc(view_height_*view_width_*4);
 			char* transparent_color_bytes = (char*)malloc(view_height_*view_width_ * 4);
-			bgra2rgba(color_bytes, transparent_color_bytes, bytes_buffer, 0, 0, view_width_, view_height_);
+			bgra2rgba(color_bytes, transparent_color_bytes, bytes_buffer, 0, 0, view_width_, view_height_,width);
 			//输出到source_hdc
 			SetDIBits(source_hdc_, source_hdc_hbitmap_, 0, view_height_, color_bytes, (BITMAPINFO*)&bih_, DIB_RGB_COLORS);
 			//准备全透明遮罩DC
@@ -91,9 +91,9 @@ void Tnelab::TchGDIRenderer::OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHan
 				const CefRect& rect = *i;
 				DCHECK(rect.x + rect.width <= view_width_);
 				DCHECK(rect.y + rect.height <= view_height_);
-				char* color_bytes = (char*)malloc(rect.width*rect.height*4);
+				uint32* color_bytes = (uint32*)malloc(rect.width*rect.height*4);
 				char* transparent_color_bytes = (char*)malloc(rect.width*rect.height * 4);
-				bgra2rgba(color_bytes, bytes_buffer, transparent_color_bytes,rect.x, rect.y, rect.width, rect.height);
+				bgra2rgba(color_bytes, transparent_color_bytes, bytes_buffer,rect.x, rect.y, rect.width, rect.height,width);
 				//局部刷新source_hdec				
 				StretchDIBits(source_hdc_,rect.x, rect.y, rect.width,rect.height, rect.x, rect.y, rect.width, rect.height, color_bytes, (BITMAPINFO*)&bih_, DIB_RGB_COLORS,0);
 				//准备全透明遮罩DC
@@ -125,9 +125,9 @@ void Tnelab::TchGDIRenderer::OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHan
 			h -= y + h - view_height_;
 
 		// Update the popup rectangle.
-		char* color_bytes = (char*)malloc(w*h * 4);
+		uint32* color_bytes = (uint32*)malloc(w*h*4);
 		char* transparent_color_bytes = (char*)malloc(w*h * 4);
-		bgra2rgba(color_bytes, transparent_color_bytes,bytes_buffer, x, y, w, h);
+		bgra2rgba(color_bytes, transparent_color_bytes,bytes_buffer, x, y, w, h,width);
 		//局部刷新source_hdec				
 		StretchDIBits(source_hdc_, x, y, w, h, x, y, w, h, color_bytes, (BITMAPINFO*)&bih_, DIB_RGB_COLORS, 0);
 		//准备全透明遮罩DC
@@ -257,16 +257,12 @@ void Tnelab::TchGDIRenderer::createSourceHDC(HDC& hdc, HBITMAP& hbitmap, int wid
 	SetPixelFormat(hdc, format, &pfd);
 }
 
-void Tnelab::TchGDIRenderer::bgra2rgba(char * out_color_bytes, char* out_transparent_color_bytes, const char * bytes_buffer, int startX, int startY, int width, int height)
+void Tnelab::TchGDIRenderer::bgra2rgba(uint32 * out_color_bytes, char* out_transparent_color_bytes, const uint32 * bytes_buffer, int startX, int startY, int width, int height,int buffer_width)
 {
 	ZeroMemory(out_transparent_color_bytes, width*height * 4);
 	for (int h =0; h < height; ++h) {
 		for (int l = 0; l < width;++l) {
-			out_color_bytes[(h*width + l) * 4 + 0] = bytes_buffer[((height - 1 - (startY + h )) * width + startX + l) * 4 + 0];//red
-			out_color_bytes[(h*width + l) * 4 + 1] = bytes_buffer[((height - 1 - (startY + h )) * width + startX + l) * 4 + 1];//green
-			out_color_bytes[(h*width + l) * 4 + 2] = bytes_buffer[((height - 1 - (startY + h )) * width + startX + l) * 4 + 2];//blue
-			out_color_bytes[(h*width + l) * 4 + 3] = bytes_buffer[((height - 1 - (startY + h )) * width + startX + l) * 4 + 3];//alpha
-
+			out_color_bytes[(height - 1 - h ) * width + l] = bytes_buffer[(startY + h ) * width + startX + l];
 			out_transparent_color_bytes[(h*width + l) * 4 + 3] = 1;
 		}
 	}

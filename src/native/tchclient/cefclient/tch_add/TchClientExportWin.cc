@@ -44,7 +44,7 @@ int TchStart(const char* url, int x,int y,int width,int height) {
 	command_str << L" --url=";
 	command_str << url;
 	command_str<<L" --off-screen-rendering-enabled";
-	//command_str<<L" --off-screen-frame-rate=15";
+	command_str<<L" --off-screen-frame-rate=15";
 	command_str<<L" --transparent-painting-enabled";
 	command_str << L" --show-update-rect";
 	//command_str<<L" --mouse-cursor-change-disabled";
