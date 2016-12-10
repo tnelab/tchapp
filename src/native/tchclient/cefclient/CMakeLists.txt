@@ -35,6 +35,7 @@ source_group(cefclient\\\\tch_add FILES ${CEFCLIENT_WINDOWS_TCHADD_SRCS})
 set(CEFCLIENT_LINUX_TCHADD_SRCS
   tch_add/TchClientExportGtk.cc
   tch_add/TchWindowApiGtk.cc
+  tch_add/TchCairoRenderer.cc
 )
 source_group(cefclient\\\\tch_add FILES ${CEFCLIENT_LINUX_TCHADD_SRCS})
 # zmg end

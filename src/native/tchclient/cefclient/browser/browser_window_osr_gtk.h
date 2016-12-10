@@ -9,6 +9,9 @@
 #include "cefclient/browser/browser_window.h"
 #include "cefclient/browser/client_handler_osr.h"
 #include "cefclient/browser/osr_renderer.h"
+// zmg 2016-12-10 for transparent
+#include "cefclient/tch_add/TchCairoRenderer.h"
+// zmg end
 
 namespace client {
 
@@ -100,6 +103,11 @@ class BrowserWindowOsrGtk : public BrowserWindow,
   static gint FocusEvent(GtkWidget* widget,
                          GdkEventFocus* event,
                          BrowserWindowOsrGtk* self);
+  // zmg 2016-11-26
+  static void ScreenChange(GtkWidget* widget,
+                           GdkScreen* old_screen,
+                           BrowserWindowOsrGtk* self);
+  // zmg end
 
   bool IsOverPopupWidget(int x, int y) const;
   int GetPopupXOffset() const;
@@ -111,7 +119,10 @@ class BrowserWindowOsrGtk : public BrowserWindow,
 
   // The below members will only be accessed on the main thread which should be
   // the same as the CEF UI thread.
-  OsrRenderer renderer_;
+  // zmg 2016-12-10  for transparent
+  // OsrRenderer renderer_;
+  Tnelab::TchCairoRenderer renderer_;
+  // zmg end
   ClientWindowHandle glarea_;
   bool hidden_;
   bool gl_enabled_;
@@ -119,10 +130,11 @@ class BrowserWindowOsrGtk : public BrowserWindow,
 
   float device_scale_factor_;
 
-  // zmg 2016-11-23
+  // zmg 2016-11-26
   bool caption_moving_;
   int caption_moving_begin_x_;
   int caption_moving_begin_y_;
+  bool supports_alpha_;
   // zmg end
 
   DISALLOW_COPY_AND_ASSIGN(BrowserWindowOsrGtk);

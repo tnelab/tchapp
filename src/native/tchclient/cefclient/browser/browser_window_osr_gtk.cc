@@ -925,10 +925,11 @@ BrowserWindowOsrGtk::BrowserWindowOsrGtk(BrowserWindow::Delegate* delegate,
       gl_enabled_(false),
       painting_popup_(false),
       device_scale_factor_(1.0f),
-      // zmg 2016-11-23
+      // zmg 2016-11-26
       caption_moving_(false),
       caption_moving_begin_x_(0),
-      caption_moving_begin_y_(0) {
+      caption_moving_begin_y_(0),
+      supports_alpha_(false) {
       // zmg end
   client_handler_ = new ClientHandlerOsr(this, this, startup_url);
 }
@@ -1156,19 +1157,22 @@ void BrowserWindowOsrGtk::OnPaint(
     return;
   }
 
+  // zmg 2016-12-10 for transparent
   if (painting_popup_) {
-    renderer_.OnPaint(browser, type, dirtyRects, buffer, width, height);
+    renderer_.OnPaint(browser, this, type, dirtyRects, buffer, width, height);
     return;
   }
-
+/* 
   if (!gl_enabled_)
     EnableGL();
 
   ScopedGLContext scoped_gl_context(glarea_, true);
   if (!scoped_gl_context.IsValid())
     return;
+*/
+  renderer_.OnPaint(browser, this, type, dirtyRects, buffer, width, height);
+  // zmg end
 
-  renderer_.OnPaint(browser, type, dirtyRects, buffer, width, height);
   if (type == PET_VIEW && !renderer_.popup_rect().IsEmpty()) {
     painting_popup_ = true;
     browser->GetHost()->Invalidate(PET_POPUP);
@@ -1271,6 +1275,13 @@ void BrowserWindowOsrGtk::Create(ClientWindowHandle parent_handle) {
                    G_CALLBACK(&BrowserWindowOsrGtk::FocusEvent), this);
   g_signal_connect(G_OBJECT(glarea_), "focus_out_event",
                    G_CALLBACK(&BrowserWindowOsrGtk::FocusEvent), this);
+  // zmg 2016-11-26
+  // support transparent background
+  gtk_widget_set_app_paintable(glarea_, true);
+  g_signal_connect(G_OBJECT(glarea_), "screen-changed",
+                   G_CALLBACK(&BrowserWindowOsrGtk::ScreenChange), this);
+  BrowserWindowOsrGtk::ScreenChange(glarea_, nullptr, this);
+  // zmg end
 
   gtk_container_add(GTK_CONTAINER(parent_handle), glarea_);
 
@@ -1522,6 +1533,29 @@ gint BrowserWindowOsrGtk::FocusEvent(GtkWidget* widget,
      self->browser_->GetHost()->SendFocusEvent(event->in == TRUE);
   return TRUE;
 }
+
+// zmg 2016-11-26
+// static
+void BrowserWindowOsrGtk::ScreenChange(GtkWidget* widget,
+                                 GdkScreen* old_screen,
+                                 BrowserWindowOsrGtk* self) {
+  /* To check if the display supports alpha channels, get the colormap */
+  GdkScreen *screen = gtk_widget_get_screen(widget);
+  GdkColormap *colormap = gdk_screen_get_rgba_colormap(screen);
+
+  if (!colormap) {
+    printf("Screen of drawing area does not support alpha channels\n");
+    colormap = gdk_screen_get_rgb_colormap(screen);
+    self->supports_alpha_ = false;
+  }
+  else {
+    printf("Screen of drawing area supports alpha channels\n");
+    self->supports_alpha_ = true;
+  }
+
+  gtk_widget_set_colormap(widget, colormap);
+}
+// zmg end
 
 bool BrowserWindowOsrGtk::IsOverPopupWidget(int x, int y) const {
   const CefRect& rc = renderer_.popup_rect();
