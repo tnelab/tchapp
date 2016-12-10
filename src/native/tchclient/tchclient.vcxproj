@@ -252,6 +252,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libcef.lib;libcef_dll_wrapper.lib;Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>libcef.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName)_cpp.pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -271,6 +272,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libcef.lib;libcef_dll_wrapper.lib;Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>libcef.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName)_cpp.pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -293,6 +295,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libcef.lib;libcef_dll_wrapper.lib;Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>libcef.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName)_cpp.pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -316,6 +319,7 @@
       <AdditionalDependencies>libcef.lib;libcef_dll_wrapper.lib;Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>libcef.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName)_cpp.pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>
