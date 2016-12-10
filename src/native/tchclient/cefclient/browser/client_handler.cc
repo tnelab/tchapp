@@ -45,6 +45,9 @@ enum client_menu_ids {
   CLIENT_ID_TESTMENU_RADIOITEM1,
   CLIENT_ID_TESTMENU_RADIOITEM2,
   CLIENT_ID_TESTMENU_RADIOITEM3,
+  //zmg 2016-12-11 for context menu reload
+  CLIENT_ID_RELOAD,
+  //zmg end
 };
 
 // Musr match the value in client_renderer.cc.
@@ -222,6 +225,9 @@ void ClientHandler::OnBeforeContextMenu(
 
     // Test context menu features.
     BuildTestMenu(model);
+	//zmg 2016-12-11 for context menu reload
+	model->AddItem(CLIENT_ID_RELOAD, "Reload");
+	//zmg end
   }
 }
 
@@ -243,6 +249,11 @@ bool ClientHandler::OnContextMenuCommand(
     case CLIENT_ID_INSPECT_ELEMENT:
       ShowDevTools(browser, CefPoint(params->GetXCoord(), params->GetYCoord()));
       return true;
+	//zmg 2016-12-11 for context menu reload
+	case CLIENT_ID_RELOAD:
+		browser->Reload();
+		return true;
+	//zmg end
     default:  // Allow default handling, if any.
       return ExecuteTestMenu(command_id);
   }
