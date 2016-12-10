@@ -51,7 +51,7 @@ namespace Tnelab {
 		void ClearPopupRects();
 	private:
 		void createSourceHDC(HDC& hdc,HBITMAP& hbitmap,int width,int height);
-		void bgra2rgba(uint32* out_color_bytes, char* out_transparent_color_bytes,const uint32* bytes_buffer,int startX,int startY,int width,int height,int buffer_width);
+		void bgra2rgba(const uint32* bytes_buffer,int startX,int startY,int width,int height,int buffer_width);
 
 		void *bmp_cnt_ = 0;
 		BITMAPINFOHEADER bih_;
@@ -70,6 +70,9 @@ namespace Tnelab {
 		float spin_x_=0.0;
 		float spin_y_=0.0;
 		CefRect update_rect_;
+
+		std::vector<char> sliced_buffer_;
+		std::vector<char> transparent_buffer_;
 
 		bool initialized_=false;
 		bool islayered = false;

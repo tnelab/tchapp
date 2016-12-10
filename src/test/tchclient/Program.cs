@@ -21,10 +21,11 @@ namespace tchclient
 
 
             int exit_code = 0;
-            exit_code = Application.This
-                .AddResourceAssembly("tchclient")
-                .UseTchAppDomainName("www.8888.com")
-                .Run("http://img.zcool.cn/community/01515c55422dfc0000019ae9334d9c.jpg");
+			exit_code = Application.This
+				.AddResourceAssembly("tchclient")
+				.UseTchAppDomainName("www.8888.com")
+				.Run("http://img.zcool.cn/community/01515c55422dfc0000019ae9334d9c.jpg");
+				//.Run("ui/index.html");
 
             return exit_code;
         }
