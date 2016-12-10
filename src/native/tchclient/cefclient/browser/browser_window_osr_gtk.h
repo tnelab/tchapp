@@ -9,6 +9,9 @@
 #include "cefclient/browser/browser_window.h"
 #include "cefclient/browser/client_handler_osr.h"
 #include "cefclient/browser/osr_renderer.h"
+// zmg 2016-12-10 for transparent
+#include "cefclient/tch_add/TchCairoRenderer.h"
+// zmg end
 
 namespace client {
 
@@ -119,7 +122,10 @@ class BrowserWindowOsrGtk : public BrowserWindow,
 
   // The below members will only be accessed on the main thread which should be
   // the same as the CEF UI thread.
-  OsrRenderer renderer_;
+  // zmg 2016-12-10  for transparent
+  // OsrRenderer renderer_;
+  Tnelab::TchCairoRenderer renderer_;
+  // zmg end
   ClientWindowHandle glarea_;
   bool hidden_;
   bool gl_enabled_;

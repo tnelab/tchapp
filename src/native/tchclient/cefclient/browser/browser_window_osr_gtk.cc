@@ -1157,19 +1157,22 @@ void BrowserWindowOsrGtk::OnPaint(
     return;
   }
 
+  // zmg 2016-12-10 for transparent
   if (painting_popup_) {
-    renderer_.OnPaint(browser, type, dirtyRects, buffer, width, height);
+    renderer_.OnPaint(browser, this, type, dirtyRects, buffer, width, height);
     return;
   }
-
+/* 
   if (!gl_enabled_)
     EnableGL();
 
   ScopedGLContext scoped_gl_context(glarea_, true);
   if (!scoped_gl_context.IsValid())
     return;
+*/
+  renderer_.OnPaint(browser, this, type, dirtyRects, buffer, width, height);
+  // zmg end
 
-  renderer_.OnPaint(browser, type, dirtyRects, buffer, width, height);
   if (type == PET_VIEW && !renderer_.popup_rect().IsEmpty()) {
     painting_popup_ = true;
     browser->GetHost()->Invalidate(PET_POPUP);
