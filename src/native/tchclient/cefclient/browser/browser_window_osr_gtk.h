@@ -100,6 +100,14 @@ class BrowserWindowOsrGtk : public BrowserWindow,
   static gint FocusEvent(GtkWidget* widget,
                          GdkEventFocus* event,
                          BrowserWindowOsrGtk* self);
+  // zmg 2016-11-26
+  static void ScreenChange(GtkWidget* widget,
+                           GdkScreen* old_screen,
+                           BrowserWindowOsrGtk* self);
+  static gboolean ExposeEvent(GtkWidget* widget,
+                           GdkEventExpose* event,
+                           BrowserWindowOsrGtk* self);
+  // zmg end
 
   bool IsOverPopupWidget(int x, int y) const;
   int GetPopupXOffset() const;
@@ -119,10 +127,11 @@ class BrowserWindowOsrGtk : public BrowserWindow,
 
   float device_scale_factor_;
 
-  // zmg 2016-11-23
+  // zmg 2016-11-26
   bool caption_moving_;
   int caption_moving_begin_x_;
   int caption_moving_begin_y_;
+  bool supports_alpha_;
   // zmg end
 
   DISALLOW_COPY_AND_ASSIGN(BrowserWindowOsrGtk);

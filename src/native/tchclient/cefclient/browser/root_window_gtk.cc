@@ -6,6 +6,9 @@
 
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
+// zmg 2016-11-26
+#include <cairo.h>
+// zmg end
 
 #include <X11/Xlib.h>
 #undef Success     // Definition conflicts with cef_message_router.h
@@ -67,7 +70,8 @@ RootWindowGtk::RootWindowGtk()
       menubar_height_(0),
       force_close_(false),
       window_destroyed_(false),
-      browser_destroyed_(false) {
+      browser_destroyed_(false),
+      supports_alpha_(false) {
 }
 
 RootWindowGtk::~RootWindowGtk() {
@@ -275,7 +279,6 @@ void RootWindowGtk::CreateRootWindow(const CefBrowserSettings& settings) {
                    G_CALLBACK(&RootWindowGtk::VboxSizeAllocated), this);
   gtk_container_add(GTK_CONTAINER(window_), vbox);
 
-
   if (with_controls_) {
     GtkWidget* menu_bar = CreateMenuBar();
     g_signal_connect(menu_bar, "size-allocate",
@@ -323,8 +326,18 @@ void RootWindowGtk::CreateRootWindow(const CefBrowserSettings& settings) {
     gtk_box_pack_start(GTK_BOX(vbox), toolbar, FALSE, FALSE, 0);
   } else {
     //zmg 2016-11-23
+    
     // no window decoration
-    gtk_window_set_decorated(GTK_WINDOW(window_), false);
+    // gtk_window_set_decorated(GTK_WINDOW(window_), false);
+    
+    // support transparent background
+    gtk_widget_set_app_paintable(window_, true);
+    g_signal_connect(G_OBJECT(window_), "screen-changed",
+                     G_CALLBACK(&RootWindowGtk::ScreenChange), this);
+    g_signal_connect(G_OBJECT(window_), "expose-event",
+                     G_CALLBACK(&RootWindowGtk::ExposeEvent), this);
+    RootWindowGtk::ScreenChange(window_, nullptr, this);
+    
     //zmg end
   }
 
@@ -518,6 +531,49 @@ gboolean RootWindowGtk::WindowDelete(GtkWidget* widget,
   // Allow the close.
   return FALSE;
 }
+
+// zmg 2016-11-26
+// static
+void RootWindowGtk::ScreenChange(GtkWidget* widget,
+                                 GdkScreen* old_screen,
+                                 RootWindowGtk* self) {
+  /* To check if the display supports alpha channels, get the colormap */
+  GdkScreen *screen = gtk_widget_get_screen(widget);
+  GdkColormap *colormap = gdk_screen_get_rgba_colormap(screen);
+
+  if (!colormap) {
+    printf("Screen of window does not support alpha channels\n");
+    colormap = gdk_screen_get_rgb_colormap(screen);
+    self->supports_alpha_ = false;
+  }
+  else {
+    printf("Screen of window supports alpha channels\n");
+    self->supports_alpha_ = true;
+  }
+
+  gtk_widget_set_colormap(widget, colormap);
+}
+
+// static
+gboolean RootWindowGtk::ExposeEvent(GtkWidget* widget,
+                                 GdkEventExpose* event,
+                                 RootWindowGtk* self) {
+  cairo_t *cr = gdk_cairo_create(widget->window);
+
+  if (self->supports_alpha_)
+      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.0); /* transparent */
+  else
+      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0); /* opaque white */
+
+  /* draw the background */
+  cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+  cairo_paint (cr);
+
+  cairo_destroy(cr);
+
+  return false;
+}
+// zmg end
 
 // static
 void RootWindowGtk::VboxSizeAllocated(GtkWidget* widget,
