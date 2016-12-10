@@ -163,7 +163,7 @@ void TchCairoRenderer::OnPaint(CefRefPtr<CefBrowser> browser,
         const CefRect& rect = *i;
         DCHECK(rect.x + rect.width <= view_width_);
         DCHECK(rect.y + rect.height <= view_height_);
-        printf("render dirty %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height);
+        // printf("render dirty %d %d %d %d\n", rect.x, rect.y, rect.width, rect.height);
         paint_buffer(cr, buffer, sliced_buffer_, rect.x, rect.y,
                      rect.width, rect.height, width, height);
       }
