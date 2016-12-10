@@ -328,7 +328,7 @@ void RootWindowGtk::CreateRootWindow(const CefBrowserSettings& settings) {
     //zmg 2016-11-23
     
     // no window decoration
-    // gtk_window_set_decorated(GTK_WINDOW(window_), false);
+    gtk_window_set_decorated(GTK_WINDOW(window_), false);
     
     // support transparent background
     gtk_widget_set_app_paintable(window_, true);

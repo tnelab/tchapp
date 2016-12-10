@@ -38,10 +38,6 @@ class TchCairoRenderer {
                const CefRenderHandler::RectList& dirtyRects,
                const void* buffer, int width, int height);
 
-  // Apply spin.
-  void SetSpin(float spinX, float spinY);
-  void IncrementSpin(float spinDX, float spinDY);
-
   bool IsTransparent() const { return settings_.transparent; }
   cef_color_t GetBackgroundColor() const { return settings_.background_color; }
 
@@ -57,14 +53,11 @@ class TchCairoRenderer {
  private:
   const client::OsrRenderer::Settings settings_;
   bool initialized_;
-  unsigned int texture_id_;
   int view_width_;
   int view_height_;
   CefRect popup_rect_;
   CefRect original_popup_rect_;
-  float spin_x_;
-  float spin_y_;
-  CefRect update_rect_;
+  std::vector<char> sliced_buffer_;
 
   DISALLOW_COPY_AND_ASSIGN(TchCairoRenderer);
 };

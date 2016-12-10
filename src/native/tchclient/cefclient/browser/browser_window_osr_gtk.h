@@ -107,9 +107,6 @@ class BrowserWindowOsrGtk : public BrowserWindow,
   static void ScreenChange(GtkWidget* widget,
                            GdkScreen* old_screen,
                            BrowserWindowOsrGtk* self);
-  static gboolean ExposeEvent(GtkWidget* widget,
-                           GdkEventExpose* event,
-                           BrowserWindowOsrGtk* self);
   // zmg end
 
   bool IsOverPopupWidget(int x, int y) const;

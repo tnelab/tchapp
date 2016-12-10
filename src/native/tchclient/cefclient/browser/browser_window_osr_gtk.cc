@@ -1280,8 +1280,6 @@ void BrowserWindowOsrGtk::Create(ClientWindowHandle parent_handle) {
   gtk_widget_set_app_paintable(glarea_, true);
   g_signal_connect(G_OBJECT(glarea_), "screen-changed",
                    G_CALLBACK(&BrowserWindowOsrGtk::ScreenChange), this);
-  g_signal_connect(G_OBJECT(glarea_), "expose-event",
-                   G_CALLBACK(&BrowserWindowOsrGtk::ExposeEvent), this);
   BrowserWindowOsrGtk::ScreenChange(glarea_, nullptr, this);
   // zmg end
 
@@ -1556,26 +1554,6 @@ void BrowserWindowOsrGtk::ScreenChange(GtkWidget* widget,
   }
 
   gtk_widget_set_colormap(widget, colormap);
-}
-
-// static
-gboolean BrowserWindowOsrGtk::ExposeEvent(GtkWidget* widget,
-                                 GdkEventExpose* event,
-                                 BrowserWindowOsrGtk* self) {
-  cairo_t *cr = gdk_cairo_create(widget->window);
-
-  if (self->supports_alpha_)
-      cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.0); /* transparent */
-  else
-      cairo_set_source_rgb (cr, 1.0, 1.0, 1.0); /* opaque white */
-
-  /* draw the background */
-  cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-  cairo_paint (cr);
-
-  cairo_destroy(cr);
-
-  return false;
 }
 // zmg end
 
