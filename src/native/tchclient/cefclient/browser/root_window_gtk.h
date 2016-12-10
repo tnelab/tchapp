@@ -84,6 +84,14 @@ class RootWindowGtk : public RootWindow,
   static gboolean WindowDelete(GtkWidget* widget,
                                GdkEvent* event,
                                RootWindowGtk* self);
+  // zmg 2016-11-26
+  static void ScreenChange(GtkWidget* widget,
+                           GdkScreen* old_screen,
+                           RootWindowGtk* self);
+  static gboolean ExposeEvent(GtkWidget* widget,
+                           GdkEventExpose* event,
+                           RootWindowGtk* self);
+  // zmg end
 
   // Signal handlers for the GTK Vbox containing all UX elements.
   static void VboxSizeAllocated(GtkWidget* widget,
@@ -149,8 +157,8 @@ class RootWindowGtk : public RootWindow,
   bool window_destroyed_;
   bool browser_destroyed_;
 
-  //zmg 2016-11-11
-  bool sizeable_;
+  //zmg 2016-11-26
+  bool supports_alpha_;
   //zmg end
 
   DISALLOW_COPY_AND_ASSIGN(RootWindowGtk);

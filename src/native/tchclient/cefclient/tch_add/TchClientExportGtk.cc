@@ -98,7 +98,7 @@ int TchStart(const char* url, int x, int y, int width, int height) {
 	//command_str<<L" type=renderer";//进程类型:windows为renderer，linux为zygote
 	//command_line->InitFromString(command_str.str());
 
-    int cmd_argc=4;
+    int cmd_argc=5;
 	char* cmd_argv[cmd_argc];
 	std::string url_str;
 	url_str.append("--url=").append(url);
@@ -106,7 +106,7 @@ int TchStart(const char* url, int x, int y, int width, int height) {
 	cmd_argv[1]=const_cast<char*>("--off-screen-rendering-enabled");
 	cmd_argv[2]=const_cast<char*>("--request-context-shared-cache");
 	cmd_argv[3]=const_cast<char*>("--enable-gpu");
-	//cmd_argv[4]=const_cast<char*>("--transparent-painting-enabled");
+	cmd_argv[4]=const_cast<char*>("--transparent-painting-enabled");
 	command_line->InitFromArgv(cmd_argc, cmd_argv);
 	// Create a ClientApp of the correct type.
 	CefRefPtr<CefApp> app;
