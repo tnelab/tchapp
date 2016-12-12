@@ -4,7 +4,7 @@
 
 #ifndef CEF_TESTS_CEFCLIENT_COMMON_SCHEME_TEST_COMMON_H_
 #define CEF_TESTS_CEFCLIENT_COMMON_SCHEME_TEST_COMMON_H_
-//#pragma once
+#pragma once
 
 #include <vector>
 

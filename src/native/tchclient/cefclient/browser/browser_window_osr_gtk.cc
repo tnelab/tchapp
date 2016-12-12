@@ -1171,8 +1171,7 @@ void BrowserWindowOsrGtk::OnPaint(
     return;
 */
   renderer_.OnPaint(browser, this, type, dirtyRects, buffer, width, height);
-  // zmg end
-
+    // zmg end
   if (type == PET_VIEW && !renderer_.popup_rect().IsEmpty()) {
     painting_popup_ = true;
     browser->GetHost()->Invalidate(PET_POPUP);

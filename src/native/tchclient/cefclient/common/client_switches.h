@@ -6,7 +6,13 @@
 
 #ifndef CEF_TESTS_CEFCLIENT_CEFCLIENT_COMMON_SWITCHES_H_
 #define CEF_TESTS_CEFCLIENT_CEFCLIENT_COMMON_SWITCHES_H_
+//zmg 2016-12-11
+//#pragma once
+//zmg
+#ifdef OS_WINDOWS
 #pragma once
+#endif
+//zmg end
 
 namespace client {
 namespace switches {
@@ -24,6 +30,9 @@ extern const char kRequestContextSharedCache[];
 extern const char kBackgroundColor[];
 extern const char kEnableGPU[];
 extern const char kFilterURL[];
+extern const char kUseViews[];
+extern const char kHideFrame[];
+extern const char kHideControls[];
 
 }  // namespace switches
 }  // namespace client

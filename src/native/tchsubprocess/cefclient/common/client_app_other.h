@@ -4,7 +4,7 @@
 
 #ifndef CEF_TESTS_CEFCLIENT_COMMON_CLIENT_APP_OTHER_H_
 #define CEF_TESTS_CEFCLIENT_COMMON_CLIENT_APP_OTHER_H_
-//#pragma once
+#pragma once
 
 #include "cefclient/common/client_app.h"
 

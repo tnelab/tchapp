@@ -3,22 +3,22 @@ windows下开发环境搭建(linux参见:linux下编译native代码.txt)
 1.工具需求
 Visual Studio 2015 Update 3
 .NET Core 1.0.1 - VS 2015 Tooling Preview 2
-cef3 cef_binary_3.2623.1399
+cef3 cef_binary_3.2704.1434
 
 2.资源下载
 需翻墙：https://www.cefbuilds.com/
 百度网盘：http://pan.baidu.com/s/1eSv97ua
 
 3.cef_sdk配置：
-1)下载cef_binary_3.2623.1399
+1)下载cef_binary_3.2704.1434
 建议下载版本:windows和linux 64位
 
 2)进入项目根目录，创建cef_sdk目录(注意大小写)
 
-3)解压cef_binary_3.2623.1399到cef_sdk
-eg:cef_sdk\cef_binary_3.2623.1399.g64e2fe1_windows64
+3)解压cef_binary_3.2704.1434到cef_sdk
+eg:cef_sdk\cef_binary_3.2704.1434.gec3e9ed_windows64
 
-4)进入相应版本的cef_binary_3.2623.1399目录,删除或改名cefclient,cefsimple,libcef_dll目录
+4)进入相应版本的cef_binary_3.2704.1434目录,删除或改名cefclient,cefsimple,libcef_dll目录
 
 4.编译代码
 1)进入项目根目录src，用vs打开TchApp.sln

@@ -39,3 +39,7 @@ libunwind8-dev
 7.编译和运行debug，需要老版本的libgcrypt
 wget https://launchpad.net/ubuntu/+archive/primary/+files/libgcrypt11_1.5.3-2ubuntu4.2_amd64.deb
 sudo dpkg -i libgcrypt*
+
+8.自动编译脚本
+src/build_linux.sh
+src/build_dotnet.sh

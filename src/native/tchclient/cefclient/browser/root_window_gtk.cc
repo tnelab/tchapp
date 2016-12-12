@@ -22,7 +22,7 @@
 #include "cefclient/browser/main_message_loop.h"
 #include "cefclient/browser/resource.h"
 #include "cefclient/browser/temp_window.h"
-#include "cefclient/browser/window_test.h"
+#include "cefclient/browser/window_test_runner_gtk.h"
 #include "cefclient/common/client_switches.h"
 //zmg 2016-11-18
 #include "cefclient/tch_add/TchWindowApi.h"
@@ -70,8 +70,12 @@ RootWindowGtk::RootWindowGtk()
       menubar_height_(0),
       force_close_(false),
       window_destroyed_(false),
+      //zmg 2016-12-11
+      //browser_destroyed_(false) {
+      //zmg
       browser_destroyed_(false),
       supports_alpha_(false) {
+      //zmg end
 }
 
 RootWindowGtk::~RootWindowGtk() {
@@ -90,6 +94,7 @@ void RootWindowGtk::Init(RootWindow::Delegate* delegate,
                          const std::string& url) {
   DCHECK(delegate);
   DCHECK(!initialized_);
+
   delegate_ = delegate;
   with_controls_ = with_controls;
   with_osr_ = with_osr;
@@ -421,10 +426,12 @@ void RootWindowGtk::OnSetFullscreen(bool fullscreen) {
 
   CefRefPtr<CefBrowser> browser = GetBrowser();
   if (browser) {
+    scoped_ptr<window_test::WindowTestRunnerGtk> test_runner(
+        new window_test::WindowTestRunnerGtk());
     if (fullscreen)
-      window_test::Maximize(browser);
+      test_runner->Maximize(browser);
     else
-      window_test::Restore(browser);
+      test_runner->Restore(browser);
   }
 }
 
@@ -748,11 +755,6 @@ GtkWidget* RootWindowGtk::AddMenuEntry(GtkWidget* menu_widget,
 
   gtk_menu_shell_append(GTK_MENU_SHELL(menu_widget), entry);
   return entry;
-}
-
-// static
-scoped_refptr<RootWindow> RootWindow::Create() {
-  return new RootWindowGtk();
 }
 
 }  // namespace client

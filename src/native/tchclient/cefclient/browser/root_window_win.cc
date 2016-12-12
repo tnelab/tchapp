@@ -15,7 +15,7 @@
 #include "cefclient/browser/resource.h"
 #include "cefclient/browser/temp_window.h"
 #include "cefclient/browser/util_win.h"
-#include "cefclient/browser/window_test.h"
+#include "cefclient/browser/window_test_runner_win.h"
 #include "cefclient/common/client_switches.h"
 
 #define MAX_URL_LENGTH  255
@@ -193,8 +193,10 @@ void RootWindowWin::Show(ShowMode mode) {
       break;
     default:
       break;
-  }  
+  }
+
   ShowWindow(hwnd_, nCmdShow);
+  UpdateWindow(hwnd_);
 }
 
 void RootWindowWin::Hide() {
@@ -257,10 +259,6 @@ void RootWindowWin::CreateBrowserWindow(const std::string& startup_url) {
   if (with_osr_) {
     OsrRenderer::Settings settings;
     MainContext::Get()->PopulateOsrSettings(&settings);
-	////zmg 2016-11-8
-	//settings.transparent = true;
-	//settings.background_color = CefColorSetARGB(0, 0, 0, 0);
-	////zmg end
     browser_window_.reset(new BrowserWindowOsrWin(this, startup_url, settings));
   } else {
     browser_window_.reset(new BrowserWindowStdWin(this, startup_url));
@@ -278,14 +276,10 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
   const std::wstring& window_class = GetResourceString(IDC_CEFCLIENT);
 
   const cef_color_t background_color = MainContext::Get()->GetBackgroundColor();
-  //zmg 2016-11-12 消除启动黑屏,使用透明画刷
-  /*const HBRUSH background_brush = CreateSolidBrush(
+  const HBRUSH background_brush = CreateSolidBrush(
       RGB(CefColorGetR(background_color),
           CefColorGetG(background_color),
-          CefColorGetB(background_color)));*/
-  //zmg
-  const HBRUSH background_brush = (HBRUSH)GetStockObject(NULL_BRUSH);
-  //zmg end
+          CefColorGetB(background_color)));
 
   // Register the window class.
   RegisterRootClass(hInstance, window_class, background_brush);
@@ -442,22 +436,23 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
                                rect.right - rect.left,
                                rect.bottom - rect.top);
   }
+
   // Show this window.
   Show(ShowNormal);
 }
 
 // static
 void RootWindowWin::RegisterRootClass(HINSTANCE hInstance,
-	const std::wstring& window_class,
-	HBRUSH background_brush) {
-	// Only register the class one time.
+                                      const std::wstring& window_class,
+                                      HBRUSH background_brush) {
+  // Only register the class one time.
   static bool class_registered = false;
   if (class_registered)
-  	return;
+    return;
   class_registered = true;
-  
+
   WNDCLASSEX wcex;
-  
+
   wcex.cbSize = sizeof(WNDCLASSEX);
   //zmg  2016-11-12
   //wcex.style         = CS_HREDRAW | CS_VREDRAW;
@@ -479,11 +474,7 @@ void RootWindowWin::RegisterRootClass(HINSTANCE hInstance,
   //zmg end
   wcex.hCursor       = LoadCursor(NULL, IDC_ARROW);
   wcex.hbrBackground = background_brush;
-  //zmg 2016-5-12 修正原菜单
-  //wcex.lpszMenuName  = MAKEINTRESOURCE(IDC_CEFCLIENT);
-  //zmg
-  wcex.lpszMenuName = NULL;
-  //zmg end
+  wcex.lpszMenuName  = MAKEINTRESOURCE(IDC_CEFCLIENT);
   wcex.lpszClassName = window_class.c_str();
   wcex.hIconSm       = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -591,6 +582,7 @@ LRESULT CALLBACK RootWindowWin::RootWndProc(HWND hWnd, UINT message,
     case WM_MOVING:
     case WM_MOVE:
       self->OnMove();
+      return 0;
 
     case WM_ERASEBKGND:
       if (self->OnEraseBkgnd())
@@ -889,10 +881,12 @@ void RootWindowWin::OnSetFullscreen(bool fullscreen) {
 
   CefRefPtr<CefBrowser> browser = GetBrowser();
   if (browser) {
+    scoped_ptr<window_test::WindowTestRunnerWin> test_runner(
+        new window_test::WindowTestRunnerWin());
     if (fullscreen)
-      window_test::Maximize(browser);
+      test_runner->Maximize(browser);
     else
-      window_test::Restore(browser);
+      test_runner->Restore(browser);
   }
 }
 
@@ -1019,11 +1013,6 @@ void RootWindowWin::NotifyDestroyedIfDone() {
   // Notify once both the window and the browser have been destroyed.
   if (window_destroyed_ && browser_destroyed_)
     delegate_->OnRootWindowDestroyed(this);
-}
-
-// static
-scoped_refptr<RootWindow> RootWindow::Create() {
-  return new RootWindowWin();
 }
 
 }  // namespace client

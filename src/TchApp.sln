@@ -46,6 +46,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CmdTest", "test\CmdTest\Cmd
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tchclient", "native\tchclient\tchclient.vcxproj", "{93B1C0BC-9F8C-406C-90B0-92AD0E6698E3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cmake", "cmake", "{0F8F46F9-4A2E-4441-A04D-1DDC1439233E}"
+	ProjectSection(SolutionItems) = preProject
+		native\cmake\cef_macros.cmake = native\cmake\cef_macros.cmake
+		native\cmake\cef_variables.cmake = native\cmake\cef_variables.cmake
+		native\cmake\FindCEF.cmake = native\cmake\FindCEF.cmake
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -183,5 +190,6 @@ Global
 		{924168BF-A9C5-48EE-85B9-3459A220B609} = {EC82F0D3-8C6F-496E-B811-938B9222D19C}
 		{8CD4564F-45E9-44C4-8CDE-E96158A188D9} = {9DFBCFB6-795B-4BEC-A978-803FEEE4DEA8}
 		{93B1C0BC-9F8C-406C-90B0-92AD0E6698E3} = {00465E09-39B3-4F6B-B5DB-3B8EB9BB8A29}
+		{0F8F46F9-4A2E-4441-A04D-1DDC1439233E} = {00465E09-39B3-4F6B-B5DB-3B8EB9BB8A29}
 	EndGlobalSection
 EndGlobal

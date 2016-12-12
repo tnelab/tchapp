@@ -6,7 +6,7 @@
 
 #ifndef CEF_TESTS_CEFCLIENT_CEFCLIENT_COMMON_SWITCHES_H_
 #define CEF_TESTS_CEFCLIENT_CEFCLIENT_COMMON_SWITCHES_H_
-//#pragma once
+#pragma once
 
 namespace client {
 namespace switches {
@@ -24,6 +24,9 @@ extern const char kRequestContextSharedCache[];
 extern const char kBackgroundColor[];
 extern const char kEnableGPU[];
 extern const char kFilterURL[];
+extern const char kUseViews[];
+extern const char kHideFrame[];
+extern const char kHideControls[];
 
 }  // namespace switches
 }  // namespace client

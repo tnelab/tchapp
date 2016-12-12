@@ -4,7 +4,7 @@
 
 #ifndef CEF_TESTS_CEFCLIENT_RENDERER_PERFORMANCE_TEST_H_
 #define CEF_TESTS_CEFCLIENT_RENDERER_PERFORMANCE_TEST_H_
-//#pragma once
+#pragma once
 
 #include "cefclient/renderer/client_app_renderer.h"
 

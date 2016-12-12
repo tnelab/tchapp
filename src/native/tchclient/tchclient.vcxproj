@@ -41,18 +41,24 @@
     <ClCompile Include="cefclient\browser\osr_renderer.cc" />
     <ClCompile Include="cefclient\browser\osr_window_win.cc" />
     <ClCompile Include="cefclient\browser\preferences_test.cc" />
+    <ClCompile Include="cefclient\browser\resource_util.cc" />
     <ClCompile Include="cefclient\browser\resource_util_win.cc" />
     <ClCompile Include="cefclient\browser\response_filter_test.cc" />
     <ClCompile Include="cefclient\browser\root_window.cc" />
+    <ClCompile Include="cefclient\browser\root_window_create.cc" />
     <ClCompile Include="cefclient\browser\root_window_manager.cc" />
+    <ClCompile Include="cefclient\browser\root_window_views.cc" />
     <ClCompile Include="cefclient\browser\root_window_win.cc" />
     <ClCompile Include="cefclient\browser\scheme_test.cc" />
     <ClCompile Include="cefclient\browser\temp_window_win.cc" />
     <ClCompile Include="cefclient\browser\test_runner.cc" />
     <ClCompile Include="cefclient\browser\urlrequest_test.cc" />
     <ClCompile Include="cefclient\browser\util_win.cc" />
+    <ClCompile Include="cefclient\browser\views_window.cc" />
     <ClCompile Include="cefclient\browser\window_test.cc" />
-    <ClCompile Include="cefclient\browser\window_test_win.cc" />
+    <ClCompile Include="cefclient\browser\window_test_runner.cc" />
+    <ClCompile Include="cefclient\browser\window_test_runner_views.cc" />
+    <ClCompile Include="cefclient\browser\window_test_runner_win.cc" />
     <ClCompile Include="cefclient\common\client_app.cc" />
     <ClCompile Include="cefclient\common\client_app_delegates_common.cc" />
     <ClCompile Include="cefclient\common\client_app_other.cc" />
@@ -97,6 +103,7 @@
     <ClInclude Include="cefclient\browser\response_filter_test.h" />
     <ClInclude Include="cefclient\browser\root_window.h" />
     <ClInclude Include="cefclient\browser\root_window_manager.h" />
+    <ClInclude Include="cefclient\browser\root_window_views.h" />
     <ClInclude Include="cefclient\browser\root_window_win.h" />
     <ClInclude Include="cefclient\browser\scheme_test.h" />
     <ClInclude Include="cefclient\browser\temp_window.h" />
@@ -104,7 +111,11 @@
     <ClInclude Include="cefclient\browser\test_runner.h" />
     <ClInclude Include="cefclient\browser\urlrequest_test.h" />
     <ClInclude Include="cefclient\browser\util_win.h" />
+    <ClInclude Include="cefclient\browser\views_window.h" />
     <ClInclude Include="cefclient\browser\window_test.h" />
+    <ClInclude Include="cefclient\browser\window_test_runner.h" />
+    <ClInclude Include="cefclient\browser\window_test_runner_views.h" />
+    <ClInclude Include="cefclient\browser\window_test_runner_win.h" />
     <ClInclude Include="cefclient\cefclient.h" />
     <ClInclude Include="cefclient\common\client_app.h" />
     <ClInclude Include="cefclient\common\client_app_other.h" />
@@ -132,6 +143,7 @@
   <ItemGroup>
     <None Include="cefclient\resources\binding.html" />
     <None Include="cefclient\resources\dialogs.html" />
+    <None Include="cefclient\resources\draggable.html" />
     <None Include="cefclient\resources\localstorage.html" />
     <None Include="cefclient\resources\osr_test.html" />
     <None Include="cefclient\resources\other_tests.html" />
@@ -149,6 +161,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="cefclient\resources\logo.png" />
+    <Image Include="cefclient\resources\menu_icon.1x.png" />
+    <Image Include="cefclient\resources\menu_icon.2x.png" />
+    <Image Include="cefclient\resources\window_icon.1x.png" />
+    <Image Include="cefclient\resources\window_icon.2x.png" />
     <Image Include="cefclient\resources\win\cefclient.ico" />
     <Image Include="cefclient\resources\win\small.ico" />
   </ItemGroup>

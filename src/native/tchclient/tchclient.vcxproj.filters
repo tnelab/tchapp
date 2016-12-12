@@ -162,6 +162,27 @@
     <ClCompile Include="cefclient\tch_add\TchWindowApi.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="cefclient\browser\resource_util.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cefclient\browser\root_window_create.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cefclient\browser\root_window_views.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cefclient\browser\views_window.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cefclient\browser\window_test_runner.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cefclient\browser\window_test_runner_views.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="cefclient\browser\window_test_runner_win.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cefclient\cefclient.h">
@@ -305,6 +326,21 @@
     <ClInclude Include="cefclient\tch_add\TchGDIRenderer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="cefclient\browser\root_window_views.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cefclient\browser\views_window.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cefclient\browser\window_test_runner.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cefclient\browser\window_test_runner_win.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="cefclient\browser\window_test_runner_views.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="cefclient\CMakeLists.txt" />
@@ -336,6 +372,7 @@
     <None Include="cefclient\resources\xmlhttprequest.html" />
     <None Include="cefclient\resources\win\cefclient.aps" />
     <None Include="cefclient\resources\pdf.pdf" />
+    <None Include="cefclient\resources\draggable.html" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="cefclient\resources\win\cefclient.ico">
@@ -345,6 +382,18 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="cefclient\resources\logo.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="cefclient\resources\menu_icon.1x.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="cefclient\resources\menu_icon.2x.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="cefclient\resources\window_icon.1x.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="cefclient\resources\window_icon.2x.png">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

@@ -17,7 +17,6 @@
 #include "cefclient/tch_add/TchGDIRenderer.h"
 //zmg end
 
-
 namespace client {
 
 // Represents the native parent window for an off-screen browser. This object
@@ -63,10 +62,6 @@ class OsrWindowWin :
   void SetFocus();
   void SetDeviceScaleFactor(float device_scale_factor);
 
-  //zmg 2016-11-13
-  ClientWindowHandle GetWindowHandle();
-  //zmg
-
  private:
   // Only allow deletion via scoped_refptr.
   friend struct CefDeleteOnThread<TID_UI>;
@@ -84,7 +79,7 @@ class OsrWindowWin :
 
   // Redraw what is currently in the texture.
   void Invalidate();
-  void Render();    
+  void Render();
 
   void NotifyNativeWindowCreated(HWND hwnd);
 

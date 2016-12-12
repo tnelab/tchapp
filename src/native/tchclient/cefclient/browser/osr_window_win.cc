@@ -145,7 +145,7 @@ void OsrWindowWin::Show() {
 
   // Show the native window if not currently visible.
   if (hwnd_ && !::IsWindowVisible(hwnd_))
-	  ShowWindow(hwnd_, SW_SHOW);
+    ShowWindow(hwnd_, SW_SHOW);
 
   if (hidden_) {
     // Set the browser as visible.
@@ -178,15 +178,6 @@ void OsrWindowWin::Hide() {
 }
 
 void OsrWindowWin::SetBounds(int x, int y, size_t width, size_t height) {
-  //zmg 2016-11-11 for transparent
-  //POINT point;
-  //point.x = x;
-  //point.y = y;
-  //ClientToScreen(GetParent(hwnd_),&point);;
-  //x = point.x;
-  //y = point.y;
-  //zmg end
-
   if (!CefCurrentlyOn(TID_UI)) {
     // Execute this method on the UI thread.
     CefPostTask(TID_UI, base::Bind(&OsrWindowWin::SetBounds, this, x, y, width,
@@ -240,17 +231,12 @@ void OsrWindowWin::Create(HWND parent_hwnd, const RECT& rect) {
   DCHECK(!::IsRectEmpty(&rect));
 
   HINSTANCE hInst = ::GetModuleHandle(NULL);
-  //zmg 2016-11-12 Ïû³ýÆô¶¯ºÚÆÁ,Ê¹ÓÃÍ¸Ã÷»­Ë¢
-  /*
+
   const cef_color_t background_color = renderer_.GetBackgroundColor();
   const HBRUSH background_brush = CreateSolidBrush(
       RGB(CefColorGetR(background_color),
           CefColorGetG(background_color),
           CefColorGetB(background_color)));
- */
-  //zmg
-  const HBRUSH background_brush = (HBRUSH)GetStockObject(NULL_BRUSH);
-  //zmg end
 
   RegisterOsrClass(hInst, background_brush);
 
@@ -263,6 +249,7 @@ void OsrWindowWin::Create(HWND parent_hwnd, const RECT& rect) {
       rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
       parent_hwnd, 0, hInst, 0);
   CHECK(hwnd_);
+
   client_rect_ = rect;
   */
   //zmg
@@ -445,14 +432,6 @@ void OsrWindowWin::RegisterOsrClass(HINSTANCE hInstance,
   RegisterClassEx(&wcex);
 }
 
-//zmg 2016-11-13
-//·µ»Ø´°¿Ú¾ä±ú
-ClientWindowHandle OsrWindowWin::GetWindowHandle() {
-	REQUIRE_MAIN_THREAD();
-	return hwnd_;
-}
-//zmg end
-
 // static
 LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
                                           WPARAM wParam, LPARAM lParam) {
@@ -467,7 +446,7 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
 	case WM_NCHITTEST:
 	{
 		int x = 0, y = 0;
-		auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<int>(self->GetWindowHandle()));
+		auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<int>(hWnd));
 		int border_width = ptr_tch_window_settings->WindowBorderWidth;
 		if (border_width == 0)
 			break;
@@ -684,7 +663,7 @@ void OsrWindowWin::OnMouseEvent(UINT message, WPARAM wParam, LPARAM lParam) {
       last_click_time_ = 0;
     }
   }
-  
+
   switch(message) {
     case WM_LBUTTONDOWN:
     case WM_RBUTTONDOWN:
@@ -774,7 +753,6 @@ void OsrWindowWin::OnMouseEvent(UINT message, WPARAM wParam, LPARAM lParam) {
 	  //zmg end
       int x = GET_X_LPARAM(lParam);
       int y = GET_Y_LPARAM(lParam);
-
       if (mouse_rotation_) {
         // Apply rotation effect.
         current_mouse_pos_.x = x;
@@ -866,9 +844,6 @@ void OsrWindowWin::OnSize() {
 
   if (browser_)
     browser_->GetHost()->WasResized();
-  //zmg 2016-11-11 for transparent
-  //::SendMessage(hwnd_, WM_PAINT, 0, 0);  
-  //zmg end
 }
 
 void OsrWindowWin::OnFocus(bool setFocus) {
@@ -981,12 +956,8 @@ bool OsrWindowWin::GetRootScreenRect(CefRefPtr<CefBrowser> browser,
 bool OsrWindowWin::GetViewRect(CefRefPtr<CefBrowser> browser,
                                CefRect& rect) {
   CEF_REQUIRE_UI_THREAD();
-  //zmg 2016-11-11 for transparent
-  rect.x =  rect.y = 0;
-  //zmg
-  //rect.x = client_rect_.left;
-  //rect.y = client_rect_.top;
-  //zmg end
+
+  rect.x = rect.y = 0;
   rect.width = DeviceToLogical(client_rect_.right - client_rect_.left,
                                device_scale_factor_);
   rect.height = DeviceToLogical(client_rect_.bottom - client_rect_.top,

@@ -4,7 +4,7 @@
 
 #ifndef CEF_TESTS_CEFCLIENT_RENDERER_CLIENT_APP_RENDERER_H_
 #define CEF_TESTS_CEFCLIENT_RENDERER_CLIENT_APP_RENDERER_H_
-//#pragma once
+#pragma once
 
 #include <set>
 

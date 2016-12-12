@@ -10,6 +10,7 @@
 #include "include/base/cef_logging.h"
 #include "include/wrapper/cef_helpers.h"
 #include "cefclient/browser/main_context.h"
+#include "cefclient/browser/resource_util.h"
 #include "cefclient/browser/test_runner.h"
 #include "cefclient/common/client_switches.h"
 
@@ -57,6 +58,7 @@ RootWindowManager::~RootWindowManager() {
   // All root windows should already have been destroyed.
   DCHECK(root_windows_.empty());
 }
+
 scoped_refptr<RootWindow> RootWindowManager::CreateRootWindow(
     bool with_controls,
     bool with_osr,
@@ -65,7 +67,8 @@ scoped_refptr<RootWindow> RootWindowManager::CreateRootWindow(
   CefBrowserSettings settings;
   MainContext::Get()->PopulateBrowserSettings(&settings);
 
-  scoped_refptr<RootWindow> root_window = RootWindow::Create();
+  scoped_refptr<RootWindow> root_window =
+      RootWindow::Create(MainContext::Get()->UseViews());
   root_window->Init(this, with_controls, with_osr, bounds, settings,
                     url.empty() ? MainContext::Get()->GetMainURL() : url);
 
@@ -84,7 +87,8 @@ scoped_refptr<RootWindow> RootWindowManager::CreateRootWindowAsPopup(
     CefBrowserSettings& settings) {
   MainContext::Get()->PopulateBrowserSettings(&settings);
 
-  scoped_refptr<RootWindow> root_window = RootWindow::Create();
+  scoped_refptr<RootWindow> root_window =
+      RootWindow::Create(MainContext::Get()->UseViews());
   root_window->InitAsPopup(this, with_controls, with_osr,
                            popupFeatures, windowInfo, client, settings);
 
@@ -174,6 +178,16 @@ CefRefPtr<CefRequestContext> RootWindowManager::GetRequestContext(
                                          new ClientRequestContextHandler);
   }
   return shared_request_context_;
+}
+
+CefRefPtr<CefImage> RootWindowManager::GetDefaultWindowIcon() {
+  REQUIRE_MAIN_THREAD();
+
+  if (!default_window_icon_) {
+    // Create the Image and load resources at different scale factors.
+    default_window_icon_ = LoadImageIcon("window_icon");
+  }
+  return default_window_icon_;
 }
 
 void RootWindowManager::OnTest(RootWindow* root_window, int test_id) {

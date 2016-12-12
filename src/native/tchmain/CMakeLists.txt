@@ -18,6 +18,7 @@ set(TCHMAIN_SRC
 source_group(. FILES ${TCHMAIN_SRC})
 
 add_library(tchmain SHARED ${TCHMAIN_SRC})
+SET_LIBRARY_TARGET_PROPERTIES(tchmain)
 # Remove the default "lib" prefix from the resulting library.
 set_target_properties(tchmain PROPERTIES PREFIX "")
 

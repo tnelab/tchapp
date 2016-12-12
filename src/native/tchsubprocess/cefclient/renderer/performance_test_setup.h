@@ -4,7 +4,7 @@
 
 #ifndef CEF_TESTS_CEFCLIENT_RENDERER_PERFORMANCE_TEST_SETUP_H_
 #define CEF_TESTS_CEFCLIENT_RENDERER_PERFORMANCE_TEST_SETUP_H_
-//#pragma once
+#pragma once
 
 #include "include/base/cef_macros.h"
 #include "include/base/cef_logging.h"

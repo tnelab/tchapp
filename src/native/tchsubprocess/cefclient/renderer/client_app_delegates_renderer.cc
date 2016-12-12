@@ -5,6 +5,7 @@
 #include "cefclient/renderer/client_app_renderer.h"
 #include "cefclient/renderer/client_renderer.h"
 #include "cefclient/renderer/performance_test.h"
+
 namespace client {
 
 // static

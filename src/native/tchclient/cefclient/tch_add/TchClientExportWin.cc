@@ -1,23 +1,21 @@
 ﻿// TCHApp.Core.cpp : 定义 DLL 应用程序的导出函数。
 //
 
-#include "include/cef_sandbox_win.h"
-#include "cefclient/browser/main_message_loop_multithreaded_win.h"
-
 #include "TchClientExport.h"
-#include <string>
-#include "include/base/cef_logging.h"
+
+#include <windows.h>
 #include "include/base/cef_scoped_ptr.h"
-#include "include/cef_app.h"
 #include "include/cef_command_line.h"
-#include "include/wrapper/cef_helpers.h"
+#include "include/cef_sandbox_win.h"
 #include "cefclient/browser/client_app_browser.h"
 #include "cefclient/browser/main_context_impl.h"
+#include "cefclient/browser/main_message_loop_multithreaded_win.h"
 #include "cefclient/browser/main_message_loop_std.h"
+#include "cefclient/browser/root_window_manager.h"
 #include "cefclient/browser/test_runner.h"
 #include "cefclient/common/client_app_other.h"
-
-
+#include "cefclient/common/client_switches.h"
+#include <string>
 
 using namespace client;
 
@@ -33,11 +31,9 @@ int TchStart(const char* url, int x,int y,int width,int height) {
 	CefScopedSandboxInfo scoped_sandbox;
 	sandbox_info = scoped_sandbox.sandbox_info();
 #endif
-	// Parse command-line arguments.
-	CefRefPtr<CefCommandLine> command_line = CefCommandLine::CreateCommandLine();	
+
 	std::wstringstream command_str;
 	//set command line string
-
 	//command_str << L"TchApp";
 	//command_str << L" --multi-threaded-message-loop";
 	//command_str << L" --cache-path=./TchApp.CefClient/cache";
@@ -52,8 +48,17 @@ int TchStart(const char* url, int x,int y,int width,int height) {
 	command_str << L" --request-context-shared-cache";
 	//command_str<<L" --background-color=#ffffff";
 	command_str << L" --enable-gpu";
+	//command_str << L" --disable-gpu";
+	//command_str << L" --disable-gpu-compositing";
 	//command_str<<L" --filter-url=http://www.baidu.com,http://www.sina.com.cn";
 	//command_str<<L" --type=renderer";//进程类型:windows为renderer，linux为zygote
+	//command_str<<L" --use-views";
+	//command_str<<L" --thide-frame";//进程类型:windows为renderer，linux为zygote
+	command_str<<L" --hide-controls";
+
+
+	// Parse command-line arguments.
+	CefRefPtr<CefCommandLine> command_line = CefCommandLine::CreateCommandLine();
 	command_line->InitFromString(command_str.str());
 	// Create a ClientApp of the correct type.
 	CefRefPtr<CefApp> app;
@@ -77,15 +82,10 @@ int TchStart(const char* url, int x,int y,int width,int height) {
 	std::wstring cef_full_path_str = cef_full_path;
 	auto scan_index= cef_full_path_str.rfind('\\');
 	auto sub_exe_path = cef_full_path_str.substr(0, scan_index).append(L"\\tchsubprocess.exe");
-
 	CefString(&settings.browser_subprocess_path).FromWString(sub_exe_path);
 	CefString(&settings.log_file).FromWString(L"cef_log.txt");
 	// Populate the settings based on command line arguments.
 	context->PopulateSettings(&settings);
-	//set single process
-	//settings.single_process = true;
-
-	//CefString(&settings.log_file).FromASCII("./TchApp.CefClient/log_file.txt");
 
 	// Create the main message loop object.
 	scoped_ptr<MainMessageLoop> message_loop;
@@ -103,7 +103,7 @@ int TchStart(const char* url, int x,int y,int width,int height) {
 	/*
 	// Create the first window.
 	context->GetRootWindowManager()->CreateRootWindow(
-		true,             // Show controls.
+		!command_line->HasSwitch(switches::kHideControls),             // Show controls.
 		settings.windowless_rendering_enabled ? true : false,
 		CefRect(),        // Use default system size.
 		std::string(url));   // Use default URL.
@@ -115,7 +115,7 @@ int TchStart(const char* url, int x,int y,int width,int height) {
 	rect.width = width;
 	rect.height = height;
 	context->GetRootWindowManager()->CreateRootWindow(
-		false,             // Show controls.
+		!command_line->HasSwitch(switches::kHideControls),             // Show controls.
 		settings.windowless_rendering_enabled ? true : false,
 		rect,        // Use default system size.
 		std::string(url));   // Use default URL.

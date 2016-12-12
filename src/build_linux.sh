@@ -2,7 +2,7 @@
 # This file use to build native executable on linux
 # You also need run "build_dotnet.sh"
 
-CEF_SDK_DIR="../cef_sdk/cef_binary_3.2623.1399.g64e2fe1_linux64"
+CEF_SDK_DIR="../cef_sdk/cef_binary_3.2704.1434.gec3e9ed_linux64"
 
 if [ ! -d "$CEF_SDK_DIR" ]; then
 	echo "cef sdk directory does not exist, please download it first"

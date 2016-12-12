@@ -28,14 +28,12 @@ class RootWindowWin : public RootWindow,
   ~RootWindowWin();
 
   // RootWindow methods.
-
   void Init(RootWindow::Delegate* delegate,
             bool with_controls,
             bool with_osr,
             const CefRect& rect,
             const CefBrowserSettings& settings,
             const std::string& url) OVERRIDE;
-
   void InitAsPopup(RootWindow::Delegate* delegate,
                    bool with_controls,
                    bool with_osr,

@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <CefSdk>$(SolutionDir)..\cef_sdk\cef_binary_3.2623.1399.g64e2fe1_windows$(PlatformArchitecture)</CefSdk>
+    <CefSdk>$(SolutionDir)..\cef_sdk\cef_binary_3.2704.1434.gec3e9ed_windows$(PlatformArchitecture)</CefSdk>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />

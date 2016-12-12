@@ -4,7 +4,13 @@
 
 #ifndef CEF_TESTS_CEFCLIENT_COMMON_SCHEME_TEST_COMMON_H_
 #define CEF_TESTS_CEFCLIENT_COMMON_SCHEME_TEST_COMMON_H_
+//zmg 2016-12-11
+//#pragma once
+//zmg
+#ifdef OS_WINDOWS
 #pragma once
+#endif
+//zmg end
 
 #include <vector>
 
