@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TchApp.TchClient;
 
-namespace TchApp.Simple.Hello
+namespace TchApp.Example.Hello
 {
     public class Program
     {
