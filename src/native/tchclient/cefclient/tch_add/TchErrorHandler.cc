@@ -19,7 +19,7 @@ namespace Tnelab{
 			MessageBoxA(NULL, error_msg.c_str(), "Error, press Ctrl+C to copy the details", MB_ICONERROR | MB_OK);
 		}
 #else
-		if (!error_msg.empty())	printf("TCH_ERROR:%d,%s\r\n", error_code, error_msg.c_str());
+		if (!error_msg.empty())	printf("TCH_ERROR:%d,%s\n", error_code, error_msg.c_str());
 #endif // OS_WIN				
 	}
 	int TchErrorHandler::SetTchErrorDelegate(TchErrorDelegate delegate) {

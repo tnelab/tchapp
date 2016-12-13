@@ -260,6 +260,11 @@ void RootWindowGtk::CreateRootWindow(const CefBrowserSettings& settings) {
   }
 
   window_ = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  //zmg 2016-11-18
+  //init window api settings
+  auto ptr_settings = new Tnelab::TchWindowApi::TchWindowSettings();
+  Tnelab::TchWindowApi::SetSettings(reinterpret_cast<unsigned long>(window_), ptr_settings);
+  //zmg end
   gtk_window_set_default_size(GTK_WINDOW(window_), width, height);
   g_signal_connect(G_OBJECT(window_), "focus-in-event",
                    G_CALLBACK(&RootWindowGtk::WindowFocusIn), this);
@@ -380,11 +385,6 @@ void RootWindowGtk::OnBrowserCreated(CefRefPtr<CefBrowser> browser) {
   // created.
   if (is_popup_)
     CreateRootWindow(CefBrowserSettings());
-  //zmg 2016-11-18
-  //≥ı ºªØwindow api settings
-  auto ptr_settings = new Tnelab::TchWindowApi::TchWindowSettings();
-  Tnelab::TchWindowApi::SetSettings(reinterpret_cast<unsigned long>(browser->GetHost()->GetWindowHandle()), ptr_settings);
-  //zmg end
 }
 
 void RootWindowGtk::OnBrowserWindowDestroyed() {

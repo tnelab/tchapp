@@ -17,6 +17,10 @@
 #include "cefclient/browser/util_win.h"
 #include "cefclient/browser/window_test_runner_win.h"
 #include "cefclient/common/client_switches.h"
+//zmg 2016-12-12
+//for TchWindowApi::StartSettings
+#include "cefclient/tch_add/TchWindowApi.h"
+//zmg end
 
 #define MAX_URL_LENGTH  255
 #define BUTTON_WIDTH    72
@@ -288,10 +292,11 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
   find_message_id_ = RegisterWindowMessage(FINDMSGSTRING);
   CHECK(find_message_id_);
 
-  //zmg 2016-11-11 去除窗口非客户区
+  //zmg 2016-12-13
   //const DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
-  //zmg
-  const DWORD dwStyle = WS_POPUP | WS_CLIPCHILDREN;
+  DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
+  if(!with_controls_)
+	dwStyle = (WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_POPUP | WS_CLIPCHILDREN);
   //zmg end
 
   int x, y, width, height;
@@ -310,12 +315,19 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
     width = window_rect.right - window_rect.left;
     height = window_rect.bottom - window_rect.top;
   }
-  //zmg 2016-11-6 窗口居中
-  if (x ==-1&& y == -1) {
-	  int screen_width = GetSystemMetrics(SM_CXSCREEN);
-	  int screen_height = GetSystemMetrics(SM_CYSCREEN);
-	  x = (screen_width - width)/2;
-	  y = (screen_height - height) / 2;
+  //zmg 2016-11-6 
+  if (!with_controls_) {
+	  if (width < 0 || height < 0) {
+		  width = Tnelab::TchWindowApi::StartSettings.Width;
+		  height = Tnelab::TchWindowApi::StartSettings.Height;
+	  }
+	  //窗口居中
+	  if (Tnelab::TchWindowApi::StartSettings.StartPosition == Tnelab::TchAppStartPosition::CenterScreen) {
+		  int screen_width = GetSystemMetrics(SM_CXSCREEN);
+		  int screen_height = GetSystemMetrics(SM_CYSCREEN);
+		  x = (screen_width - width) / 2;
+		  y = (screen_height - height) / 2;
+	  }
   }
   //zmg end
   // Create the main window initially hidden.
@@ -325,15 +337,34 @@ void RootWindowWin::CreateRootWindow(const CefBrowserSettings& settings) {
                        NULL, NULL, hInstance, NULL);
   CHECK(hwnd_);
 
-  //zmg 2016-11-11 for transparent
-  ::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_LAYERED/*|WS_EX_TRANSPARENT*/);
+  //zmg 2016-11-11
+  //for transparent
+  if (!with_controls_) {
+	  ::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_LAYERED/*|WS_EX_TRANSPARENT*/);
+	  //SetWindowLong(hwnd_, GWL_STYLE, GetWindowLong(hwnd_, GWL_STYLE) & ~WS_BORDER);
+  }
+  //初始化window api settings
+  auto ptr_settings = new Tnelab::TchWindowApi::TchWindowSettings();
+  Tnelab::TchWindowApi::SetSettings(reinterpret_cast<unsigned long>(hwnd_), ptr_settings);
   //zmg end
 
   // Associate |this| with the main window.
   SetUserDataPtr(hwnd_, this);
 
   RECT rect;
-  GetClientRect(hwnd_, &rect);
+  //zmg 2016-12-13
+  //GetClientRect(hwnd_, &rect);
+  //zmg
+  if (!with_controls_) {
+	  GetWindowRect(hwnd_, &rect);
+	  rect.right = rect.right - rect.left;
+	  rect.bottom = rect.bottom - rect.top;
+	  rect.left = rect.top = 0;
+  }
+  else {
+	  GetClientRect(hwnd_, &rect);
+  }
+  //zmg end
 
   if (with_controls_) {
     // Create the child controls.
@@ -562,14 +593,20 @@ LRESULT CALLBACK RootWindowWin::RootWndProc(HWND hWnd, UINT message,
 
   // Callback for the main window
   switch (message) {
+	//zmg 2016-12-12
+    case WM_NCCALCSIZE:
+		if(!self->with_controls_)
+			return 0;
+		break;
+	//zmg end
     case WM_COMMAND:
       if (self->OnCommand(LOWORD(wParam)))
         return 0;
       break;
 
     case WM_PAINT:
-      self->OnPaint();
-      return 0;
+		self->OnPaint();
+		return 0;
 
     case WM_SETFOCUS:
       self->OnFocus();

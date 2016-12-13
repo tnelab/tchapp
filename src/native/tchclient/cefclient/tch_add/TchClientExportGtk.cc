@@ -48,7 +48,8 @@ void TerminationSignalHandler(int signatl) {
 
 int cef_argc=0;
 char* cef_argv[16];
-int TchStart(const char* url, int x, int y, int width, int height) {
+int TchStart(const TchAppStartSettings start_settings) {
+	TchWindowApi::StartSettings = start_settings;
 	// Create a copy of |argv| on Linux because Chromium mangles the value
 	// internally (see issue #620).	
 
@@ -92,9 +93,7 @@ int TchStart(const char* url, int x, int y, int width, int height) {
 
     int cmd_argc=6;
 	char* cmd_argv[cmd_argc];
-	std::string url_str;
-	url_str.append("--url=").append(url);
-	cmd_argv[0]=const_cast<char*>(url_str.c_str());
+	cmd_argv[0]=const_cast<char*>("--url=https://wwww.baidu.com");
 	cmd_argv[1]=const_cast<char*>("--off-screen-rendering-enabled");
 	cmd_argv[2]=const_cast<char*>("--request-context-shared-cache");
 	cmd_argv[3]=const_cast<char*>("--enable-gpu");
@@ -162,15 +161,15 @@ int TchStart(const char* url, int x, int y, int width, int height) {
 
 	// Create the first window.
 	CefRect rect;
-	rect.x = x;
-	rect.y = y;
-	rect.width = width;
-	rect.height = height;
+	rect.x = TchWindowApi::StartSettings.X;
+	rect.y = TchWindowApi::StartSettings.Y;
+	rect.width = TchWindowApi::StartSettings.Width;
+	rect.height = TchWindowApi::StartSettings.Height;
 	context->GetRootWindowManager()->CreateRootWindow(
 		!command_line->HasSwitch(switches::kHideControls),             // Show controls.
 		settings.windowless_rendering_enabled ? true : false,
 		rect,        // Use default system size.
-		std::string(url));   // Use default URL.
+		TchWindowApi::StartSettings.Url);   // Use default URL.
 
 						  // Run the message loop. This will block until Quit() is called by the
 						  // RootWindowManager after all windows have been destroyed.

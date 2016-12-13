@@ -755,8 +755,15 @@ bool ClientHandler::CreatePopupWindow(
 
   // The popup browser will be parented to a new native window.
   // Don't show URL bar and navigation buttons on DevTools windows.
+  //zmg 2016-12-11
+  /*
   MainContext::Get()->GetRootWindowManager()->CreateRootWindowAsPopup(
       !is_devtools, is_osr(), popupFeatures, windowInfo, client, settings);
+  */
+  //zmg
+  MainContext::Get()->GetRootWindowManager()->CreateRootWindowAsPopup(
+	 is_devtools, is_osr(), popupFeatures, windowInfo, client, settings);
+  //zmg end
 
   return true;
 }

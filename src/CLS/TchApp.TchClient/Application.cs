@@ -9,7 +9,51 @@ using System.IO;
 using System.Reflection;
 
 namespace TchApp.TchClient
-{   
+{
+    /// <summary>
+    /// 窗口启动位置
+    /// </summary>
+    public enum TchAppStartPosition {
+        /// <summary>
+        /// 手动设置
+        /// </summary>
+        Manual,
+        /// <summary>
+        /// 屏幕中心，忽略x,y设置
+        /// </summary>
+        CenterScreen
+    };
+    /// <summary>
+    /// cef窗口默认构造参数
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential)]    
+	public struct TchAppStartSettings
+    {
+        /// <summary>
+        /// url
+        /// </summary>
+		public string Url;
+        /// <summary>
+        /// 窗口启动位置，参看枚举：TchAppStartPosition
+        /// </summary>
+		public TchAppStartPosition StartPosition;
+        /// <summary>
+        /// 窗口屏幕x坐标
+        /// </summary>
+		public int X;
+        /// <summary>
+        /// 窗口y坐标
+        /// </summary>
+		public int Y;
+        /// <summary>
+        /// 窗口宽度
+        /// </summary>
+		public int Width;
+        /// <summary>
+        /// 窗口高度
+        /// </summary>
+		public int Height;
+	}
     /// <summary>
     /// 负责与web交互
     /// </summary>
@@ -28,7 +72,7 @@ namespace TchApp.TchClient
         delegate void TchErrorDelegate(int error_code, string error_msg);
 
         [DllImport("tchmain")]
-        extern static int TchStart(string url, int x = -1, int y = -1, int width = 800, int height = 600);
+        extern static int TchStart(TchAppStartSettings start_settings);
         [DllImport("tchmain")]
         extern static int SetTchErrorDelegate(TchErrorDelegate func);
         [DllImport("tchmain")]
@@ -124,24 +168,40 @@ namespace TchApp.TchClient
         /// </summary>
         public static Application This = new Application();
 
-        /// <summary>
-        /// 启动web解析和渲染
-        /// </summary>
-        /// <param name="url">初始url,tch默认内部域名为：tchapp.localhost,eg:http://tchapp.localhost/ui/index.html or ui/index.html or /ui/index.html</param>
-        /// <param name="sizeable">窗口是否可调整大小</param>
-        /// <param name="x">窗口初始x坐标</param>
-        /// <param name="y">窗口初始y坐标</param>
-        /// <param name="width">窗口初始宽度</param>
-        /// <param name="height">窗口初始高度</param>
-        /// <returns>无措返回0</returns>
-        public int Run(string url,int x = -1, int y = -1, int width = 800, int height = 600)
+        public int Run(TchAppStartSettings start_settings)
         {
+            string url = start_settings.Url;
             Uri result;
             if (!Uri.TryCreate(url, UriKind.Absolute, out result))
                 if (!Uri.TryCreate($"http://{this.TchAppDomainName}/{url}", UriKind.Absolute, out result))
                     if (!Uri.TryCreate($"http://{this.TchAppDomainName}{url}", UriKind.Absolute, out result))
                         throw new ArgumentException($"[{url}] is bad url.");
-            int exit_code= TchStart(result.AbsoluteUri, x, y, width, height);
+            start_settings.Url = result.AbsoluteUri;
+            int exit_code = TchStart(start_settings);
+            return exit_code;
+        }
+
+        /// <summary>
+        /// 启动web解析和渲染
+        /// </summary>
+        /// <param name="url">初始url,tch默认内部域名为：tchapp.localhost,eg:http://tchapp.localhost/ui/index.html or ui/index.html or /ui/index.html</param>
+        /// <param name="start_position">窗口是启动位置，参看枚举：TchAppStartPosition</param>
+        /// <param name="width">窗口初始宽度</param>
+        /// <param name="height">窗口初始高度</param>
+        /// <param name="border_width">窗口边框大小</param>
+        /// <param name="x">窗口初始x坐标</param>
+        /// <param name="y">窗口初始y坐标</param>
+        /// <returns>无措返回0</returns>        
+        public int Run(string url, int width = 800, int height = 600,TchAppStartPosition start_position = TchAppStartPosition.CenterScreen, int x=0,int y=0)
+        {
+            TchAppStartSettings start_settings;
+            start_settings.Url = url;
+            start_settings.StartPosition = start_position;
+            start_settings.X = x;
+            start_settings.Y = y;
+            start_settings.Width = width;
+            start_settings.Height = height;
+            int exit_code= Run(start_settings);
             return exit_code;
         }
 

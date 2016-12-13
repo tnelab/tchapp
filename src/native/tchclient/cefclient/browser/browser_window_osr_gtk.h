@@ -11,6 +11,7 @@
 #include "cefclient/browser/osr_renderer.h"
 // zmg 2016-12-10 for transparent
 #include "cefclient/tch_add/TchCairoRenderer.h"
+#include "cefclient/browser/root_window.h"
 // zmg end
 
 namespace client {

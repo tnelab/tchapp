@@ -6,8 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native", "Native", "{00465E09-39B3-4F6B-B5DB-3B8EB9BB8A29}"
 	ProjectSection(SolutionItems) = preProject
 		native\CMakeLists.txt = native\CMakeLists.txt
-		native\macros.cmake = native\macros.cmake
-		native\inc\TchVersion.h = native\inc\TchVersion.h
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CLI", "CLI", "{D1B7BDF8-7E68-4B0B-A946-C6D0EA208C91}"
@@ -51,6 +49,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cmake", "cmake", "{0F8F46F9
 		native\cmake\cef_macros.cmake = native\cmake\cef_macros.cmake
 		native\cmake\cef_variables.cmake = native\cmake\cef_variables.cmake
 		native\cmake\FindCEF.cmake = native\cmake\FindCEF.cmake
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tch_include", "tch_include", "{E934FC2D-2D3E-43C5-99D9-7C0530063602}"
+	ProjectSection(SolutionItems) = preProject
+		native\tch_include\TchTypedef.h = native\tch_include\TchTypedef.h
+		native\tch_include\TchVersion.h = native\tch_include\TchVersion.h
 	EndProjectSection
 EndProject
 Global
@@ -191,5 +195,6 @@ Global
 		{8CD4564F-45E9-44C4-8CDE-E96158A188D9} = {9DFBCFB6-795B-4BEC-A978-803FEEE4DEA8}
 		{93B1C0BC-9F8C-406C-90B0-92AD0E6698E3} = {00465E09-39B3-4F6B-B5DB-3B8EB9BB8A29}
 		{0F8F46F9-4A2E-4441-A04D-1DDC1439233E} = {00465E09-39B3-4F6B-B5DB-3B8EB9BB8A29}
+		{E934FC2D-2D3E-43C5-99D9-7C0530063602} = {00465E09-39B3-4F6B-B5DB-3B8EB9BB8A29}
 	EndGlobalSection
 EndGlobal

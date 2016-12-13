@@ -50,6 +50,7 @@ namespace Tnelab {
 		CefRect GetPopupRectInWebView(const CefRect& original_rect);
 		void ClearPopupRects();
 	private:
+		bool is_popup_reloaded_ = false;
 		void createSourceHDC(HDC& hdc,HBITMAP& hbitmap,int width,int height);
 		void bgra2rgba(const uint32* bytes_buffer,int startX,int startY,int width,int height,int buffer_width);
 

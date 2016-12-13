@@ -1,11 +1,14 @@
 ﻿<!DOCTYPE html>
-<html style="background-color:rgba(255,0,0,0.5)" data-tch-window="{Border:5,Width:1024}">
+<html data-tch-window="{Border:5,Width:1024}">
 <head>
     <meta charset="UTF-8">
     <title>TchApp测试</title>
     <script src="/jquery-3.1.1.min.js"></script>
     <script src="/tchapp.js"></script>
     <style>
+        html{
+            background-color:rgba(255,0,0,0.5);
+        }
         #tch_window_caption{
             background-color:red;
             color:white;
@@ -30,6 +33,9 @@
         <a href="javascript:Tch.RestoreWindow()">恢复窗口</a>
         <a href="javascript:Tch.HideWindow()">隐藏窗口</a>
         <a href="javascript:Tch.ShowWindow()">显示窗口</a>
+        <a href="doraemon.html">哆啦A梦</a>
+        <a href="doraemon.html" target="_blank">弹出哆啦A梦</a>
+        <a href="index.html" target="_blank">弹出Index</a>
         <h1>你好 TchApp</h1>
     </div>
 </body>

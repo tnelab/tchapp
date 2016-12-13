@@ -2,6 +2,7 @@
 using namespace Tnelab;
 
 std::map<unsigned long, TchWindowApi::TchWindowSettings*> TchWindowApi::map_settings_;
+TchAppStartSettings TchWindowApi::StartSettings;
 void TchWindowApi::ClearSettings(unsigned long settings_id)
 {
 	auto it = map_settings_.find(settings_id);

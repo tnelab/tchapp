@@ -260,13 +260,7 @@ void OsrWindowWin::Create(HWND parent_hwnd, const RECT& rect) {
 	  rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
 	  parent_hwnd, 0, hInst, 0);
   CHECK(hwnd_);
-  //初始化window api settings
-  auto ptr_settings = new Tnelab::TchWindowApi::TchWindowSettings();
-  RECT temp_rect;
-  GetWindowRect(parent_hwnd, &temp_rect);
-  CefRect cef_rect(temp_rect.left, temp_rect.top, temp_rect.right - temp_rect.left, temp_rect.bottom - temp_rect.top);
-  ptr_settings->OldRootWindowRect = cef_rect;
-  Tnelab::TchWindowApi::SetSettings(reinterpret_cast<unsigned long>(hwnd_), ptr_settings);
+
   //初始化gdi 呈现器
   renderer_.SetTargetHWND(hwnd_);
   renderer_.Initialize();
@@ -416,7 +410,7 @@ void OsrWindowWin::RegisterOsrClass(HINSTANCE hInstance,
   //zmg 2016-11-12 for transparent
   //wcex.style         = CS_OWNDC;
   //zmg 
-  wcex.style		   = CS_PARENTDC;
+  wcex.style		   = CS_OWNDC;
   //zmg end
   wcex.lpfnWndProc   = OsrWndProc;
   wcex.cbClsExtra    = 0;
@@ -445,8 +439,10 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
 	//zmg 2016-12-6 处理边框
 	case WM_NCHITTEST:
 	{
+		if (::IsZoomed(GetParent(hWnd)))
+			break;		
 		int x = 0, y = 0;
-		auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<int>(hWnd));
+		auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(::GetParent(hWnd)));
 		int border_width = ptr_tch_window_settings->WindowBorderWidth;
 		if (border_width == 0)
 			break;
@@ -537,7 +533,7 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
 		//zmg 2016-11-6
 		{
 			//for border
-			if (self->ht_flag_ != 0) {
+			if (self->ht_flag_ >0) {
 				if (self->ht_flag_ == HTTOP) {
 					SendMessage(GetParent(hWnd), WM_SYSCOMMAND, SC_SIZE | WMSZ_TOP, lParam);
 					break;
@@ -573,7 +569,7 @@ LRESULT CALLBACK OsrWindowWin::OsrWndProc(HWND hWnd, UINT message,
 			}			
 			//for caption
 			int x = 0, y = 0;
-			auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<int>(self->hwnd_));
+			auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(::GetParent(self->hwnd_)));
 			x = LOWORD(lParam);
 			y = HIWORD(lParam);
 			//is caption

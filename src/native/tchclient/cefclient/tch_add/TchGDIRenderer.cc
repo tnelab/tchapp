@@ -52,6 +52,13 @@ void Tnelab::TchGDIRenderer::OnPopupSize(CefRefPtr<CefBrowser> browser, const Ce
 
 void Tnelab::TchGDIRenderer::OnPaint(CefRefPtr<CefBrowser> browser, CefRenderHandler::PaintElementType type, const CefRenderHandler::RectList & dirtyRects, const void * buffer, int width, int height)
 {
+	//for popup
+	if (!this->is_popup_reloaded_ && browser->IsPopup()) {
+		browser->Reload();
+		this->is_popup_reloaded_ = true;
+		return;
+	}
+
 	if (this->hwnd_ == 0) return;
 	if (width != view_width_ || height != view_height_) {
 		this->createSourceHDC(this->source_hdc_, this->source_hdc_hbitmap_, width, height);
@@ -173,18 +180,18 @@ void Tnelab::TchGDIRenderer::Render()
 	size.cx = view_width_;
 	size.cy = view_height_;
 	
-	//呈现到父窗口
+	//父窗口1透明
 	bool result = true;
-	result=UpdateLayeredWindow(GetParent(hwnd_), GetDC(GetParent(hwnd_)), NULL, &size, source_hdc_, &point, 0, &bfunc, ULW_ALPHA);
-	DCHECK(result);
-	//浏览器窗口设置为1透明遮罩
+	result=UpdateLayeredWindow(GetParent(hwnd_), GetDC(GetParent(hwnd_)), NULL, &size, transparent_source_hdc_, &point, 0, &bfunc, ULW_ALPHA);
+	//DCHECK(result);
 
+	//浏览器窗口
 	//执行后会默认绘制黑色背景，影响体验，需马上刷新界面
 	if (!islayered) {
 		::SetWindowLong(hwnd_, GWL_EXSTYLE, ::GetWindowLong(hwnd_, GWL_EXSTYLE) | WS_EX_LAYERED/* | WS_EX_TRANSPARENT*/);
 		islayered = true;
 	}
-	result = UpdateLayeredWindow(hwnd_, GetDC(hwnd_), NULL, &size, transparent_source_hdc_, &point, 0, &bfunc, ULW_ALPHA);
+	result = UpdateLayeredWindow(hwnd_, GetDC(hwnd_), NULL, &size, source_hdc_, &point, 0, &bfunc, ULW_ALPHA);
 	DCHECK(result);
 }
 
@@ -267,14 +274,17 @@ void Tnelab::TchGDIRenderer::createSourceHDC(HDC& hdc, HBITMAP& hbitmap, int wid
 
 void Tnelab::TchGDIRenderer::bgra2rgba(const uint32* bytes_buffer, int startX, int startY, int width, int height, int buffer_width)
 {
-	bool update_transparent_buffer = false;
+	//bool update_transparent_buffer = false;
 	int buffer_size = width * height * 4;
 
 	sliced_buffer_.resize(buffer_size);
+	/*
 	if (transparent_buffer_.size() < buffer_size) {
 		transparent_buffer_.resize(buffer_size);
 		update_transparent_buffer = true;
 	}
+	*/
+	transparent_buffer_.resize(buffer_size);
 	
 	uint32_t* sliced_ptr = reinterpret_cast<uint32_t*>(sliced_buffer_.data());
 	uint32_t* transparent_ptr = reinterpret_cast<uint32_t*>(transparent_buffer_.data());
@@ -282,12 +292,19 @@ void Tnelab::TchGDIRenderer::bgra2rgba(const uint32* bytes_buffer, int startX, i
 		for (int l = 0; l < width; ++l) {
 			sliced_ptr[(height - 1 - h) * width + l] =
 				bytes_buffer[(startY + h) * buffer_width + startX + l];
+			if ((bytes_buffer[(startY + h) * buffer_width + startX + l] & 0xff000000) == 0) {
+				transparent_ptr[(height - 1 - h) * width + l] = 0x00000000;
+			}
+			else
+			{
+				transparent_ptr[(height - 1 - h) * width + l] = 0x01000000;
+			}
 		}
 	}
 
-	if (update_transparent_buffer) {
-		for (int i = 0, j = width * height; i < j; ++i) {
-			transparent_ptr[i] = 0x01000000; // little endian
-		}
-	}
+	//if (update_transparent_buffer) {
+	//	for (int i = 0, j = width * height; i < j; ++i) {
+	//		transparent_ptr[i] = 0x01000000; // little endian
+	//	}
+	//}
 }

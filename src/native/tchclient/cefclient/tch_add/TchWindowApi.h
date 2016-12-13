@@ -4,6 +4,7 @@
 #include "include/wrapper/cef_helpers.h"
 #include "include/cef_frame.h"
 #include <vector>
+#include "../../../tch_include/TchTypedef.h"
 
 namespace Tnelab {	
 	class TchWindowApi {
@@ -11,9 +12,9 @@ namespace Tnelab {
 		class TchWindowSettings {
 		public:
 			CefRect CaptionRect;
-			CefRect OldRootWindowRect;
 			int WindowBorderWidth = 0;
 		};
+		static TchAppStartSettings StartSettings;
 		static void CloseWindow(CefRefPtr<CefFrame> frame);
 		static void MinimizeWindow(CefRefPtr<CefFrame> frame);
 		static void MaximizingWindow(CefRefPtr<CefFrame> frame);

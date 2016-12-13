@@ -14,6 +14,7 @@ set(TCHMAIN_SRC
   TchMainExport.h
   TchMainExportGtk.cc  
   TchClientApi.cc
+  ../tch_include/TchTypedef.h
 )
 source_group(. FILES ${TCHMAIN_SRC})
 

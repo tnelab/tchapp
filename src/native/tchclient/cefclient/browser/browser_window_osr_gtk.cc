@@ -1356,7 +1356,9 @@ gint BrowserWindowOsrGtk::ClickEvent(GtkWidget* widget,
     if (mouse_up) {
       self->caption_moving_ = false;
     } else {
-      auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(static_cast<int>(host->GetWindowHandle()));
+      scoped_refptr<client::RootWindow> root_window =
+		client::RootWindow::GetForBrowser(self->browser_->GetIdentifier());
+	  auto ptr_tch_window_settings = Tnelab::TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(root_window->GetWindowHandle()));
       auto& caption_rect = ptr_tch_window_settings->CaptionRect;
       // printf("x %d y %d\n", (int)caption_rect.x, (int)caption_rect.y);
       // printf("w %d h %d\n", (int)caption_rect.width, (int)caption_rect.height);

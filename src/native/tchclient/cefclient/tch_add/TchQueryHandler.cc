@@ -2,6 +2,7 @@
 #include "TchWindowApi.h"
 #include "TchQueryHandler.h"
 #include "cefclient/browser/main_context.h"
+#include "cefclient/browser/root_window.h"
 using namespace client;
 namespace Tnelab {
 	//资源处理委托
@@ -78,7 +79,9 @@ namespace Tnelab {
 		rect.y = json_dic->GetDouble("Y");
 		rect.width = json_dic->GetDouble("Width");
 		rect.height = json_dic->GetDouble("Height");
-		auto ptr_tch_window_settings = TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(frame->GetBrowser()->GetHost()->GetWindowHandle()));
+		scoped_refptr<client::RootWindow> root_window =
+			client::RootWindow::GetForBrowser(frame->GetBrowser()->GetIdentifier());
+		auto ptr_tch_window_settings = TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(root_window->GetWindowHandle()));
 		ptr_tch_window_settings->CaptionRect = rect;
 		callback->Success("true");
 		return true;
@@ -124,7 +127,9 @@ namespace Tnelab {
 		auto invoke_json = request_dict->GetString("Arguments");
 		auto json_val = CefParseJSON(invoke_json, JSON_PARSER_RFC);
 		auto json_dic = json_val->GetDictionary();
-		auto ptr_tch_window_settings = TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(frame->GetBrowser()->GetHost()->GetWindowHandle()));
+		scoped_refptr<client::RootWindow> root_window =
+			client::RootWindow::GetForBrowser(frame->GetBrowser()->GetIdentifier());
+		auto ptr_tch_window_settings = TchWindowApi::GetSettings(reinterpret_cast<unsigned long>(root_window->GetWindowHandle()));
 		ptr_tch_window_settings->WindowBorderWidth= json_dic->GetInt("Border");
 		callback->Success("true");
 		return true;

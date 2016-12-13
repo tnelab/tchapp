@@ -6,7 +6,7 @@
 #include <locale>
 #include <cstring>
 #include <experimental/filesystem>
-#include "../inc/TchVersion.h"
+#include "../tch_include/TchVersion.h"
 #include <io.h>
 
 namespace gnu_fs = std::experimental::filesystem;

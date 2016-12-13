@@ -11,9 +11,9 @@ HMODULE htchclient = GetModuleHandle(0);
 void* htchclient = dlopen(NULL, RTLD_NOW);
 #endif // OS_WIN
 
-int TchStart(const char* url, int x, int y, int width, int height) {
+int TchStart(const Tnelab::TchAppStartSettings start_settings) {
 	auto func = (TchStart_ptr)GetFuncPtr(htchclient, "TchStart");
-	return func(url,x,y,width,height);
+	return func(start_settings);
 }
 int SetTchErrorDelegate(void* delegate) {
 	auto func = (SetTchErrorDelegate_ptr)GetFuncPtr(htchclient, "SetTchErrorDelegate");
