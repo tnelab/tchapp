@@ -2,6 +2,7 @@ windows下开发环境搭建(linux参见:linux下编译native代码.txt)
 
 1.工具需求
 Visual Studio 2015 Update 3
+.NET Core 1.0.1 sdk
 .NET Core 1.0.1 - VS 2015 Tooling Preview 2
 cef3 cef_binary_3.2704.1434
 
