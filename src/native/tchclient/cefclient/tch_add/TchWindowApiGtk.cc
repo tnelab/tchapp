@@ -54,3 +54,8 @@ void TchWindowApi::ShowWindow(CefRefPtr<CefFrame> frame) {
 		gtk_window_present(window);
 	}
 }
+void TchWindowApi::SetWindowPos(CefRefPtr<CefFrame> frame, int x, int y, int width, int height) {
+
+}
+void TchWindowApi::GetWindowPos(CefRefPtr<CefFrame> frame, CefRect& rect) {
+}

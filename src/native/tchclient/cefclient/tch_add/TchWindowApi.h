@@ -24,6 +24,8 @@ namespace Tnelab {
 		static void ClearSettings(unsigned long settings_id);
 		static TchWindowSettings* GetSettings(unsigned long settings_id);
 		static void SetSettings(unsigned long settings_id, TchWindowSettings* ptr_settings);
+		static void SetWindowPos(CefRefPtr<CefFrame> frame, int x, int y, int width, int height);
+		static void GetWindowPos(CefRefPtr<CefFrame> frame, CefRect& rect);
 	private:
 		static std::map<unsigned long, TchWindowSettings*> map_settings_;
 	};	

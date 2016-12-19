@@ -50,6 +50,10 @@ namespace Tnelab {
 		bool ShowWindowProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
 		//处理SetWindowBorder
 		bool SetWindowBorderProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
+		//处理SetWindowPos
+		bool SetWindowPosProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
+		//处理GetWindowPos
+		bool GetWindowPosProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback);
 	};
 }
 #endif  // CEF_TESTS_CEFCLIENT_TCH_ADD_TCH_QUERY_HANDLER_H_

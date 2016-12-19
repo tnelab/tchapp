@@ -55,6 +55,12 @@ namespace Tnelab {
 		query_processor_map_["SetWindowBorder"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 			return this->SetWindowBorderProcessor_(request_dic, frame, query_id, request, persistent, callback);
 		};
+		query_processor_map_["SetWindowPos"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+			return this->SetWindowPosProcessor_(request_dic, frame, query_id, request, persistent, callback);
+		};
+		query_processor_map_["GetWindowPos"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+			return this->GetWindowPosProcessor_(request_dic, frame, query_id, request, persistent, callback);
+		};
 	}
 
 	//TchQueryProcessor List
@@ -122,7 +128,7 @@ namespace Tnelab {
 		callback->Success("true");
 		return true;
 	}
-	//处理ShowWindow
+	//处理SetWindowBorder
 	bool TchQueryHandler::SetWindowBorderProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 		auto invoke_json = request_dict->GetString("Arguments");
 		auto json_val = CefParseJSON(invoke_json, JSON_PARSER_RFC);
@@ -134,4 +140,29 @@ namespace Tnelab {
 		callback->Success("true");
 		return true;
 	}
+	//处理SetWindowPos
+	bool TchQueryHandler::SetWindowPosProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+		auto invoke_json = request_dict->GetString("Arguments");
+		auto json_val = CefParseJSON(invoke_json, JSON_PARSER_RFC);
+		auto json_dic = json_val->GetDictionary();
+		TchWindowApi::SetWindowPos(frame,json_dic->GetInt("X"), json_dic->GetInt("Y"), json_dic->GetInt("Width"), json_dic->GetInt("Height"));
+		callback->Success("true");
+		return true;
+	}
+	//处理GetWindowPos
+	bool TchQueryHandler::GetWindowPosProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+		CefRect rect;
+		TchWindowApi::GetWindowPos(frame,rect);
+		CefRefPtr<CefDictionaryValue> dictionary = CefDictionaryValue::Create();
+		dictionary->SetInt("X", rect.x);
+		dictionary->SetInt("Y", rect.y);
+		dictionary->SetInt("Width", rect.width);
+		dictionary->SetInt("Height", rect.height);
+		CefRefPtr<CefValue> value = CefValue::Create();
+		value->SetDictionary(dictionary);
+		
+		callback->Success(CefWriteJSON(value, JSON_WRITER_DEFAULT));
+		return true;
+	}
+
 }

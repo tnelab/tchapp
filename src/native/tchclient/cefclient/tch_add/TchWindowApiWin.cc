@@ -42,3 +42,16 @@ void TchWindowApi::ShowWindow(CefRefPtr<CefFrame> frame) {
 	HWND root_window_handle = GetRootWindow(frame->GetBrowser())->GetWindowHandle();
 	::ShowWindow(root_window_handle, SW_SHOW);
 }
+void TchWindowApi::SetWindowPos(CefRefPtr<CefFrame> frame, int x, int y, int width, int height) {
+	HWND root_window_handle = GetRootWindow(frame->GetBrowser())->GetWindowHandle();
+	::SetWindowPos(root_window_handle, 0, x, y, width, height, SWP_NOZORDER);
+}
+void TchWindowApi::GetWindowPos(CefRefPtr<CefFrame> frame,CefRect& rect) {
+	HWND root_window_handle = GetRootWindow(frame->GetBrowser())->GetWindowHandle();
+	RECT w_rect;
+	::GetWindowRect(root_window_handle, &w_rect);
+	rect.x = w_rect.left;
+	rect.y = w_rect.top;
+	rect.width = w_rect.right - w_rect.left;
+	rect.height = w_rect.bottom - w_rect.top;
+}
