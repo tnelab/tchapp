@@ -40,22 +40,22 @@ int TchStart(const TchAppStartSettings start_settings) {
 	//command_str << L" --multi-threaded-message-loop";
 	//command_str << L" --cache-path=./TchApp.CefClient/cache";
 	command_str << L" --url=https://www.baidu.com";
-	command_str<<" --off-screen-rendering-enabled";
+	command_str << L" --off-screen-rendering-enabled";
 	//command_str<<L" --off-screen-frame-rate=15";
-	command_str<< L" --transparent-painting-enabled";
+	command_str << L" --transparent-painting-enabled";
 	command_str << L" --show-update-rect";
 	//command_str<<L" --mouse-cursor-change-disabled";
 	//command_str << L" --request-context-per-browser";
 	command_str << L" --request-context-shared-cache";
-	command_str<<L" --background-color=#ff0000";
+	command_str << L" --background-color=#ff0000";
 	command_str << L" --enable-gpu";
 	//command_str << L" --disable-gpu";
 	//command_str << L" --disable-gpu-compositing";
 	//command_str<<L" --filter-url=http://www.baidu.com,http://www.sina.com.cn";
 	//command_str<<L" --type=renderer";//进程类型:windows为renderer，linux为zygote
-	command_str<<L" --use-views";
+	command_str << L" --use-views";
 	//command_str<<L" --thide-frame";
-	command_str<< L" --hide-controls";
+	command_str << L" --hide-controls";
 
 
 	// Parse command-line arguments.
