@@ -311,7 +311,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libcef.lib;libcef_dll_wrapper.lib;Opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>libcef.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
-      <ProgramDatabaseFile>$(OutDir)$(TargetName)_cpp.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>

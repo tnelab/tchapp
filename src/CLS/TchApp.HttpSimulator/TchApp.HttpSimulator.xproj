@@ -9,23 +9,17 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>12a0e352-75c6-4f0f-b587-7563155706cb</ProjectGuid>
     <RootNamespace>TchApp.HttpSimulator</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">$(SolutionDir)..\obj</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'=='' ">$(SolutionDir)..\bin\</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
 
   <PropertyGroup>
     <PostBuildEvent>
-      mkdir $(SolutionDir)..\publish\windows\x64\Debug
-      mkdir $(SolutionDir)..\publish\windows\win32\Debug
-      mkdir $(SolutionDir)..\publish\windows\x64\Release
-      mkdir $(SolutionDir)..\publish\windows\win32\Release
-      mkdir $(SolutionDir)..\publish\linux\x86_64\Release
-      xcopy $(SolutionDir)..\bin\CLS\TchApp.HttpSimulator\bin\$(Configuration)\netstandard1.6 $(SolutionDir)..\publish\windows\x64\Debug /E /Y
-      xcopy $(SolutionDir)..\bin\CLS\TchApp.HttpSimulator\bin\$(Configuration)\netstandard1.6 $(SolutionDir)..\publish\windows\win32\Debug /E /Y
-      xcopy $(SolutionDir)..\bin\CLS\TchApp.HttpSimulator\bin\$(Configuration)\netstandard1.6 $(SolutionDir)..\publish\windows\x64\Release /E /Y
-      xcopy $(SolutionDir)..\bin\CLS\TchApp.HttpSimulator\bin\$(Configuration)\netstandard1.6 $(SolutionDir)..\publish\windows\win32\Release /E /Y
-      xcopy $(SolutionDir)..\bin\CLS\TchApp.HttpSimulator\bin\$(Configuration)\netstandard1.6 $(SolutionDir)..\publish\linux\x86_64\Release /E /Y
+      mkdir $(SolutionDir)..\publish\windows\x64\$(Configuration)
+      mkdir $(SolutionDir)..\publish\windows\win32\$(Configuration)
+      xcopy $(SolutionDir)\CLS\TchApp.HttpSimulator\bin\$(Configuration)\netstandard1.6\*.dll $(SolutionDir)..\publish\windows\x64\$(Configuration) /E /Y
+      xcopy $(SolutionDir)\CLS\TchApp.HttpSimulator\bin\$(Configuration)\netstandard1.6\*.dll $(SolutionDir)..\publish\windows\win32\$(Configuration) /E /Y
     </PostBuildEvent>
   </PropertyGroup>
   

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RazorCompiler": {
+      "commandName": "Project",
+      "commandLineArgs": "../../test/tchclient"
+    }
+  }
+}

@@ -244,9 +244,32 @@
             }
         });
     }
+    //获取TchAppDomainName
+    Tch.GetTchAppDomainName = function (callback) {
+        let callback_;
+        let len = arguments.length;
+        if (len == 1) {
+            callback_ = callback;
+        }
+        else {
+            callback_ = function (result) { }
+        }
+        let obj = {};
+        let invoke_body = JSON.stringify(obj);
+        let request_body = { TchQuery: "GetTchAppDomainName", Arguments: invoke_body };
+        window.cefQuery({
+            request: JSON.stringify(request_body),
+            onSuccess: function (response) {
+                callback_(response);
+            },
+            onFailure: function (error_code, error_message) {
+                console.log(error_code + ":" + error_message);
+            }
+        });
+    }
 
     //初始化
-    let tch_init_ = function () {
+    Tch.Ready = function () {
         let set_caption_rect = function () {
             //处理标题栏,内部ID：tch_window_caption表示标题栏
             let caption_elm = document.getElementById("tch_window_caption");
@@ -262,8 +285,9 @@
         set_caption_rect();
         window.addEventListener("resize", set_caption_rect);
         //处理window设置
-        let window_settings = document.getElementsByTagName("html")[0].attributes.getNamedItem("data-tch-window").value;
-        if (window_settings != undefined) {
+        let html_settings_attr=document.getElementsByTagName("html")[0].attributes.getNamedItem("data-tch-window");
+        if (html_settings_attr != undefined) {
+            let window_settings = html_settings_attr.value;
             try {
                 window_settings = eval("window_settings=" + window_settings);
             }
@@ -279,7 +303,7 @@
 
     let dom_ready_ = function () {
         document.removeEventListener("DOMContentLoaded", dom_ready_, false);
-        tch_init_();
+        Tch.Ready();
     }
     document.addEventListener("DOMContentLoaded", dom_ready_, false);
 })();

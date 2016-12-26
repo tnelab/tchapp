@@ -14,7 +14,8 @@ namespace Tnelab {
 		explicit TchRequestResourceProvider() {}
 
 		bool OnRequest(scoped_refptr<CefResourceManager::Request> request) OVERRIDE;
-		static void SetBlockedDomain(const char* blocked_domain);		
+		static void SetBlockedDomain(const char* blocked_domain);	
+		static std::string GetBlockDomain();
 
 	private:
 		static std::string blocked_domain_;

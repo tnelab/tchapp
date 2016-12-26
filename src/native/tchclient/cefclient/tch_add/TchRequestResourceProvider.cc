@@ -18,8 +18,12 @@ namespace Tnelab {
 			TchRequestResourceProvider::blocked_domain_ = blocked_domain_str;
 		}
 	}
+	std::string TchRequestResourceProvider::GetBlockDomain() {
+		return TchRequestResourceProvider::blocked_domain_;
+	}
 	bool TchRequestResourceProvider::OnRequest(scoped_refptr<CefResourceManager::Request> request) {
 		CEF_REQUIRE_IO_THREAD();
+		
 		if (TchResourceHandler::user_resource_request_handle_ == 0) return false;
 		std::string url = request->request()->GetURL();
 		std::string schemes = url.substr(0, url.find(':'));

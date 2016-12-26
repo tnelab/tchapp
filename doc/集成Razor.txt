@@ -1,1 +1,25 @@
-T4调用Razor接口，根据.cshtml生成.cs代码
+RazorCompiler可以把指定项目的非"_"开头的cshtml文件编译为html文件（生成的html文件和cshtml同名且同路径，扩展名不同）
+用法：
+RazorCompiler 项目相对或绝对路径
+eg:
+RazorCompiler tchclient 把tchclient项目中的所有非"_"开头的cshtml文件编译为html文件
+
+项目源代码位置：src\tools\RazorCompiler
+可以使用vs的项目发布功能发布该工具到publish\windows\x64\Release\tools\RazorCompiler目录下
+windows版本：test\tchclient在编译前，会自动调用该工具转换cshtml文件
+调试项目需要启用：src\tools\RazorCompiler\project.debug.json
+发布项目需要启用：src\tools\RazorCompiler\project.release.json
+
+Razor语法支持：
+支持布局页
+支持布局页嵌套
+支持ViewBag
+支持分部视图：分部视图调用方法为@{await RenderPartialAsync("分部视图绝对或相对路径");}
+支持标准c#语法
+支持_ViewStart.cshtml
+其他特性不支持，如Html,TagHelper等
+
+Razor受限，是有意为之，用来限制Razor被滥用，引起编程模式混乱，同时用户项目可以无razor相关库的依赖.
+Razor在本项目的目的：
+可以使用布局和分部，进行结构化html，而不是用于动态生成html，所有动态内容，应该使用JsInvoke方法获取，而不是用cshtml或者ajax获取。
+需要完整MVC可以使用TchApp.HttpSimulator

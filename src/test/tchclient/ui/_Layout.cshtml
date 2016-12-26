@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html data-tch-window="{Border:5,Width:1024}">
+<head>
+    <title>@ViewBag.Title</title>
+    <script src="/tchapp.js"></script>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        html {
+            background-color: rgba(255,255,255,0);
+            border-style: solid;
+            border-width: 2px;
+            border-color: purple;
+            height: calc(100% - 4px);
+        }
+
+        body {
+            background-color:rgba(251, 196, 156,0.6);
+       }
+
+        #tch_window_caption {
+            background-color: purple;
+            color: white;
+            border-bottom-style: solid;
+            border-bottom-width: 2px;
+            border-bottom-color: purple;
+        }
+
+        .caption_button {
+            float: right;
+            cursor: pointer;
+        }
+
+        #tch_window_client {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="tch_window_caption">
+        @ViewBag.Title
+        <span class="caption_button" onclick="Tch.CloseWindow()">Ｘ</span>
+        <span class="caption_button" onclick="Tch.MaximizingWindow()">口</span>
+        <span class="caption_button" onclick="Tch.MinimizeWindow()">＿</span>
+    </div>
+    <div id="tch_window_client">
+        @RenderBody()
+    </div>
+</body>
+</html>

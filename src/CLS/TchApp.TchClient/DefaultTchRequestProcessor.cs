@@ -17,8 +17,9 @@ namespace TchApp.TchClient
         /// </summary>
         /// <param name="file_path">本地文件路径</param>
         /// <returns>未找到文件返回null</returns>
-        public TchResponseInfo GetResponseInfoFormFile(string file_path)
+        public TchResponseInfo GetResponseInfoFormFile(TchRequestInfo tch_request_info)
         {
+            var file_path = $".{tch_request_info.Uri.LocalPath}";
             if (!File.Exists(file_path)) return null;
             var raw_datas = File.ReadAllBytes(file_path);
             byte[] datas;
@@ -35,7 +36,8 @@ namespace TchApp.TchClient
             {
                 datas = raw_datas;
             }
-            return TchHelper.ParseToResponse(datas);
+            var mimeType = tch_request_info.Headers["Accept"].Split(';')[0].Split(',')[0];
+            return TchHelper.ParseToResponse(datas, mime_type: mimeType);
         }
         /// <summary>
         /// 从TchApp.TchClient.Client对象的资源集合中构造web请求结果
@@ -58,7 +60,8 @@ namespace TchApp.TchClient
                 {
                     byte[] bytes = new byte[resource_stream.Length];
                     resource_stream.Read(bytes, 0, bytes.Length);
-                    return TchHelper.ParseToResponse(bytes);
+                    var mimeType = tch_request_info.Headers["Accept"].Split(';')[0].Split(',')[0];
+                    return TchHelper.ParseToResponse(bytes,mime_type:mimeType);
                 }
             }
             return null;
@@ -82,13 +85,22 @@ namespace TchApp.TchClient
         public TchResponseInfo ProcessTchRequest(TchRequestInfo tch_request_info)
         {
             TchResponseInfo tch_response_info = this.GetResponseInfoFormFilter(tch_request_info.Uri.AbsolutePath);
-            if (tch_response_info != null) return tch_response_info;
+            if (tch_response_info != null)
+            {
+                return tch_response_info;
+            }
 
-            tch_response_info = this.GetResponseInfoFormFile($".{tch_request_info.Uri.LocalPath}");
-            if (tch_response_info != null) return tch_response_info;
+            tch_response_info = this.GetResponseInfoFormFile(tch_request_info);
+            if (tch_response_info != null)
+            {
+                return tch_response_info;
+            }
 
             tch_response_info = this.GetResponseInfoFormResource(tch_request_info);
-            if (tch_response_info != null) return tch_response_info;
+            if (tch_response_info != null)
+            {                
+                return tch_response_info;
+            }
 
             //未找到任何资源
             Application.This.OnError(-1, $"[{tch_request_info.Uri.AbsolutePath}] File Not Found");

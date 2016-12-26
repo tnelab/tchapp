@@ -3,6 +3,8 @@
 #include "TchQueryHandler.h"
 #include "cefclient/browser/main_context.h"
 #include "cefclient/browser/root_window.h"
+#include "TchRequestResourceProvider.h"
+
 using namespace client;
 namespace Tnelab {
 	//资源处理委托
@@ -60,6 +62,9 @@ namespace Tnelab {
 		};
 		query_processor_map_["GetWindowPos"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
 			return this->GetWindowPosProcessor_(request_dic, frame, query_id, request, persistent, callback);
+		};
+		query_processor_map_["GetTchAppDomainName"] = [this](CefRefPtr<CefDictionaryValue> request_dic, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+			return this->GetTchAppDomainNameProcessor_(request_dic, frame, query_id, request, persistent, callback);
 		};
 	}
 
@@ -164,5 +169,9 @@ namespace Tnelab {
 		callback->Success(CefWriteJSON(value, JSON_WRITER_DEFAULT));
 		return true;
 	}
-
+	//处理GetTchAppDomainName
+	bool TchQueryHandler::GetTchAppDomainNameProcessor_(CefRefPtr<CefDictionaryValue> request_dict, CefRefPtr<CefFrame> frame, int64 query_id, const CefString& request, bool persistent, CefRefPtr<Callback> callback) {
+		callback->Success(TchRequestResourceProvider::GetBlockDomain().c_str());
+		return true;
+	}
 }

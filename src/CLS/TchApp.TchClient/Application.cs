@@ -26,34 +26,34 @@ namespace TchApp.TchClient
     /// <summary>
     /// cef窗口默认构造参数
     /// </summary>
-    [StructLayout(LayoutKind.Sequential)]    
-	public struct TchAppStartSettings
+    [StructLayout(LayoutKind.Sequential)]
+	public class TchAppStartSettings
     {
         /// <summary>
         /// url
         /// </summary>
-		public string Url;
+        public string Url="https://wwww.baidu.com";
         /// <summary>
         /// 窗口启动位置，参看枚举：TchAppStartPosition
         /// </summary>
-		public TchAppStartPosition StartPosition;
+		public TchAppStartPosition StartPosition=TchAppStartPosition.CenterScreen;        
         /// <summary>
         /// 窗口屏幕x坐标
         /// </summary>
-		public int X;
+		public int X=0;
         /// <summary>
         /// 窗口y坐标
         /// </summary>
-		public int Y;
+		public int Y=0;
         /// <summary>
         /// 窗口宽度
         /// </summary>
-		public int Width;
+		public int Width=800;
         /// <summary>
         /// 窗口高度
         /// </summary>
-		public int Height;
-	}
+		public int Height=600;
+    }
     /// <summary>
     /// 负责与web交互
     /// </summary>
@@ -71,7 +71,7 @@ namespace TchApp.TchClient
         [UnmanagedFunctionPointerAttribute(CallingConvention.Cdecl,CharSet=CharSet.Ansi)]
         delegate void TchErrorDelegate(int error_code, string error_msg);
 
-        [DllImport("tchmain")]
+        [DllImport("tchmain",CharSet =CharSet.Ansi)]
         extern static int TchStart(TchAppStartSettings start_settings);
         [DllImport("tchmain")]
         extern static int SetTchErrorDelegate(TchErrorDelegate func);
@@ -194,7 +194,7 @@ namespace TchApp.TchClient
         /// <returns>无措返回0</returns>        
         public int Run(string url, int width = 800, int height = 600,TchAppStartPosition start_position = TchAppStartPosition.CenterScreen, int x=0,int y=0)
         {
-            TchAppStartSettings start_settings;
+            TchAppStartSettings start_settings=new TchAppStartSettings();
             start_settings.Url = url;
             start_settings.StartPosition = start_position;
             start_settings.X = x;

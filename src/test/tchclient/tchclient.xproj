@@ -8,25 +8,22 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>5b082a11-838f-4637-8ed0-ed983aa34a8e</ProjectGuid>
     <RootNamespace>tchclient</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">$(SolutionDir)..\obj</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'=='' ">$(SolutionDir)..\bin\</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)..\publish\windows\x64\Release\tools\RazorCompiler\RazorCompiler.exe  $(SolutionDir)\test\tchclient</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
     <PostBuildEvent>
-      mkdir $(SolutionDir)..\publish\windows\x64\Debug
-      mkdir $(SolutionDir)..\publish\windows\win32\Debug
-      mkdir $(SolutionDir)..\publish\windows\x64\Release
-      mkdir $(SolutionDir)..\publish\windows\win32\Release
-      mkdir $(SolutionDir)..\publish\linux\x86_64\Release
-      xcopy $(SolutionDir)..\bin\Test\tchclient\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\x64\Debug /E /Y
-      xcopy $(SolutionDir)..\bin\Test\tchclient\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\win32\Debug /E /Y
-      xcopy $(SolutionDir)..\bin\Test\tchclient\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\x64\Release /E /Y
-      xcopy $(SolutionDir)..\bin\Test\tchclient\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\win32\Release /E /Y
-      xcopy $(SolutionDir)..\bin\Test\tchclient\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\linux\x86_64\Release /E /Y
+      mkdir $(SolutionDir)..\publish\windows\x64\$(Configuration)
+      mkdir $(SolutionDir)..\publish\windows\win32\$(Configuration)
+      xcopy $(SolutionDir)\Test\tchclient\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\x64\$(Configuration) /E /Y
+      xcopy $(SolutionDir)\Test\tchclient\bin\$(Configuration)\netcoreapp1.0 $(SolutionDir)..\publish\windows\win32\$(Configuration) /E /Y
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>

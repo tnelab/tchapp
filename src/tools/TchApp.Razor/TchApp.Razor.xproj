@@ -7,22 +7,13 @@
 
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>ef4024f8-5022-4b2f-95cf-55f72be9285b</ProjectGuid>
-    <RootNamespace>TchApp.TchClient</RootNamespace>
+    <ProjectGuid>2058a0b8-8ca6-4487-978b-58fa016bde98</ProjectGuid>
+    <RootNamespace>TchApp.Razor</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <PostBuildEvent>
-      mkdir $(SolutionDir)..\publish\windows\x64\$(Configuration)
-      mkdir $(SolutionDir)..\publish\windows\win32\$(Configuration)
-      xcopy $(SolutionDir)\CLS\TchApp.TchClient\bin\$(Configuration)\netstandard1.6\*.dll $(SolutionDir)..\publish\windows\x64\$(Configuration) /E /Y
-      xcopy $(SolutionDir)\CLS\TchApp.TchClient\bin\$(Configuration)\netstandard1.6\*.dll $(SolutionDir)..\publish\windows\win32\$(Configuration) /E /Y
-    </PostBuildEvent>
-  </PropertyGroup>
-  
   <PropertyGroup>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
