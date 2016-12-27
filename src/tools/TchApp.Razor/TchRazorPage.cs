@@ -51,9 +51,15 @@ namespace TchApp.Razor
         
         public IDictionary<string, RenderAsyncDelegate> SectionWriters { get; }
 
-        public abstract Task ExecuteAsync();        
+        public abstract Task ExecuteAsync();
 
-
+        public virtual void Write(object value)
+        {
+            if (value != null)
+            {
+                Output.Write(value.ToString());
+            }            
+        }
         public virtual void Write(string value)
         {
             Output.Write(value);

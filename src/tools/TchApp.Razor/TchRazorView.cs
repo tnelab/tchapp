@@ -88,7 +88,11 @@ namespace TchApp.Razor
                 }
 
                 await RenderPageCoreAsync(page, context);
-                return writer;
+                return writer;              
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
             finally
             {
