@@ -1471,11 +1471,14 @@ gint BrowserWindowOsrGtk::MoveEvent(GtkWidget* widget,
   // zmg 2016-11-23
   if (self->caption_moving_) {
     GtkWidget* window = gtk_widget_get_ancestor(GTK_WIDGET(widget), GTK_TYPE_WINDOW);
-    if (window != nullptr) {
+    if (window != nullptr && event->y_root > 0.01) {
       gint window_x = event->x_root - self->caption_moving_begin_x_;
       gint window_y = event->y_root - self->caption_moving_begin_y_;
       gtk_window_move(GTK_WINDOW(window), window_x, window_y);
-      // printf("move window to %d %d\n", window_x, window_y);
+      //printf("move window to %d %d (%lf %d, %lf %d)\n",
+      //  window_x, window_y,
+      //  event->x_root, self->caption_moving_begin_x_,
+      //  event->y_root, self->caption_moving_begin_y_);
     }
   }
   // zmg end
