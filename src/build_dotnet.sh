@@ -25,6 +25,7 @@ publish(){
 	dotnet publish -r $2 -o ../../$PUBLISH_DIR_RELEASE/$1
 	cd "$oldDir"
 }
+build "tools/TchApp.Razor" "netcoreapp1.0"
 publish "tools/RazorCompiler" "ubuntu.16.04-x64"
 $PUBLISH_DIR_RELEASE/tools/RazorCompiler/RazorCompiler test/tchclient
 

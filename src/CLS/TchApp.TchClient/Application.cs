@@ -218,8 +218,8 @@ namespace TchApp.TchClient
         internal readonly HashSet<Assembly> ResourceAssemblySet = new HashSet<Assembly>();
         /// <summary>
         /// 添加包含web资源的程序集,这些程序集可以用于web请求时获取资源,请注意填写正确的程序集名称
-        /// TchApp自带资源：jquery.3.1.1.min.js和TchApp.js
-        /// 引用url:http://tchapp.localhost/jquery-3.1.1.min.js和http://tchapp.localhost/tchapp.js
+        /// TchApp自带资源：TchApp.js
+        /// 引用url:http://tchapp.localhost/tchapp.js
         /// </summary>
         /// <param name="assembly_name">包含资源的程序集名称</param>
         /// <returns>Client对象</returns>
