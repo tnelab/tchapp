@@ -54,8 +54,24 @@ void TchWindowApi::ShowWindow(CefRefPtr<CefFrame> frame) {
 		gtk_window_present(window);
 	}
 }
-void TchWindowApi::SetWindowPos(CefRefPtr<CefFrame> frame, int x, int y, int width, int height) {
 
+void TchWindowApi::SetWindowPos(CefRefPtr<CefFrame> frame, int x, int y, int width, int height) {
+	auto window = GetWindow(frame->GetBrowser());
+	if (window != nullptr) {
+		gtk_window_move(GTK_WINDOW(window), x, y);
+		gtk_window_resize(GTK_WINDOW(window), width, height);
+	}
 }
+
 void TchWindowApi::GetWindowPos(CefRefPtr<CefFrame> frame, CefRect& rect) {
+	auto window = GetWindow(frame->GetBrowser());
+	if (window != nullptr) {
+		gint x = 0, y = 0, width = 0, height = 0;
+		gtk_window_get_position(GTK_WINDOW(window), &x, &y);
+		gtk_window_get_size(GTK_WINDOW(window), &width, &height);
+		rect.x = x;
+		rect.y = y;
+		rect.width = width;
+		rect.height = height;
+	}
 }
