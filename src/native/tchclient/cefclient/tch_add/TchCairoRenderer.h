@@ -51,6 +51,7 @@ class TchCairoRenderer {
   void ClearPopupRects();
 
  private:
+  bool is_popup_reloaded_ = false;
   const client::OsrRenderer::Settings settings_;
   bool initialized_;
   int view_width_;

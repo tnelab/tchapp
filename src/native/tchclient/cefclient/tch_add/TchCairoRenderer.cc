@@ -135,6 +135,12 @@ void TchCairoRenderer::OnPaint(CefRefPtr<CefBrowser> browser,
                           CefRenderHandler::PaintElementType type,
                           const CefRenderHandler::RectList& dirtyRects,
                           const void* buffer, int width, int height) {
+	//for popup
+  if (!this->is_popup_reloaded_ && browser->IsPopup()) {
+  	browser->Reload();
+  	this->is_popup_reloaded_ = true;
+  	return;
+  }
   if (!initialized_)
     Initialize();
 
